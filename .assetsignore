@@ -1,0 +1,26 @@
+# Archivos que Wrangler no debe publicar como assets estáticos del sitio.
+# Mismo formato que .gitignore.
+
+# Dependencias (acá vive el binario workerd de 122MB que causaba el error)
+node_modules/
+
+# Control de versiones y configuración local
+.git/
+.wrangler/
+.vscode/
+.claude/
+
+# Archivos de build/tooling, no son parte del sitio público
+package.json
+package-lock.json
+bun.lock
+bun.lockb
+.gitignore
+.assetsignore
+wrangler.jsonc
+.env.example
+
+# Documentación interna del proyecto (no son páginas del sitio)
+README.md
+ESTRUCTURA.md
+INSTALACION.html
