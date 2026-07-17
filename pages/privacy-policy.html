@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Política de Privacidad de PATERSAY: qué información recopilamos, cómo la usamos, con quién la compartimos y qué derechos tenés sobre tus datos.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Política de Privacidad | PATERSAY">
+    <meta property="og:description" content="Cómo PATERSAY recopila, utiliza y protege tu información personal.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/privacy-policy.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Política de Privacidad",
+        "isPartOf": { "@type": "WebSite", "name": "PATERSAY", "url": "https://patersay.com" },
+        "publisher": { "@type": "Organization", "name": "PATERSAY" }
+    }
+    </script>
+
+    <title>Política de Privacidad — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página legal -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver al inicio
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Política de Privacidad</h1>
+                <p>Cómo PATERSAY recopila, utiliza, comparte y protege tu información personal cuando visitás nuestro sitio, nos escribís o te postulás a una vacante.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="printLegalDoc">Descargar Política de Privacidad (PDF)</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Contenido legal -->
+    <section class="about">
+        <div class="container" style="max-width: 860px;">
+            <div class="print-only" style="margin-bottom: 32px; border-bottom: 2px solid #0066cc; padding-bottom: 16px;">
+                <strong style="font-size: 20px; letter-spacing: 1px;">PATERSAY</strong>
+                <div style="font-size: 13px; color: #555; margin-top: 4px;">Política de Privacidad — Versión 1.0 — Emitido el 16 de julio de 2026</div>
+            </div>
+
+            <div class="legal-meta">
+                <span>Versión 1.0</span>
+                <span>Vigente desde el 16 de julio de 2026</span>
+                <span>Última actualización: 16 de julio de 2026</span>
+            </div>
+
+            <nav class="legal-toc" aria-label="Índice del documento">
+                <h2>Índice</h2>
+                <ol><!-- Generado automáticamente por main.js a partir de los <h2> de .legal-content --></ol>
+            </nav>
+
+            <article class="legal-content">
+                <h2>1. Introducción</h2>
+                <p>PATERSAY es una consultora de Tecnología de la Información que presta servicios de consultoría SAP, desarrollo de software, diseño web, aplicaciones móviles, recursos humanos, sistemas de gestión e integraciones tecnológicas. Esta Política de Privacidad describe cómo recopilamos, utilizamos, compartimos y protegemos la información personal de quienes visitan nuestro sitio web, se comunican con nosotros o utilizan nuestros servicios.</p>
+
+                <h2>2. Alcance de la política</h2>
+                <p>Esta política aplica a la información recopilada a través de nuestro sitio web patersay.com, de los formularios de contacto, postulación laboral y solicitud de asesoría disponibles en él, y de cualquier otro canal de comunicación directo con PATERSAY (correo electrónico, WhatsApp, redes sociales corporativas). No aplica a sitios web de terceros a los que este sitio pueda enlazar, ni a la información que un cliente nos entregue en el marco de un contrato de servicios, la cual se rige por los términos acordados en dicho contrato.</p>
+
+                <h2>3. Información que recopilamos</h2>
+                <p>Recopilamos información personal que vos nos proporcionás directamente y, en menor medida, información que se genera automáticamente al navegar nuestro sitio. No recopilamos categorías especiales de datos (salud, origen étnico, opiniones políticas o religiosas) salvo que vos mismo decidas incluirlas voluntariamente en un mensaje o postulación, en cuyo caso te pedimos evitarlo cuando no sea estrictamente necesario.</p>
+
+                <h2>4. Información proporcionada por el usuario</h2>
+                <p>Cuando completás el formulario de contacto, el formulario de asesoría, el chat de WhatsApp o el formulario de postulación laboral de la sección Careers, podemos recopilar: nombre y apellido, nombre de tu empresa, correo electrónico, número de teléfono, país y ciudad, el contenido de tu mensaje o carta de presentación, y, en el caso de postulaciones laborales, tu currículum vitae adjunto, años de experiencia y nivel profesional.</p>
+
+                <h2>5. Información recopilada automáticamente</h2>
+                <p>Al navegar nuestro sitio, algunos datos técnicos se recopilan de forma automática: dirección IP, tipo y versión de navegador, sistema operativo, páginas visitadas, tiempo de permanencia, sitio de referencia y, cuando corresponda, la región que seleccionás en el selector de región del sitio (guardada localmente en tu navegador). Esta información se utiliza con fines estadísticos y de mejora del sitio, y no se combina con tu identidad salvo que vos mismo nos la hayas proporcionado a través de un formulario.</p>
+
+                <h2>6. Uso de cookies y tecnologías similares</h2>
+                <p>Nuestro sitio puede utilizar cookies propias y almacenamiento local del navegador (localStorage) para recordar tu región seleccionada y evitar mostrarte la pantalla de bienvenida más de una vez por sesión. No utilizamos cookies de seguimiento publicitario propias; si en el futuro incorporamos herramientas de analítica o marketing de terceros que utilicen cookies, actualizaremos esta política y, cuando la normativa aplicable lo exija, solicitaremos tu consentimiento previo mediante un aviso de cookies.</p>
+
+                <h2>7. Finalidades del tratamiento de datos</h2>
+                <p>Utilizamos tu información personal para: responder a tus consultas y solicitudes de asesoría; evaluar postulaciones laborales; enviarte información sobre nuestros servicios cuando lo hayas solicitado; mejorar el contenido, la usabilidad y la seguridad de nuestro sitio; cumplir con obligaciones legales o contractuales; y, en general, gestionar la relación comercial o laboral que iniciás con nosotros a través de estos canales.</p>
+
+                <h2>8. Base legal del tratamiento</h2>
+                <p>Tratamos tu información sobre la base de: tu consentimiento, otorgado al completar voluntariamente un formulario de nuestro sitio; la ejecución de medidas precontractuales o contractuales, cuando la información se recopila para evaluar o desarrollar una propuesta de servicios o una postulación laboral; y nuestro interés legítimo en mantener la seguridad y el correcto funcionamiento de nuestro sitio. Cuando la normativa de tu país exija una base legal específica adicional, la solicitaremos en el momento correspondiente.</p>
+
+                <h2>9. Compartición de información con terceros</h2>
+                <p>No vendemos ni alquilamos tu información personal a terceros. Podemos compartir información con: proveedores de servicios que actúan en nuestro nombre (por ejemplo, proveedores de hosting, correo electrónico o almacenamiento en la nube); autoridades públicas, cuando la ley así lo exija; y, en el caso de postulaciones laborales, con el equipo interno de PATERSAY involucrado en el proceso de selección correspondiente. Cada tercero con el que compartimos información está sujeto a obligaciones de confidencialidad y uso limitado de los datos.</p>
+
+                <h2>10. Proveedores de servicios</h2>
+                <p>Podemos apoyarnos en proveedores externos para operar nuestro sitio y nuestros procesos internos, como servicios de hosting, correo electrónico transaccional y herramientas de gestión de postulaciones. Estos proveedores solo acceden a la información necesaria para prestar el servicio contratado y están obligados contractualmente a protegerla y a no utilizarla para fines distintos a los acordados con PATERSAY.</p>
+
+                <h2>11. Transferencias internacionales de datos</h2>
+                <p>PATERSAY presta servicios en distintos países de Latinoamérica. Es posible que, en el marco de la prestación de nuestros servicios o del uso de proveedores tecnológicos internacionales, tu información sea transferida o almacenada en un país distinto al tuyo. En esos casos, adoptamos medidas razonables para que la información reciba un nivel de protección adecuado, equivalente al exigido por la normativa aplicable en tu país de origen.</p>
+
+                <h2>12. Seguridad de la información</h2>
+                <p>Implementamos medidas técnicas y organizativas razonables para proteger tu información personal frente a accesos no autorizados, pérdida, alteración o divulgación indebida, incluyendo controles de acceso y buenas prácticas de desarrollo seguro. Sin embargo, ningún sistema es completamente infalible, por lo que no podemos garantizar la seguridad absoluta de la información transmitida a través de internet.</p>
+
+                <h2>13. Conservación de datos</h2>
+                <p>Conservamos tu información personal durante el tiempo necesario para cumplir con las finalidades descritas en esta política, o mientras exista una relación comercial, contractual o de postulación vigente con vos. Las postulaciones laborales no seleccionadas se conservan por un período razonable para futuros procesos de selección, salvo que solicites su eliminación antes. Transcurridos esos plazos, eliminamos o anonimizamos la información de forma segura.</p>
+
+                <h2>14. Derechos del usuario</h2>
+                <p>Según la normativa de protección de datos aplicable en tu país, podés tener derecho a: acceder a la información personal que tenemos sobre vos; solicitar su rectificación o actualización; solicitar su supresión; oponerte a determinados tratamientos; solicitar la portabilidad de tus datos a otro responsable; y, cuando corresponda, retirar el consentimiento previamente otorgado. Para ejercer cualquiera de estos derechos, podés escribirnos a los datos de contacto indicados más abajo.</p>
+
+                <h2>15. Protección de menores</h2>
+                <p>Nuestros servicios y nuestro sitio web están dirigidos a un público empresarial y profesional, y no están destinados a menores de edad. No recopilamos intencionalmente información personal de menores. Si tomamos conocimiento de que hemos recopilado información de un menor sin el consentimiento correspondiente de su representante legal, adoptaremos las medidas necesarias para eliminarla.</p>
+
+                <h2>16. Cambios en la política</h2>
+                <p>Podemos actualizar esta Política de Privacidad periódicamente para reflejar cambios en nuestras prácticas, en nuestros servicios o en la normativa aplicable. Publicaremos cualquier cambio en esta misma página, indicando la fecha de la última actualización y el número de versión correspondiente. Te recomendamos revisar esta página periódicamente.</p>
+
+                <h2>17. Datos de contacto</h2>
+                <p>Si tenés preguntas sobre esta Política de Privacidad o querés ejercer alguno de tus derechos, podés contactarnos a través del <a href="#" id="privacyContactLink">formulario de contacto</a> de nuestro sitio o escribiendo a sayagoluisp@gmail.com.</p>
+
+                <h2>18. Fecha de entrada en vigor y versión</h2>
+                <p>Versión 1.0 — Vigente desde el 16 de julio de 2026.</p>
+
+                <h2>19. Uso de imágenes, logotipos y marcas de terceros</h2>
+                <p>Todas las imágenes, íconos y logotipos utilizados en el sitio web de PATERSAY, incluidos los que aparecen en la sección "Tecnologías", tienen un carácter exclusivamente ilustrativo e informativo. Su presencia en este sitio no debe interpretarse, por sí sola, como una afirmación de vínculo societario, comercial o contractual con los titulares de dichas marcas, salvo que esa relación sea indicada de forma expresa en el sitio.</p>
+                <ul>
+                    <li><strong>Titularidad de las marcas:</strong> los logotipos, nombres comerciales, marcas registradas e imágenes que aparecen en la sección "Tecnologías" —así como cualquier otra referencia a productos o plataformas de terceros mencionada en el sitio— pertenecen exclusivamente a sus respectivos propietarios.</li>
+                    <li><strong>Finalidad del uso:</strong> la utilización de dichos logotipos tiene como único objetivo identificar las tecnologías con las que nuestro equipo posee experiencia profesional y sobre las cuales PATERSAY presta servicios de consultoría, implementación, desarrollo, soporte y capacitación.</li>
+                    <li><strong>Ausencia de relación comercial implícita:</strong> la presencia de estas marcas en el sitio no implica que PATERSAY sea subsidiaria, representante oficial, distribuidor autorizado, partner certificado, afiliado, patrocinador, ni que mantenga ningún tipo de relación comercial, contractual o societaria con las empresas propietarias de dichas marcas, salvo que esa relación sea indicada de forma expresa en el sitio.</li>
+                    <li><strong>Ausencia de respaldo o aprobación:</strong> tampoco implica el respaldo, la aprobación, la certificación ni la recomendación de PATERSAY por parte de los titulares de dichas marcas.</li>
+                    <li><strong>Conocimiento técnico, no vínculo corporativo:</strong> la mención de una tecnología o marca en este sitio da cuenta del conocimiento y la experiencia técnica que PATERSAY posee sobre ella, pero esa mención, por sí sola, no constituye ni debe interpretarse como una relación comercial, contractual o societaria con la empresa propietaria de dicha tecnología o marca.</li>
+                    <li><strong>Propiedad intelectual:</strong> todos los derechos de propiedad intelectual sobre las marcas, logotipos e imágenes de terceros exhibidos en este sitio pertenecen exclusivamente a sus respectivos titulares, y su inclusión aquí no transfiere ni cede derecho alguno sobre ellos a favor de PATERSAY ni de los visitantes del sitio.</li>
+                    <li><strong>Reclamos de titulares:</strong> si el titular de una marca considera que existe un uso inadecuado, desactualizado o no autorizado de su marca en este sitio, podrá contactarse con PATERSAY a través de los datos de contacto indicados en este documento, para evaluar y resolver la situación de buena fe.</li>
+                </ul>
+                <p>Esta aclaración busca únicamente facilitar la comprensión de nuestros servicios y de las tecnologías con las que trabajamos, evitando cualquier interpretación errónea sobre la naturaleza de nuestra relación con las empresas propietarias de las marcas mencionadas.</p>
+            </article>
+
+            <div class="print-only" style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 12px; font-size: 12px; color: #777;">
+                PATERSAY — Política de Privacidad — Versión 1.0
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tenés dudas sobre cómo tratamos tu información?</h2>
+            <p>Escribinos y te respondemos a la brevedad.</p>
+            <button class="btn btn-primary" id="ctaContact">Contactar</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.getElementById('privacyContactLink')?.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('contactBtn')?.click();
+        });
+    </script>
+</body>
+</html>

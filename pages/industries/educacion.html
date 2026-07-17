@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cómo PATERSAY ayuda a universidades e instituciones educativas con gestión académica, campus virtual e integraciones.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Educación | Soluciones tecnológicas para el sector — PATERSAY">
+    <meta property="og:description" content="Tecnología para instituciones educativas que gestionan alumnos, contenidos y campus al mismo tiempo">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/industries/educacion.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Consultoría tecnológica para el sector educativo",
+        "serviceType": "Consultoría e implementación tecnológica",
+        "provider": { "@type": "Organization", "name": "PATERSAY" },
+        "areaServed": "Educación",
+        "description": "Campus virtuales, gestión académica e integraciones para universidades e instituciones educativas."
+    }
+    </script>
+
+    <title>Tecnología para el sector Educación: Soluciones y servicios — PATERSAY</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="../..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de industria -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../../index.html#industries">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Industrias
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Educación</h1>
+                <p>Las instituciones educativas gestionan alumnos, profesores, contenidos y campus físicos y virtuales al mismo tiempo. PATERSAY conecta esa complejidad con sistemas que simplifican la gestión académica y mejoran la experiencia de estudiantes y docentes.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Hablar con un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- ¿Qué es esta industria? -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>El sector educativo</h2>
+                <p>El sector educativo agrupa universidades, institutos terciarios, colegios y centros de formación, cuyo negocio depende de gestionar con eficiencia la relación entre estudiantes, docentes, contenidos y procesos administrativos.</p>
+                <p>Durante años operó con sistemas de gestión académica aislados de la gestión administrativa y financiera; la pandemia aceleró la adopción de campus virtuales y educación híbrida como parte permanente de la operación.</p>
+                <p>Sus procesos centrales incluyen admisión e inscripción de alumnos, gestión académica (notas, asistencia, planes de estudio), gestión de contenidos educativos, facturación de aranceles y comunicación con la comunidad educativa.</p>
+                <p>Sus necesidades tecnológicas combinan un sistema de gestión académica integrado, plataformas de campus virtual robustas, portales para alumnos y familias, y analítica para anticipar deserción y medir desempeño.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principales Desafíos -->
+    <section class="services" id="desafios">
+        <div class="container">
+            <h2>Principales Desafíos</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Falta de integración entre sistemas académicos y administrativos</h4>
+                    <p>Gestión académica, facturación de aranceles y comunicación con familias que operan en sistemas separados.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Procesos manuales de inscripción y admisión</h4>
+                    <p>Procesos de inscripción que aún dependen de trámites presenciales o formularios en papel.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Deserción estudiantil</h4>
+                    <p>Dificultad para identificar a tiempo a estudiantes en riesgo de abandonar sus estudios.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Experiencia digital limitada</h4>
+                    <p>Estudiantes que esperan plataformas tan ágiles como las que usan fuera del ámbito educativo.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Escalabilidad de plataformas virtuales</h4>
+                    <p>Campus virtuales que no soportan picos de uso en períodos de exámenes o inscripción.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Baja trazabilidad académica</h4>
+                    <p>Dificultad para consolidar el historial académico completo de un estudiante entre distintos sistemas.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Falta de indicadores de gestión</h4>
+                    <p>Decisiones institucionales tomadas sin datos consolidados de desempeño académico y financiero.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Cómo ayuda PATERSAY? -->
+    <section class="services section-alt-white" id="como-ayudamos">
+        <div class="container">
+            <h2>¿Cómo ayuda PATERSAY?</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
+                    </div>
+                    <h3>Consultoría SAP</h3>
+                    <p>Implementamos SAP para la gestión financiera y administrativa de instituciones educativas, incluyendo facturación de aranceles y control presupuestario.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Construimos portales para alumnos, familias y docentes con acceso a notas, asistencia y comunicación institucional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>Desarrollo Mobile</h3>
+                    <p>Desarrollamos apps educativas para que alumnos y docentes accedan a contenidos, calificaciones y notificaciones desde el celular.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>ERP a Medida</h3>
+                    <p>Diseñamos sistemas de gestión académica a medida adaptados al plan de estudios y proceso de cada institución.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                    </div>
+                    <h3>Programación</h3>
+                    <p>Desarrollamos las integraciones entre el sistema académico, la plataforma de campus virtual y el sistema administrativo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Consultoría RRHH</h3>
+                    <p>Acompañamos la gestión digital de docentes y personal administrativo, desde la contratación hasta la evaluación de desempeño.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 17H5" /><path d="M19 7h-9" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>
+                    </div>
+                    <h3>Sistemas de Gestión</h3>
+                    <p>Implementamos sistemas de gestión académica que centralizan notas, asistencia y planes de estudio de toda la institución.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integraciones</h3>
+                    <p>Conectamos el sistema académico con plataformas de campus virtual, pasarelas de pago y sistemas de comunicación institucional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización</h3>
+                    <p>Automatizamos la inscripción, la generación de boletines y el envío de comunicaciones a alumnos y familias.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
+                    </div>
+                    <h3>Cloud</h3>
+                    <p>Migramos plataformas de campus virtual a AWS para sostener picos de uso en períodos de examen sin caídas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Business Intelligence</h3>
+                    <p>Construimos tableros de desempeño académico, asistencia y riesgo de deserción para la gestión institucional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Transformación Digital</h3>
+                    <p>Acompañamos a instituciones educativas en su tránsito hacia modelos de enseñanza híbrida y campus digitales.</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:32px; font-size:14px; color:#666;">
+                ¿Tu institución necesita un sistema de gestión académica integrado? Conocé nuestro
+                <a href="../erp-custom.html" style="color:#0066cc; text-decoration:underline; font-weight:500;">servicio de ERP a Medida</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tecnologías que utilizamos en esta industria -->
+    <section class="case-studies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías que utilizamos en el sector educativo</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3><a href="../tech/sap.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/sap.svg" alt="" width="24" height="24"> SAP</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para la gestión financiera, presupuestaria y de facturación de aranceles de la institución educativa.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dispersión de información financiera entre distintas sedes o facultades de la institución.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta control presupuestario y una gestión financiera unificada de toda la institución.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la facturación de aranceles, el control de becas y el cierre contable institucional.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa y parametriza los módulos financieros de SAP adaptados a la operación educativa.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad privada redujo su tiempo de facturación de aranceles a la mitad tras implementar SAP FI.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/java.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/java.svg" alt="" width="24" height="24"> Java</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en sistemas backend de gestión académica que requieren estabilidad durante períodos de alta demanda, como inscripciones o exámenes.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve caídas de sistema en los momentos de mayor concurrencia del calendario académico.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta estabilidad en los momentos más críticos del calendario académico.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad del sistema durante inscripciones, exámenes y cierres de período.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla servicios backend en Java para sistemas de gestión académica de alta demanda.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad sostuvo su sistema de inscripción a exámenes sin caídas durante el pico de demanda de fin de cuatrimestre.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/python.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/python.svg" alt="" width="24" height="24"> Python</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en modelos de predicción de deserción estudiantil y análisis de desempeño académico.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de identificar a tiempo a estudiantes en riesgo de abandonar sus estudios.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta capacidad de intervenir a tiempo con estudiantes en riesgo, antes de que abandonen.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el seguimiento académico y las estrategias de retención de estudiantes.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla modelos predictivos en Python integrados al sistema de gestión académica.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad redujo su tasa de deserción de primer año en un 15% tras implementar un modelo de alerta temprana en Python.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/react.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/react.svg" alt="" width="24" height="24"> React</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para construir portales de alumnos, docentes y familias con acceso a notas, asistencia y comunicación.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de acceder de forma simple a información académica dispersa en distintos sistemas.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta una experiencia digital moderna que mejora la percepción de la institución.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la comunicación entre la institución, los alumnos y las familias.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla interfaces en React para portales académicos y de campus virtual.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un colegio redujo las consultas telefónicas de padres sobre calificaciones en un 50% tras lanzar su portal de familias en React.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/nodejs.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/nodejs.svg" alt="" width="24" height="24"> Node.js</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para exponer APIs que conectan el sistema académico, el campus virtual y la plataforma de pagos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de sincronización entre notas, asistencia y contenidos del campus virtual.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta información académica actualizada en tiempo real en todos los canales de la institución.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad de notas, asistencia y contenidos entre sistemas académicos.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY construye APIs en Node.js como capa de integración entre los sistemas educativos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una institución sincronizó notas y asistencia entre su sistema académico y el campus virtual en tiempo real gracias a una capa de APIs en Node.js.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/aws.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/aws.svg" alt="" width="34" height="22"> AWS</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como infraestructura para plataformas de campus virtual, especialmente en períodos de examen.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve caídas de plataforma durante los picos de uso de fin de cuatrimestre o época de exámenes.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta escalabilidad automática que sostiene la plataforma en los momentos de mayor demanda.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad del campus virtual y reduce el riesgo de interrupciones durante exámenes.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas elásticas en AWS dimensionadas para los picos del calendario académico.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad sostuvo su campus virtual sin caídas durante la semana de exámenes finales tras migrar a AWS.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/azure.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/azure.svg" alt="" width="24" height="24"> Azure</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en instituciones educativas que ya operan con Microsoft 365 para docentes y alumnos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la fragmentación entre las herramientas de productividad que ya usa la institución y sus sistemas académicos.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integración nativa entre el campus virtual y las herramientas Microsoft que ya usan docentes y alumnos.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la colaboración entre docentes y alumnos dentro del ecosistema de herramientas ya instalado.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY integra sistemas académicos con Azure Active Directory y Microsoft 365 Education.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad unificó el acceso de sus 5.000 alumnos a Microsoft 365 y al campus virtual con un único inicio de sesión.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/postgresql.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/postgresql.svg" alt="" width="24" height="24"> PostgreSQL</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como base de datos transaccional para notas, asistencia y planes de estudio de los alumnos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve inconsistencias en el registro académico que pueden afectar la validez de un título o certificado.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integridad en el registro académico, crítico para la validez de títulos y certificaciones.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la precisión del historial académico y la trazabilidad de cada calificación registrada.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña esquemas PostgreSQL para sistemas de gestión académica con controles estrictos de integridad.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad eliminó inconsistencias en su registro de calificaciones tras migrar su sistema académico a PostgreSQL.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/mongodb.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/mongodb.svg" alt="" width="24" height="24"> MongoDB</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para almacenar contenidos educativos y materiales de estudio con formatos muy variables entre cátedras.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de modelar contenidos educativos diversos en una estructura rígida.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta flexibilidad para que cada cátedra organice sus contenidos según sus necesidades.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la incorporación de nuevos formatos de contenido al campus virtual.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa MongoDB como capa de almacenamiento de contenidos del campus virtual.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una institución incorporó nuevos formatos de contenido interactivo a su campus virtual sin rediseñar su base de datos.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/docker.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/docker.svg" alt="" width="24" height="24"> Docker</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para empaquetar los servicios del campus virtual de forma consistente entre entornos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve fallas de última hora antes de períodos críticos como inscripciones o exámenes.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta despliegues predecibles justo antes de los momentos más sensibles del calendario académico.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la velocidad y seguridad con la que se actualiza el campus virtual.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY containeriza los servicios del campus virtual antes de cada actualización crítica.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad evitó errores de última hora en su sistema de inscripción tras containerizar su plataforma académica.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/kubernetes.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/kubernetes.svg" alt="" width="24" height="24"> Kubernetes</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para escalar automáticamente el campus virtual durante períodos de alta demanda.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve caídas de plataforma en los momentos de mayor concurrencia del calendario académico.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta continuidad del campus virtual incluso con miles de alumnos conectados simultáneamente.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad del campus virtual durante inscripciones y exámenes.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas sobre Kubernetes con autoescalado configurado para el calendario académico.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una universidad sostuvo sin caídas su campus virtual durante la inscripción a exámenes con diez mil alumnos conectados.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/cicd.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg> CI/CD</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para desplegar mejoras al campus virtual y al sistema académico de forma frecuente y controlada.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve el riesgo de desplegar cambios antes de períodos críticos sin un proceso de validación confiable.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta despliegues más frecuentes y seguros, incluso en la previa de períodos de examen.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el ciclo de mejora continua del campus virtual y el sistema académico.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña pipelines de CI/CD con ventanas de despliegue coordinadas con el calendario académico.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una institución comenzó a desplegar mejoras a su campus virtual cada dos semanas, sin incidentes, gracias a un pipeline de CI/CD.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg>
+                    </div>
+                    <h3>Reducción de costos</h3>
+                    <p>Menos procesos administrativos manuales en inscripción, facturación y gestión académica.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización de procesos</h3>
+                    <p>Inscripción, boletines y comunicaciones que se generan y envían sin intervención manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integración de sistemas</h3>
+                    <p>Gestión académica, campus virtual y administración conectados en un mismo ecosistema.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Mejor experiencia del cliente</h3>
+                    <p>Alumnos y familias con acceso digital simple a notas, asistencia y comunicación institucional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Escalabilidad</h3>
+                    <p>El campus virtual sostiene picos de uso en exámenes sin comprometer el servicio.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                    </div>
+                    <h3>Trazabilidad completa</h3>
+                    <p>Historial académico completo y auditable de cada estudiante.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Cumplimiento normativo</h3>
+                    <p>Registro académico alineado a los requisitos de validez de títulos y certificaciones.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 15 21.84" /><path d="M21 5V8" /><path d="M21 12L18 17H22L19 22" /><path d="M3 12A9 3 0 0 0 14.59 14.87" /></svg>
+                    </div>
+                    <h3>Decisiones basadas en datos</h3>
+                    <p>Desempeño académico, asistencia y riesgo de deserción visibles para la gestión institucional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Mayor productividad</h3>
+                    <p>Docentes y personal administrativo con menos tareas repetitivas y más tiempo para su función principal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de Uso -->
+    <section class="case-studies section-alt-white" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Universidad con alta deserción en primer año</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>no había forma de identificar a tiempo a estudiantes en riesgo de abandono.</span></div>
+                        <div><strong>Solución:</strong> <span>modelo de alerta temprana en Python integrado al sistema académico.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Python, PostgreSQL</span></div>
+                        <div><strong>Resultado:</strong> <span>deserción de primer año reducida en un 15%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Colegio con alto volumen de consultas de padres</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>los padres solo podían consultar calificaciones y asistencia por teléfono o en persona.</span></div>
+                        <div><strong>Solución:</strong> <span>portal de familias con acceso digital a notas y asistencia.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>React, Node.js</span></div>
+                        <div><strong>Resultado:</strong> <span>consultas telefónicas de padres reducidas en un 50%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Universidad con caídas de campus virtual en exámenes</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>la plataforma de campus virtual colapsaba durante los picos de inscripción a exámenes.</span></div>
+                        <div><strong>Solución:</strong> <span>migración a arquitectura escalable con Kubernetes sobre AWS.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Kubernetes, AWS</span></div>
+                        <div><strong>Resultado:</strong> <span>campus virtual sin caídas con diez mil alumnos conectados simultáneamente.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Instituto con facturación de aranceles lenta</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>el proceso de facturación de aranceles y becas tomaba semanas y generaba errores.</span></div>
+                        <div><strong>Solución:</strong> <span>implementación de SAP FI integrado al sistema de gestión académica.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>SAP, Java</span></div>
+                        <div><strong>Resultado:</strong> <span>tiempo de facturación de aranceles reducido a la mitad.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Universidad con contenidos educativos difíciles de organizar</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>cada cátedra necesitaba un formato distinto de contenido, difícil de estandarizar.</span></div>
+                        <div><strong>Solución:</strong> <span>migración de contenidos a un modelo de datos flexible en MongoDB.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>MongoDB, Node.js</span></div>
+                        <div><strong>Resultado:</strong> <span>nuevos formatos de contenido incorporados sin rediseñar la plataforma.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestro Proceso de Trabajo -->
+    <section class="methodology" id="proceso">
+        <div class="container">
+            <h2>Nuestro Proceso de Trabajo</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Descubrimiento y relevamiento</h3>
+                    <p>Analizamos la operación actual del sector, sus sistemas, procesos y objetivos de negocio, junto a los equipos técnicos y de negocio del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Diagnóstico</h3>
+                    <p>Identificamos brechas tecnológicas, cuellos de botella y riesgos, priorizando las oportunidades de mayor impacto.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Diseño de la solución</h3>
+                    <p>Definimos el alcance funcional y la hoja de ruta, alineando la solución con la estrategia y el presupuesto del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Arquitectura tecnológica</h3>
+                    <p>Diseñamos la arquitectura de sistemas, integraciones e infraestructura que sostendrá la solución en el tiempo.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Desarrollo e implementación</h3>
+                    <p>Construimos e implementamos la solución de forma incremental, con entregas frecuentes y validación continua.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Pruebas</h3>
+                    <p>Ejecutamos pruebas funcionales, de integración, de rendimiento y de seguridad antes de cada puesta en producción.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Capacitación</h3>
+                    <p>Formamos a los equipos del cliente para que adopten la solución con autonomía desde el primer día.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Soporte y mejora continua</h3>
+                    <p>Acompañamos la operación en producción con soporte, monitoreo y evolución continua de la solución.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar nuestro sistema académico con el campus virtual?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, es una de las integraciones más habituales que realizamos, sincronizando notas, asistencia y contenidos entre ambos sistemas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Nuestra plataforma soportará los picos de inscripción a exámenes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Diseñamos las arquitecturas de campus virtual pensando específicamente en esos picos, con autoescalado que se activa según la demanda real.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden ayudarnos a identificar estudiantes en riesgo de deserción?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos modelos predictivos en Python que analizan asistencia y desempeño para identificar señales tempranas de riesgo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Trabajan con universidades y también con colegios?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, trabajamos con instituciones de todos los niveles educativos, adaptando la solución a la escala y complejidad de cada una.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma implementar un sistema de gestión académica?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del alcance y la cantidad de sedes; proyectos de mediana envergadura suelen tomar entre 3 y 8 meses.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar nuestro campus virtual con Microsoft 365 Education?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, integramos sistemas académicos con Azure Active Directory y Microsoft 365 para instituciones que ya usan ese ecosistema.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen portales para que las familias sigan el desempeño de los alumnos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos portales y apps donde las familias acceden a notas, asistencia y comunicación institucional de forma digital.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo garantizan la seguridad de los datos de los alumnos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aplicamos control de accesos y cifrado adecuados a la sensibilidad de los datos de menores y de la comunidad educativa.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen soporte continuo después de la implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros proyectos incluyen una etapa de soporte y mejora continua una vez en producción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos a trabajar con PATERSAY?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión de relevamiento donde analizamos tu operación actual y definimos la mejor hoja de ruta tecnológica para tu institución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tu institución educativa necesita modernizar su gestión académica?</h2>
+            <p>Conversemos sobre los desafíos de tu institución y cómo podemos ayudarte a resolverlos.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar asesoría</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../../index.html#services">Servicios</a></li>
+                        <li><a href="../../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="../privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="../terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

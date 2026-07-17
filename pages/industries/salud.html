@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cómo PATERSAY ayuda a hospitales, clínicas y laboratorios con historia clínica, integraciones y seguridad.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Salud | Soluciones tecnológicas para el sector — PATERSAY">
+    <meta property="og:description" content="Tecnología para instituciones de salud que deben cuidar datos, cumplimiento y pacientes al mismo tiempo">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/industries/salud.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Consultoría tecnológica para el sector salud",
+        "serviceType": "Consultoría e implementación tecnológica",
+        "provider": { "@type": "Organization", "name": "PATERSAY" },
+        "areaServed": "Salud",
+        "description": "Historias clínicas, integraciones, seguridad y movilidad para instituciones de salud."
+    }
+    </script>
+
+    <title>Tecnología para el sector Salud: Soluciones y servicios — PATERSAY</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="../..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de industria -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../../index.html#industries">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Industrias
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Salud</h1>
+                <p>En salud, cada sistema tiene un paciente detrás. PATERSAY diseña e implementa la tecnología que conecta historias clínicas, laboratorios y turnos con la seguridad y el cumplimiento normativo que el sector exige.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Hablar con un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- ¿Qué es esta industria? -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>El sector salud</h2>
+                <p>El sector salud agrupa hospitales, clínicas, laboratorios, obras sociales y prestadores privados, cuyo negocio depende de la calidad de atención al paciente y de la correcta gestión de información médica sensible.</p>
+                <p>Durante años operó con historias clínicas en papel y sistemas administrativos aislados; la digitalización de la historia clínica electrónica y la telemedicina aceleraron la necesidad de sistemas integrados y seguros.</p>
+                <p>Sus procesos centrales incluyen gestión de historias clínicas, turnos y admisión de pacientes, resultados de laboratorio e imágenes, facturación a obras sociales y cumplimiento normativo de protección de datos de salud.</p>
+                <p>Sus necesidades tecnológicas combinan sistemas que integren historia clínica, laboratorio y turnos, infraestructura segura para datos sensibles, y aplicaciones móviles que faciliten el acceso del paciente y del profesional.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principales Desafíos -->
+    <section class="services" id="desafios">
+        <div class="container">
+            <h2>Principales Desafíos</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Falta de integración entre sistemas</h4>
+                    <p>Historia clínica, laboratorio, imágenes y facturación que operan en sistemas separados, obligando a duplicar información del paciente.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Seguridad de la información</h4>
+                    <p>Datos de salud, entre los más sensibles que existen, expuestos por sistemas con controles de acceso insuficientes.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Cumplimiento normativo</h4>
+                    <p>Normativas de protección de datos de salud que exigen trazabilidad y consentimiento explícito en cada acceso a la información del paciente.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Procesos manuales de admisión y turnos</h4>
+                    <p>Gestión de turnos y admisión que aún depende de planillas o sistemas telefónicos poco eficientes.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Baja trazabilidad de estudios y resultados</h4>
+                    <p>Dificultad para seguir el recorrido completo de un estudio, desde la orden médica hasta la entrega del resultado.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Experiencia del paciente</h4>
+                    <p>Pacientes que esperan turnos digitales, resultados online y comunicación fluida con la institución.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Interoperabilidad con otras instituciones</h4>
+                    <p>Dificultad para compartir información clínica entre instituciones cuando un paciente se atiende en más de un lugar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Cómo ayuda PATERSAY? -->
+    <section class="services section-alt-white" id="como-ayudamos">
+        <div class="container">
+            <h2>¿Cómo ayuda PATERSAY?</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
+                    </div>
+                    <h3>Consultoría SAP</h3>
+                    <p>Implementamos SAP para la gestión administrativa y financiera de instituciones de salud, incluyendo facturación a obras sociales y control de costos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Construimos portales de pacientes para gestión de turnos, resultados de estudios y comunicación con la institución.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>Desarrollo Mobile</h3>
+                    <p>Desarrollamos apps para pacientes y profesionales de salud, con acceso seguro a turnos, resultados e historia clínica.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>ERP a Medida</h3>
+                    <p>Diseñamos sistemas de gestión clínica y administrativa a medida para procesos que un ERP estándar no cubre.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                    </div>
+                    <h3>Programación</h3>
+                    <p>Desarrollamos las integraciones entre historia clínica, laboratorio, imágenes y sistemas de facturación.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Consultoría RRHH</h3>
+                    <p>Acompañamos la digitalización de la gestión de guardias, turnos de personal médico y capacitación continua.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 17H5" /><path d="M19 7h-9" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>
+                    </div>
+                    <h3>Sistemas de Gestión</h3>
+                    <p>Implementamos sistemas de gestión de historia clínica electrónica con control de acceso granular.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integraciones</h3>
+                    <p>Conectamos laboratorios, servicios de imágenes y obras sociales con el sistema de gestión de la institución.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización</h3>
+                    <p>Automatizamos la asignación de turnos, el envío de resultados y los recordatorios a pacientes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
+                    </div>
+                    <h3>Cloud</h3>
+                    <p>Migramos sistemas de gestión de salud a infraestructura cloud con los controles de seguridad que exigen los datos sensibles.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Business Intelligence</h3>
+                    <p>Construimos tableros de ocupación, tiempos de espera e indicadores clínicos para la gestión de la institución.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Transformación Digital</h3>
+                    <p>Acompañamos a instituciones de salud en su tránsito hacia la historia clínica electrónica y la atención híbrida presencial-remota.</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:32px; font-size:14px; color:#666;">
+                ¿Tu institución necesita integrar historia clínica, laboratorio y turnos? Conocé nuestro
+                <a href="../erp-custom.html" style="color:#0066cc; text-decoration:underline; font-weight:500;">servicio de ERP a Medida</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tecnologías que utilizamos en esta industria -->
+    <section class="case-studies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías que utilizamos en el sector salud</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3><a href="../tech/sap.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/sap.svg" alt="" width="24" height="24"> SAP</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para la gestión administrativa, financiera y de facturación a obras sociales de la institución de salud.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dispersión de información financiera y administrativa entre distintas áreas de la institución.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta control de costos y una gestión financiera unificada, crítica en instituciones con múltiples fuentes de pago.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la facturación a obras sociales, el control de costos y el cierre contable de la institución.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa y parametriza los módulos financieros de SAP adaptados a la operación de salud.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una clínica privada redujo su tiempo de facturación a obras sociales a la mitad tras implementar SAP FI.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/java.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/java.svg" alt="" width="24" height="24"> Java</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en sistemas backend de historia clínica electrónica que requieren máxima estabilidad y seguridad.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la necesidad de sistemas robustos donde la disponibilidad de la historia clínica es crítica para la atención.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta estabilidad y seguridad en el acceso a información clínica sensible del paciente.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad de la historia clínica electrónica y la integración con otros sistemas del hospital.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla servicios backend en Java para sistemas de historia clínica electrónica.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un hospital privado sostuvo el acceso a la historia clínica electrónica sin interrupciones durante un pico de admisiones de urgencia.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/python.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/python.svg" alt="" width="24" height="24"> Python</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en el análisis de datos clínicos, apoyo diagnóstico y automatización de procesos administrativos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de identificar patrones clínicos relevantes en grandes volúmenes de datos de pacientes.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta capacidades analíticas para apoyar decisiones clínicas y optimizar procesos administrativos.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el análisis de indicadores clínicos y la automatización de tareas administrativas repetitivas.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla modelos de análisis de datos y automatización en Python integrados a los sistemas clínicos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un laboratorio automatizó la validación de resultados dentro de rango normal con Python, liberando tiempo del equipo bioquímico.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/react.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/react.svg" alt="" width="24" height="24"> React</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para construir portales de pacientes y paneles clínicos para profesionales de la salud.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de acceder de forma rápida y clara a turnos, resultados e historia clínica.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta una experiencia digital simple tanto para el paciente como para el profesional de salud.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la gestión de turnos, la consulta de resultados y la comunicación con el paciente.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla interfaces en React para portales de pacientes y paneles clínicos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una red de clínicas redujo las llamadas por consulta de turnos en un 40% tras lanzar su portal de pacientes en React.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/nodejs.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/nodejs.svg" alt="" width="24" height="24"> Node.js</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para exponer APIs que conectan laboratorio, imágenes, turnos e historia clínica en tiempo real.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la demora en la disponibilidad de resultados de estudios entre distintas áreas de la institución.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta disponibilidad inmediata de resultados de laboratorio e imágenes para el profesional tratante.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la velocidad con la que un resultado de estudio llega al médico y al paciente.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY construye APIs en Node.js para conectar laboratorio, imágenes y sistemas de historia clínica.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un centro de diagnóstico redujo el tiempo de entrega de resultados de estudios de horas a minutos.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/aws.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/aws.svg" alt="" width="34" height="22"> AWS</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como infraestructura para portales de pacientes y almacenamiento seguro de información clínica.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de infraestructura propia capaz de escalar y cumplir con los estándares de seguridad de datos de salud.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta infraestructura escalable con controles de seguridad alineados a la sensibilidad de los datos de salud.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad de los sistemas de atención al paciente y reduce el riesgo de pérdida de información.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas en AWS con cifrado y control de accesos para datos clínicos sensibles.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una red de clínicas migró su portal de pacientes a AWS sin interrupciones de servicio durante la transición.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/azure.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/azure.svg" alt="" width="24" height="24"> Azure</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en instituciones de salud que integran su operación con herramientas Microsoft ya instaladas.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la fragmentación entre sistemas administrativos corporativos y sistemas clínicos.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta identidad centralizada y cumplimiento normativo respaldado por certificaciones reconocidas del sector salud.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la gestión de accesos del personal médico y administrativo a los sistemas de la institución.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY configura Azure Active Directory para instituciones de salud con fuerte presencia Microsoft.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un hospital centralizó el acceso de su personal médico y administrativo a los sistemas internos con un único inicio de sesión sobre Azure AD.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/postgresql.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/postgresql.svg" alt="" width="24" height="24"> PostgreSQL</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como base de datos transaccional para historia clínica, turnos y resultados de laboratorio.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve el riesgo de inconsistencias en información clínica que debe quedar registrada con exactitud.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integridad de datos clínicos, crítica cuando cada registro puede impactar en una decisión médica.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la precisión de la historia clínica y la trazabilidad de cada estudio realizado al paciente.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña esquemas PostgreSQL para sistemas de historia clínica con controles estrictos de integridad.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un hospital eliminó inconsistencias en el registro de estudios tras migrar su sistema de historia clínica a PostgreSQL.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/mongodb.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/mongodb.svg" alt="" width="24" height="24"> MongoDB</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para almacenar datos clínicos con estructura variable, como notas médicas o resultados de estudios diversos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de modelar información clínica que varía significativamente según la especialidad médica.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta flexibilidad para adaptar el registro clínico a distintas especialidades sin rediseñar el sistema.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la incorporación de nuevos tipos de estudios y especialidades al sistema de historia clínica.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa MongoDB como capa de almacenamiento de datos clínicos no estructurados.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una clínica incorporó un nuevo tipo de estudio de diagnóstico por imágenes a su sistema sin rediseñar su base de datos.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/docker.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/docker.svg" alt="" width="24" height="24"> Docker</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para empaquetar los sistemas clínicos de forma consistente entre entornos de desarrollo y producción.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve fallas de entorno que en sistemas de salud pueden afectar directamente la atención al paciente.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta despliegues predecibles en sistemas donde la disponibilidad es crítica para la atención.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la velocidad y seguridad con la que se actualizan los sistemas clínicos de la institución.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY containeriza los sistemas clínicos críticos antes de cada actualización.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un hospital actualizó su sistema de turnos sin interrumpir la atención al paciente gracias a un despliegue containerizado.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/kubernetes.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/kubernetes.svg" alt="" width="24" height="24"> Kubernetes</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para orquestar los sistemas clínicos de instituciones con múltiples sedes o servicios de salud.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de resiliencia en sistemas que deben estar disponibles las 24 horas, todos los días del año.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta alta disponibilidad, crítica en sistemas de salud que no pueden interrumpirse.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la continuidad de los sistemas de historia clínica y turnos ante fallas puntuales.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas sobre Kubernetes para instituciones de salud con múltiples sedes.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una red de clínicas con seis sedes sostuvo su sistema de turnos disponible 24/7 gracias a una arquitectura de alta disponibilidad en Kubernetes.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/cicd.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg> CI/CD</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para automatizar la actualización de sistemas clínicos con controles de calidad y seguridad previos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve el riesgo de actualizar sistemas críticos de salud sin un proceso de validación confiable.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta actualizaciones más frecuentes y seguras a los sistemas que sostienen la atención al paciente.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el ciclo de mejora continua de los sistemas de historia clínica y turnos.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña pipelines de CI/CD con validaciones de seguridad antes de cada despliegue a producción.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un centro de salud comenzó a desplegar mejoras a su portal de pacientes cada dos semanas, sin incidentes, gracias a un pipeline de CI/CD.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg>
+                    </div>
+                    <h3>Reducción de costos</h3>
+                    <p>Menos procesos administrativos manuales y menos tiempo de facturación a obras sociales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización de procesos</h3>
+                    <p>Turnos, resultados y recordatorios a pacientes gestionados sin intervención manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integración de sistemas</h3>
+                    <p>Historia clínica, laboratorio, imágenes y facturación conectados en un mismo ecosistema.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Seguridad de la información</h3>
+                    <p>Datos clínicos sensibles protegidos con controles de acceso y cifrado adecuados a su criticidad.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Cumplimiento normativo</h3>
+                    <p>Trazabilidad y consentimiento que facilitan el cumplimiento de normativas de protección de datos de salud.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Mejor experiencia del cliente</h3>
+                    <p>Pacientes que gestionan turnos y resultados de forma digital, sin llamadas ni esperas innecesarias.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                    </div>
+                    <h3>Trazabilidad completa</h3>
+                    <p>Cada estudio y cada acceso a la historia clínica queda registrado de forma auditable.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Escalabilidad</h3>
+                    <p>La infraestructura acompaña el crecimiento de la institución sin comprometer la atención.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 15 21.84" /><path d="M21 5V8" /><path d="M21 12L18 17H22L19 22" /><path d="M3 12A9 3 0 0 0 14.59 14.87" /></svg>
+                    </div>
+                    <h3>Decisiones basadas en datos</h3>
+                    <p>Ocupación, tiempos de espera e indicadores clínicos disponibles para la gestión de la institución.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de Uso -->
+    <section class="case-studies section-alt-white" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Hospital privado con historia clínica fragmentada</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>la información del paciente estaba dispersa entre laboratorio, imágenes y admisión.</span></div>
+                        <div><strong>Solución:</strong> <span>integración de todos los sistemas sobre una historia clínica electrónica unificada.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Java, Node.js, PostgreSQL</span></div>
+                        <div><strong>Resultado:</strong> <span>acceso a la historia clínica completa del paciente en un mismo sistema.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Red de clínicas con alto volumen de llamadas por turnos</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>los pacientes solo podían gestionar turnos por teléfono, generando esperas y saturación de líneas.</span></div>
+                        <div><strong>Solución:</strong> <span>portal y app de pacientes para gestión de turnos y resultados.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>React, Node.js, AWS</span></div>
+                        <div><strong>Resultado:</strong> <span>llamadas por gestión de turnos reducidas en un 40%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Laboratorio con demoras en entrega de resultados</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>los resultados de estudios demoraban horas en llegar al médico y al paciente.</span></div>
+                        <div><strong>Solución:</strong> <span>integración en tiempo real entre el equipo de laboratorio y el sistema de historia clínica.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Node.js, PostgreSQL</span></div>
+                        <div><strong>Resultado:</strong> <span>tiempo de entrega de resultados reducido de horas a minutos.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Centro de salud con riesgo de seguridad en datos clínicos</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>controles de acceso insuficientes a información sensible de pacientes.</span></div>
+                        <div><strong>Solución:</strong> <span>rediseño de la arquitectura de seguridad y accesos sobre AWS y Azure AD.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>AWS, Azure, PostgreSQL</span></div>
+                        <div><strong>Resultado:</strong> <span>control de accesos auditable implementado en toda la institución.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Clínica con facturación lenta a obras sociales</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>el proceso de facturación a obras sociales tomaba semanas y generaba errores.</span></div>
+                        <div><strong>Solución:</strong> <span>implementación de SAP FI integrado al sistema de admisión de pacientes.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>SAP, Java</span></div>
+                        <div><strong>Resultado:</strong> <span>tiempo de facturación a obras sociales reducido a la mitad.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestro Proceso de Trabajo -->
+    <section class="methodology" id="proceso">
+        <div class="container">
+            <h2>Nuestro Proceso de Trabajo</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Descubrimiento y relevamiento</h3>
+                    <p>Analizamos la operación actual del sector, sus sistemas, procesos y objetivos de negocio, junto a los equipos técnicos y de negocio del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Diagnóstico</h3>
+                    <p>Identificamos brechas tecnológicas, cuellos de botella y riesgos, priorizando las oportunidades de mayor impacto.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Diseño de la solución</h3>
+                    <p>Definimos el alcance funcional y la hoja de ruta, alineando la solución con la estrategia y el presupuesto del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Arquitectura tecnológica</h3>
+                    <p>Diseñamos la arquitectura de sistemas, integraciones e infraestructura que sostendrá la solución en el tiempo.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Desarrollo e implementación</h3>
+                    <p>Construimos e implementamos la solución de forma incremental, con entregas frecuentes y validación continua.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Pruebas</h3>
+                    <p>Ejecutamos pruebas funcionales, de integración, de rendimiento y de seguridad antes de cada puesta en producción.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Capacitación</h3>
+                    <p>Formamos a los equipos del cliente para que adopten la solución con autonomía desde el primer día.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Soporte y mejora continua</h3>
+                    <p>Acompañamos la operación en producción con soporte, monitoreo y evolución continua de la solución.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo garantizan la seguridad de los datos de nuestros pacientes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aplicamos cifrado, control de accesos granular y trazabilidad completa de cada acceso a la información clínica, alineados a los estándares de protección de datos de salud.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar laboratorio, imágenes e historia clínica en un solo sistema?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, es una de las integraciones más frecuentes que realizamos para instituciones de salud con sistemas hoy dispersos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen portales de autogestión para pacientes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos portales y aplicaciones móviles para que los pacientes gestionen turnos y consulten resultados de forma digital.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Trabajan con instituciones públicas y privadas?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, trabajamos con hospitales, clínicas y laboratorios tanto del sector público como privado.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma implementar un sistema de historia clínica electrónica?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del alcance y la cantidad de sedes; proyectos de mediana envergadura suelen tomar entre 4 y 10 meses.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden ayudarnos a cumplir con normativas de protección de datos de salud?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, incorporamos los controles de trazabilidad y consentimiento necesarios en el diseño de los sistemas que implementamos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué pasa con nuestros sistemas actuales durante la migración?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Diseñamos migraciones incrementales que conviven con los sistemas actuales hasta completar la transición, sin interrumpir la atención.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen soluciones de telemedicina?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos plataformas que integran consulta remota con la historia clínica y los sistemas de turnos de la institución.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Dan soporte continuo después de la implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros proyectos incluyen una etapa de soporte y mejora continua una vez en producción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos a trabajar con PATERSAY?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión de relevamiento donde analizamos tu operación actual y definimos la mejor hoja de ruta tecnológica para tu institución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tu institución de salud necesita integrar y proteger mejor su información?</h2>
+            <p>Conversemos sobre los desafíos de tu institución y cómo podemos ayudarte a resolverlos.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar asesoría</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../../index.html#services">Servicios</a></li>
+                        <li><a href="../../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="../privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="../terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

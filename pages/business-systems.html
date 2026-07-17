@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Venta e implementación de sistemas de gestión para PyMEs: facturación electrónica, stock, compras, ventas, producción y contabilidad integrada, con soporte continuo.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Venta de Sistemas de Gestión | PATERSAY">
+    <meta property="og:description" content="Elegimos, implementamos y acompañamos el sistema de gestión ideal para tu empresa.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/business-systems.html">
+
+    <title>Venta de Sistemas de Gestión | Software para PyMEs — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de servicio -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html#services">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Servicios
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Venta de Sistemas de Gestión</h1>
+                <p>Te ayudamos a elegir, implementar y sacar el máximo provecho de un sistema de gestión listo para usar, sin sobrepagar por funcionalidades que no necesitás.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Contactar un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Descripción General -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>¿Qué es la Venta de Sistemas de Gestión?</h2>
+                <p>Es el servicio de asesoramiento, selección e implementación de sistemas de gestión ya existentes en el mercado —facturación, stock, ventas, contabilidad, CRM— adaptados a las necesidades de tu empresa.</p>
+                <p>Sirve para que una PyME acceda rápido a un sistema de gestión probado, sin pagar por el desarrollo de un software desde cero.</p>
+                <p>Resuelve problemas concretos: falta de un sistema de gestión formal (todo en Excel o en papel), sistemas desactualizados que ya no dan abasto, y la dificultad de elegir entre decenas de opciones del mercado sin asesoramiento.</p>
+                <p>Lo necesitan PyMEs y empresas en crecimiento que necesitan poner orden en su gestión rápido, sin la inversión de tiempo y dinero que implica un desarrollo a medida.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué hacemos? -->
+    <section class="services" id="que-hacemos">
+        <div class="container">
+            <h2>¿Qué hacemos?</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Selección del sistema adecuado</h4>
+                    <p>Evaluamos tus necesidades y te recomendamos el sistema de gestión que mejor se adapta, sin venderte funcionalidades que no vas a usar.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Facturación electrónica</h4>
+                    <p>Implementación de sistemas de facturación conforme a la normativa vigente de cada país.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Gestión de stock y compras</h4>
+                    <p>Control de inventario, órdenes de compra y proveedores en un solo sistema.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Gestión de ventas y CRM</h4>
+                    <p>Seguimiento comercial y de clientes integrado a la facturación y el stock.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Gestión de producción</h4>
+                    <p>Sistemas para PyMEs industriales que necesitan planificar y controlar su producción.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Contabilidad integrada</h4>
+                    <p>Sistemas contables conectados con ventas, compras y stock para evitar carga duplicada.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Implementación y migración de datos</h4>
+                    <p>Puesta en marcha del sistema con migración de tu información histórica.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Capacitación y soporte continuo</h4>
+                    <p>Formamos a tu equipo y te acompañamos en el uso diario del sistema.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestros Servicios -->
+    <section class="services section-alt-white" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>
+                    </div>
+                    <h3>Asesoramiento y selección</h3>
+                    <p>Comparamos alternativas del mercado según tu operación y presupuesto.</p>
+                    <p><strong>Beneficio:</strong> elegís sin sesgo hacia una marca en particular.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                    </div>
+                    <h3>Facturación electrónica</h3>
+                    <p>Sistemas conformes a la normativa vigente de cada país.</p>
+                    <p><strong>Beneficio:</strong> cumplimiento normativo sin dolores de cabeza.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Stock &amp; Compras</h3>
+                    <p>Inventario, órdenes de compra y proveedores en un solo lugar.</p>
+                    <p><strong>Beneficio:</strong> menos quiebres de stock y compras más ordenadas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Ventas &amp; CRM</h3>
+                    <p>Seguimiento comercial integrado a facturación y stock.</p>
+                    <p><strong>Beneficio:</strong> más visibilidad de tu pipeline comercial.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                    </div>
+                    <h3>Implementación &amp; migración</h3>
+                    <p>Puesta en marcha con migración de tu información histórica.</p>
+                    <p><strong>Beneficio:</strong> arrancás sin perder tu historial.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" /><path d="M21 16v2a4 4 0 0 1-4 4h-5" /></svg>
+                    </div>
+                    <h3>Soporte continuo</h3>
+                    <p>Acompañamiento después de la implementación, cuando lo necesites.</p>
+                    <p><strong>Beneficio:</strong> nunca estás solo frente a un problema del sistema.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología de Trabajo -->
+    <section class="methodology" id="metodologia">
+        <div class="container">
+            <h2>Nuestra Metodología</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Reunión inicial</h3>
+                    <p>Entendemos tu operación actual y qué esperás de un sistema de gestión.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Relevamiento</h3>
+                    <p>Analizamos tus procesos de facturación, stock, ventas y compras.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Análisis</h3>
+                    <p>Comparamos alternativas del mercado y te recomendamos la mejor opción.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Diseño de solución</h3>
+                    <p>Definimos la configuración del sistema y los datos a migrar.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Implementación</h3>
+                    <p>Instalamos y configuramos el sistema, con migración de tu información histórica.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Capacitación</h3>
+                    <p>Formamos a tu equipo en el uso diario del sistema.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Soporte</h3>
+                    <p>Te acompañamos en las primeras semanas de uso real.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Mejora continua</h3>
+                    <p>Ajustamos configuración y sumamos funcionalidades a medida que tu operación crece.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services section-alt-white" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Implementación rápida</h3>
+                    <p>Un sistema probado, en producción en semanas, no en meses.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg>
+                    </div>
+                    <h3>Menor costo</h3>
+                    <p>Más económico que desarrollar un sistema desde cero.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Sistema probado</h3>
+                    <p>Usado por miles de empresas, con actualizaciones continuas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" /><path d="M21 16v2a4 4 0 0 1-4 4h-5" /></svg>
+                    </div>
+                    <h3>Soporte continuo</h3>
+                    <p>Acompañamiento cuando lo necesites, no solo en el arranque.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="m9 14 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Cumplimiento normativo</h3>
+                    <p>Facturación electrónica conforme a la normativa de cada país.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías utilizadas -->
+    <section class="technologies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías</h2>
+            <div class="tech-grid">
+                <a class="tech-item" href="tech/postgresql.html">
+                    <img class="tech-logo" src="../assets/tech/postgresql.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>PostgreSQL</span>
+                </a>
+                <a class="tech-item" href="tech/mongodb.html">
+                    <img class="tech-logo" src="../assets/tech/mongodb.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>MongoDB</span>
+                </a>
+                <a class="tech-item" href="tech/docker.html">
+                    <img class="tech-logo" src="../assets/tech/docker.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Docker</span>
+                </a>
+                <a class="tech-item" href="tech/aws.html">
+                    <img class="tech-logo tech-logo--wide" src="../assets/tech/aws.svg" alt="" width="36" height="28" loading="lazy">
+                    <span>AWS</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectores -->
+    <section class="industries section-alt-white" id="sectores">
+        <div class="container">
+            <h2>Sectores</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="industries/manufactura.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16h.01" /><path d="M16 16h.01" /><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /><path d="M8 16h.01" /></svg>
+                    <span>Manufactura</span>
+                </a>
+                <a class="industry-item" href="industries/logistica.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /><path d="M15 18H9" /><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /><circle cx="17" cy="18" r="2" /><circle cx="7" cy="18" r="2" /></svg>
+                    <span>Logística</span>
+                </a>
+                <a class="industry-item" href="industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="industries/salud.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg>
+                    <span>Salud</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de uso -->
+    <section class="case-studies section-alt-gray" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>PyME comercial con gestión en Excel</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>control de stock y facturación manual en planillas, con errores frecuentes.</span></div>
+                        <div><strong>Solución:</strong> <span>implementación de sistema de gestión con facturación electrónica integrada.</span></div>
+                        <div><strong>Resultado:</strong> <span>80% menos errores de facturación y stock siempre actualizado.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Distribuidora familiar en expansión</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>sistema de gestión desactualizado que no soportaba el crecimiento de la empresa.</span></div>
+                        <div><strong>Solución:</strong> <span>migración a un sistema moderno con módulos de ventas y compras integrados.</span></div>
+                        <div><strong>Resultado:</strong> <span>capacidad de duplicar el volumen de operaciones sin sumar personal.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Taller de manufactura con producción por pedido</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>sin visibilidad de costos reales por orden de producción.</span></div>
+                        <div><strong>Solución:</strong> <span>sistema de gestión con módulo de producción y costeo por orden.</span></div>
+                        <div><strong>Resultado:</strong> <span>15% de mejora en el margen gracias a una cotización más precisa.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué diferencia hay entre este servicio y un ERP a medida?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Acá implementamos un sistema ya existente en el mercado, adaptado a tu operación; un ERP a medida se construye desde cero para tu empresa. Es una decisión de costo, tiempo y nivel de personalización.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo eligen el sistema adecuado para mi empresa?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Relevamos tus procesos y comparamos alternativas del mercado según tu tamaño, industria y presupuesto, para recomendarte la mejor opción sin sesgo hacia una marca en particular.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿El sistema cumple con la normativa de facturación electrónica?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, implementamos sistemas que cumplen con los requisitos de facturación electrónica vigentes en cada país donde operamos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden migrar la información de mi sistema actual?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, migramos tu historial de clientes, productos, stock y movimientos al nuevo sistema.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma la implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Entre 2 y 8 semanas según el tamaño de la empresa y la cantidad de módulos a implementar.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen soporte después de la implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, con planes de soporte continuo para dudas, incidencias y nuevas configuraciones.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿El sistema puede crecer con mi empresa?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, la mayoría de los sistemas que implementamos permiten sumar módulos o usuarios a medida que la empresa crece.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Sirve para empresas muy pequeñas?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, trabajamos con PyMEs desde pocos usuarios hasta empresas medianas con varios locales o sucursales.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión inicial donde relevamos tu operación actual y te proponemos las mejores alternativas de sistema.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Todavía gestionás tu empresa en Excel?</h2>
+            <p>Contanos cómo trabajás hoy y te recomendamos el sistema de gestión ideal para vos.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar recomendación</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

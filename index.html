@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PATERSAY - Servicios de Tecnología de la Información (IT Services). Consultoría SAP, Desarrollo Web, Apps Móviles, Consultoría HR.">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="PATERSAY - Soluciones Tecnológicas de Impacto">
+    <meta property="og:description" content="Consultoría SAP, Desarrollo Web, Apps Móviles, Consultoría HR. Transformación digital para empresas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com">
+    
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PATERSAY",
+        "description": "Servicios de Tecnología de la Información",
+        "url": "https://patersay.com",
+        "logo": "https://patersay.com/assets/logo.png",
+        "sameAs": ["https://linkedin.com/company/patersay", "https://github.com/patersay"]
+    }
+    </script>
+    
+    <title>PATERSAY - Soluciones Tecnológicas Empresariales</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root=".">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    // Script síncrono e inline: decide ANTES del primer pintado si la splash debe
+    // omitirse (ya vista en esta sesión, o el usuario prefiere movimiento reducido),
+    // evitando así un parpadeo (flash) de la introducción en visitas repetidas.
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="#" class="logo">PATERSAY</a>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <!-- Las opciones se generan dinámicamente en js/main.js a partir de la lista REGIONS,
+                 de modo que agregar un nuevo país no requiere tocar este markup. -->
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+                
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section: texto agrupado a la izquierda + prisma azul (#1345CF)
+         sangrando hasta el borde derecho de la pantalla (misma sección) -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-accent"></div>
+                <h1>Soluciones tecnológicas de impacto</h1>
+                <p>Para empresas que valoran la simplicidad, la claridad y resultados medibles.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Contactar</button>
+                    <button class="btn btn-secondary" id="heroServices">Nuestros Servicios</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <!-- Service 1: SAP Consulting -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
+                    </div>
+                    <h3>Consultoría SAP</h3>
+                    <p>Implementación y optimización de sistemas SAP para empresas en transformación digital.</p>
+                    <a class="more-info-btn" href="pages/sap-consulting.html">Más información</a>
+                </div>
+
+                <!-- Service 2: Web Design -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Diseño de Páginas Web</h3>
+                    <p>Diseño responsivo y creativo que comunica tu marca con efectividad.</p>
+                    <a class="more-info-btn" href="pages/web-design.html">Más información</a>
+                </div>
+
+                <!-- Service 3: Web Development -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /><path d="m14.5 4-5 16" /></svg>
+                    </div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Aplicaciones web modernas, escalables y de alto rendimiento con tecnología cutting-edge.</p>
+                    <a class="more-info-btn" href="pages/web-development.html">Más información</a>
+                </div>
+
+                <!-- Service 4: Mobile Apps -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>Aplicaciones Móviles</h3>
+                    <p>Diseño e implementación de aplicaciones nativas para iOS y Android.</p>
+                    <a class="more-info-btn" href="pages/mobile-apps.html">Más información</a>
+                </div>
+
+                <!-- Service 5: Software Development -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                    </div>
+                    <h3>Programación de Software</h3>
+                    <p>Desarrollo de software personalizado adaptado a tus necesidades específicas.</p>
+                    <a class="more-info-btn" href="pages/software-development.html">Más información</a>
+                </div>
+
+                <!-- Service 6: HR Consulting -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Consultoría RRHH</h3>
+                    <p>Transformación digital de procesos de Recursos Humanos y gestión del talento.</p>
+                    <a class="more-info-btn" href="pages/hr-consulting.html">Más información</a>
+                </div>
+
+                <!-- Service 7: ERP Customization -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>ERP a Medida</h3>
+                    <p>Sistemas ERP personalizados para optimizar todos tus procesos empresariales.</p>
+                    <a class="more-info-btn" href="pages/erp-custom.html">Más información</a>
+                </div>
+
+                <!-- Service 8: Systems Sales -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
+                    </div>
+                    <h3>Venta de Sistemas de Gestión</h3>
+                    <p>Asesoramiento en la selección e implementación de sistemas de gestión empresarial.</p>
+                    <a class="more-info-btn" href="pages/business-systems.html">Más información</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>Quiénes Somos</h2>
+                <p>PATERSAY es una empresa líder en servicios de Tecnología de la Información con más de una década transformando negocios a través de soluciones innovadoras.</p>
+                <p>Trabajamos con empresas Fortune 500 y PYMEs en toda Latinoamérica, proporcionando consultoría estratégica y soluciones técnicas de clase mundial.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology" id="methodology">
+        <div class="container">
+            <h2>Nuestra Metodología</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Diagnóstico</h3>
+                    <p>Análisis profundo de tus necesidades y procesos actuales.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Estrategia</h3>
+                    <p>Diseño de la solución perfecta para tu organización.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Implementación</h3>
+                    <p>Ejecución con excelencia y mínima disrupción.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Soporte</h3>
+                    <p>Acompañamiento continuo para maximizar el ROI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section class="technologies" id="technologies">
+        <div class="container">
+            <h2>Tecnologías</h2>
+            <div class="tech-grid">
+                <a class="tech-item" href="pages/tech/sap.html">
+                    <img class="tech-logo" src="assets/tech/sap.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>SAP</span>
+                </a>
+                <a class="tech-item" href="pages/tech/java.html">
+                    <img class="tech-logo" src="assets/tech/java.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Java</span>
+                </a>
+                <a class="tech-item" href="pages/tech/python.html">
+                    <img class="tech-logo" src="assets/tech/python.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Python</span>
+                </a>
+                <a class="tech-item" href="pages/tech/react.html">
+                    <img class="tech-logo" src="assets/tech/react.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>React</span>
+                </a>
+                <a class="tech-item" href="pages/tech/nodejs.html">
+                    <img class="tech-logo" src="assets/tech/nodejs.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Node.js</span>
+                </a>
+                <a class="tech-item" href="pages/tech/aws.html">
+                    <img class="tech-logo tech-logo--wide" src="assets/tech/aws.svg" alt="" width="36" height="28" loading="lazy">
+                    <span>AWS</span>
+                </a>
+                <a class="tech-item" href="pages/tech/azure.html">
+                    <img class="tech-logo" src="assets/tech/azure.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Azure</span>
+                </a>
+                <a class="tech-item" href="pages/tech/postgresql.html">
+                    <img class="tech-logo" src="assets/tech/postgresql.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>PostgreSQL</span>
+                </a>
+                <a class="tech-item" href="pages/tech/mongodb.html">
+                    <img class="tech-logo" src="assets/tech/mongodb.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>MongoDB</span>
+                </a>
+                <a class="tech-item" href="pages/tech/docker.html">
+                    <img class="tech-logo" src="assets/tech/docker.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Docker</span>
+                </a>
+                <a class="tech-item" href="pages/tech/kubernetes.html">
+                    <img class="tech-logo" src="assets/tech/kubernetes.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Kubernetes</span>
+                </a>
+                <a class="tech-item" href="pages/tech/cicd.html">
+                    <span class="tech-logo tech-logo--icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </span>
+                    <span>CI/CD</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries Section -->
+    <section class="industries" id="industries">
+        <div class="container">
+            <h2>Industrias</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="pages/industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="pages/industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="pages/industries/manufactura.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16h.01" /><path d="M16 16h.01" /><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /><path d="M8 16h.01" /></svg>
+                    <span>Manufactura</span>
+                </a>
+                <a class="industry-item" href="pages/industries/salud.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg>
+                    <span>Salud</span>
+                </a>
+                <a class="industry-item" href="pages/industries/educacion.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                    <span>Educación</span>
+                </a>
+                <a class="industry-item" href="pages/industries/telecomunicaciones.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9" /><path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5" /><circle cx="12" cy="9" r="2" /><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47" /><path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1" /><path d="M9.5 18h5" /><path d="m8 22 4-11 4 11" /></svg>
+                    <span>Telecomunicaciones</span>
+                </a>
+                <a class="industry-item" href="pages/industries/logistica.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /><path d="M15 18H9" /><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /><circle cx="17" cy="18" r="2" /><circle cx="7" cy="18" r="2" /></svg>
+                    <span>Logística</span>
+                </a>
+                <a class="industry-item" href="pages/industries/energia.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
+                    <span>Energía</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuál es el tiempo promedio de implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del proyecto. Los proyectos SAP típicamente toman entre 3-12 meses. Consulta con nuestro equipo para una estimación precisa.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen soporte post-implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos planes de soporte 24/7 personalizados según las necesidades de tu empresa.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿En qué regiones operan?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Operamos en Argentina, Colombia, Uruguay y Venezuela. Estamos expandiendo a más países.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué tamaño de empresa pueden servir?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Trabajamos con empresas de todos los tamaños, desde PYMEs hasta Fortune 500.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para transformar tu empresa?</h2>
+            <p>Contáctanos hoy y descubre cómo podemos ayudarte a alcanzar tus objetivos.</p>
+            <button class="btn btn-primary" id="ctaContact">Iniciar Conversación</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="#services">Servicios</a></li>
+                        <li><a href="#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="pages/privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="pages/terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="pages/careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="js/main.js"></script>
+</body>
+</html>

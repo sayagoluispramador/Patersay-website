@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Qué es React, cómo funciona su modelo de componentes y DOM virtual, y los servicios de desarrollo frontend de PATERSAY.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="React | Guía técnica y de negocio — PATERSAY">
+    <meta property="og:description" content="La librería que define cómo se construyen interfaces web modernas">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/tech/react.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Desarrollo frontend con React",
+        "serviceType": "Desarrollo web",
+        "provider": { "@type": "Organization", "name": "PATERSAY" },
+        "description": "Interfaces web modernas, rápidas y mantenibles construidas con React."
+    }
+    </script>
+
+    <title>React: Qué es, cómo funciona y servicios — PATERSAY</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="../..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de tecnología -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../../index.html#technologies">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Tecnologías
+                </a>
+                <div class="hero-service-badge">
+                    <img src="../../assets/tech/react.svg" alt="" width="28" height="28">
+                </div>
+                <div class="hero-accent"></div>
+                <h1>React</h1>
+                <p>React es la librería de JavaScript más utilizada para construir interfaces de usuario interactivas, y la base del frontend de gran parte de las plataformas web que desarrolla PATERSAY.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Hablar con un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- ¿Qué es? -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>¿Qué es React?</h2>
+                <p>React es una librería de JavaScript de código abierto, creada por Facebook (hoy Meta) y liberada en 2013, diseñada para construir interfaces de usuario mediante componentes reutilizables.</p>
+                <p>Su propósito es simplificar la construcción de interfaces complejas y dinámicas, dividiendo la pantalla en piezas independientes que se combinan y actualizan de forma eficiente cuando cambian los datos.</p>
+                <p>Nació en 2013 dentro de Facebook para resolver problemas de rendimiento en interfaces con mucha interacción; con el tiempo introdujo los Hooks (2019), que simplificaron la gestión de estado y lógica reutilizable sin depender de clases.</p>
+                <p>Hoy es la base de aplicaciones de una sola página (SPA), portales corporativos, dashboards y, mediante React Native, también de aplicaciones móviles nativas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Cómo funciona? -->
+    <section class="services" id="como-funciona">
+        <div class="container">
+            <h2>¿Cómo funciona?</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Componentes</h4>
+                    <p>La interfaz se divide en piezas reutilizables que reciben datos (props) y devuelven la interfaz que deben mostrar.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>DOM virtual</h4>
+                    <p>React mantiene una representación en memoria de la interfaz y actualiza solo las partes que realmente cambiaron, en lugar de redibujar toda la pantalla.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Hooks y estado</h4>
+                    <p>Funciones como useState y useEffect permiten manejar el estado y los efectos secundarios de un componente sin necesidad de clases.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Renderizado declarativo</h4>
+                    <p>En lugar de indicar paso a paso cómo modificar la pantalla, se describe cómo debe verse la interfaz para cada estado posible.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Ecosistema de frameworks</h4>
+                    <p>Herramientas como Next.js extienden React con renderizado en servidor, rutas y optimizaciones listas para producción.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios que ofrece PATERSAY -->
+    <section class="services section-alt-white" id="servicios">
+        <div class="container">
+            <h2>Servicios que ofrece PATERSAY</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Desarrollo de interfaces (SPA)</h3>
+                    <p>Aplicaciones de una sola página rápidas e interactivas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Dashboards & Portales</h3>
+                    <p>Paneles de control y portales corporativos a medida.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                    </div>
+                    <h3>Migración de frontend legado</h3>
+                    <p>Modernización de interfaces construidas en tecnología antigua.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 19a1 1 0 0 1-1-1v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a1 1 0 0 1-1 1z" /><path d="M17 21v-2" /><path d="M19 14V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V10" /><path d="M21 21v-2" /><path d="M3 5V3" /><path d="M4 10a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a2 2 0 0 1-2 2z" /><path d="M7 5V3" /></svg>
+                    </div>
+                    <h3>Integración con APIs</h3>
+                    <p>Conexión de la interfaz con tus sistemas de backend.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Optimización de performance</h3>
+                    <p>Mejoras de velocidad de carga y renderizado.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" /></svg>
+                    </div>
+                    <h3>Mantenimiento y soporte</h3>
+                    <p>Evolución continua de tu interfaz en producción.</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:32px; font-size:14px; color:#666;">
+                ¿Necesitás una interfaz nueva o modernizar la actual? Conocé nuestro
+                <a href="../web-development.html" style="color:#0066cc; text-decoration:underline; font-weight:500;">servicio de Desarrollo Web</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services section-alt-gray" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Interfaces rápidas y fluidas</h3>
+                    <p>El DOM virtual minimiza actualizaciones innecesarias.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></svg>
+                    </div>
+                    <h3>Reutilización de componentes</h3>
+                    <p>Menos código duplicado y desarrollo más consistente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Gran ecosistema</h3>
+                    <p>Herramientas maduras para testing, routing y estado.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                    </div>
+                    <h3>Curva de aprendizaje moderada</h3>
+                    <p>Fácil de incorporar para nuevos desarrolladores del equipo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>Compatible con mobile</h3>
+                    <p>React Native reutiliza el mismo conocimiento para apps móviles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de uso -->
+    <section class="case-studies" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Empresa financiera con portal de clientes lento</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>portal de autogestión con tiempos de carga altos y experiencia inconsistente.</span></div>
+                        <div><strong>Solución:</strong> <span>reconstrucción del frontend en React con componentes optimizados.</span></div>
+                        <div><strong>Resultado:</strong> <span>tiempo de carga reducido en un 65%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Startup SaaS B2B con dashboard complejo</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>dashboard con múltiples vistas de datos difícil de mantener.</span></div>
+                        <div><strong>Solución:</strong> <span>arquitectura de componentes reutilizables en React.</span></div>
+                        <div><strong>Resultado:</strong> <span>nuevas funcionalidades entregadas 40% más rápido.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa de retail con herramienta interna obsoleta</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>herramienta interna de gestión de pedidos hecha en tecnología antigua.</span></div>
+                        <div><strong>Solución:</strong> <span>migración a React con integración a las APIs existentes.</span></div>
+                        <div><strong>Resultado:</strong> <span>100% del equipo adoptó la herramienta en 2 semanas.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industrias -->
+    <section class="industries" id="industrias">
+        <div class="container">
+            <h2>Industrias</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="../industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="../industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="../industries/telecomunicaciones.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9" /><path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5" /><circle cx="12" cy="9" r="2" /><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47" /><path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1" /><path d="M9.5 18h5" /><path d="m8 22 4-11 4 11" /></svg>
+                    <span>Telecomunicaciones</span>
+                </a>
+                <a class="industry-item" href="../industries/educacion.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                    <span>Educación</span>
+                </a>
+                <a class="industry-item" href="../industries/logistica.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /><path d="M15 18H9" /><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /><circle cx="17" cy="18" r="2" /><circle cx="7" cy="18" r="2" /></svg>
+                    <span>Logística</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ventajas -->
+    <section class="methodology section-alt-white" id="ventajas">
+        <div class="container">
+            <h2>Ventajas</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Rendimiento con DOM virtual</h3>
+                    <p>Actualiza solo lo necesario, frente a librerías que redibujan la pantalla completa.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Reutilización de componentes</h3>
+                    <p>Acelera nuevos desarrollos reutilizando piezas ya construidas y probadas.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Ecosistema maduro</h3>
+                    <p>Next.js, herramientas de testing y librerías de estado ampliamente adoptadas.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Talento disponible</h3>
+                    <p>Una de las tecnologías frontend con mayor cantidad de desarrolladores en el mercado.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Compatible con apps móviles</h3>
+                    <p>React Native permite extender el conocimiento del equipo a mobile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buenas Prácticas -->
+    <section class="services" id="buenas-practicas">
+        <div class="container">
+            <h2>Buenas Prácticas</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Mantené componentes pequeños</h4>
+                    <p>Componentes enfocados en una sola responsabilidad son más fáciles de testear y reutilizar.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Elegí bien dónde vive el estado</h4>
+                    <p>No todo necesita un store global; el estado local es suficiente en la mayoría de los casos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Testeá los componentes</h4>
+                    <p>Pruebas automatizadas evitan regresiones visuales y funcionales.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Evitá renders innecesarios</h4>
+                    <p>Memoización y buenas prácticas de props mejoran el rendimiento percibido.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Diseñá con accesibilidad</h4>
+                    <p>Contraste, navegación por teclado y semántica HTML desde el inicio, no como parche.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Usá code splitting</h4>
+                    <p>Cargá solo el código necesario para cada pantalla, reduciendo el tiempo de carga inicial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿React es un framework o una librería?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es una librería enfocada en la capa de interfaz; para funcionalidades como routing o renderizado en servidor se combina con herramientas como Next.js.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué diferencia hay entre React y React Native?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>React construye interfaces para la web; React Native usa el mismo modelo de componentes para construir aplicaciones móviles nativas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Conviene migrar un sitio antiguo a React?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del caso: si la interfaz actual es difícil de mantener o extender, migrar a React suele mejorar la velocidad de desarrollo futuro.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿React es bueno para SEO?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con frameworks como Next.js que ofrecen renderizado en servidor, React puede lograr muy buenos resultados de SEO.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué es Next.js?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es un framework construido sobre React que agrega routing, renderizado en servidor y optimizaciones listas para producción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma desarrollar una interfaz en React?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del alcance; proyectos de mediana complejidad suelen tomar entre 6 y 16 semanas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar React con nuestro backend actual?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, React se conecta a cualquier backend mediante APIs REST o GraphQL, sin importar en qué tecnología esté construido.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen testing automatizado del frontend?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, incorporamos pruebas de componentes y de extremo a extremo según la criticidad de cada funcionalidad.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿React sirve para aplicaciones muy grandes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, es utilizado por muchas de las plataformas más grandes del mundo; la clave está en una buena arquitectura de componentes y estado.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión inicial donde relevamos tu interfaz actual u objetivo, y te proponemos la mejor arquitectura de frontend.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tu interfaz necesita ser más rápida y fácil de mantener?</h2>
+            <p>Contanos tu proyecto y te mostramos cómo React puede mejorarlo.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar asesoría</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../../index.html#services">Servicios</a></li>
+                        <li><a href="../../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="../privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="../terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

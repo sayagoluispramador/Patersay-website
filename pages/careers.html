@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trabaja con Nosotros en PATERSAY: cultura, planes de carrera y oportunidades en SAP, desarrollo de software, cloud, datos, UX/UI, QA y más.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Trabaja con Nosotros | Careers — PATERSAY">
+    <meta property="og:description" content="Construí el futuro de la tecnología junto a PATERSAY.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/careers.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Trabaja con Nosotros",
+        "isPartOf": { "@type": "WebSite", "name": "PATERSAY", "url": "https://patersay.com" },
+        "publisher": { "@type": "Organization", "name": "PATERSAY" }
+    }
+    </script>
+
+    <title>Trabaja con Nosotros — Careers — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Postulación (Careers) Modal: compartido por las 20 tarjetas de área y por "Postularme" del hero -->
+    <div class="modal" id="careersModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeCareers">×</button>
+            <h2>Postulate a PATERSAY</h2>
+            <form id="careersForm" class="contact-form">
+                <div class="form-group">
+                    <label for="c-name">Nombre y Apellido *</label>
+                    <input type="text" id="c-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-email">Correo Electrónico *</label>
+                    <input type="email" id="c-email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-phone">Número de Celular *</label>
+                    <input type="tel" id="c-phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-country">País *</label>
+                    <select id="c-country" name="country" required>
+                        <option value="">Seleccioná tu país</option>
+                        <option>Argentina</option>
+                        <option>Colombia</option>
+                        <option>Uruguay</option>
+                        <option>Venezuela</option>
+                        <option>México</option>
+                        <option>Chile</option>
+                        <option>Perú</option>
+                        <option>España</option>
+                        <option>Estados Unidos</option>
+                        <option>Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-city">Ciudad</label>
+                    <input type="text" id="c-city" name="city">
+                </div>
+
+                <div class="form-group">
+                    <label for="c-area">Tecnología o puesto *</label>
+                    <select id="c-area" name="area" required>
+                        <option value="">Seleccioná un área</option>
+                        <option value="SAP">SAP</option>
+                        <option value="Java">Java</option>
+                        <option value="Python">Python</option>
+                        <option value="React">React</option>
+                        <option value="Node.js">Node.js</option>
+                        <option value="AWS">AWS</option>
+                        <option value="Azure">Azure</option>
+                        <option value="PostgreSQL">PostgreSQL</option>
+                        <option value="MongoDB">MongoDB</option>
+                        <option value="Docker">Docker</option>
+                        <option value="Kubernetes">Kubernetes</option>
+                        <option value="DevOps / CI-CD">DevOps / CI-CD</option>
+                        <option value="UX/UI">UX/UI</option>
+                        <option value="QA">QA</option>
+                        <option value="Business Analysis">Business Analysis</option>
+                        <option value="Project Management">Project Management</option>
+                        <option value="Consultoría Funcional">Consultoría Funcional</option>
+                        <option value="Recursos Humanos">Recursos Humanos</option>
+                        <option value="ERP">ERP</option>
+                        <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+                        <option value="Otra">Otra</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-experience">Años de experiencia *</label>
+                    <select id="c-experience" name="experience" required>
+                        <option value="">Seleccioná un rango</option>
+                        <option>Sin experiencia</option>
+                        <option>1 a 2 años</option>
+                        <option>3 a 5 años</option>
+                        <option>6 a 10 años</option>
+                        <option>Más de 10 años</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-level">Nivel profesional *</label>
+                    <select id="c-level" name="level" required>
+                        <option value="">Seleccioná un nivel</option>
+                        <option>Junior</option>
+                        <option>Semi Senior</option>
+                        <option>Senior</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-letter">Carta de presentación</label>
+                    <textarea id="c-letter" name="letter" placeholder="Contanos brevemente por qué te gustaría sumarte a PATERSAY (opcional)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="c-cv">Adjuntar CV * (PDF, DOC o DOCX — máx. 10MB)</label>
+                    <input type="file" id="c-cv" name="cv" accept=".pdf,.doc,.docx" required>
+                    <small class="file-hint" id="cvFileHint">Ningún archivo seleccionado</small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar postulación</button>
+                <div id="careersFormMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: Careers -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver al inicio
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" x2="19" y1="8" y2="14" /><line x1="22" x2="16" y1="11" y2="11" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Trabaja con Nosotros</h1>
+                <p>Construí el futuro de la tecnología junto a PATERSAY.</p>
+                <div class="hero-buttons">
+                    <a class="btn btn-secondary" href="#areas-oportunidad">Ver oportunidades</a>
+                    <button class="btn btn-primary" id="careersHeroApply">Postularme</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Nuestra Cultura -->
+    <section class="about" id="cultura">
+        <div class="container">
+            <div class="about-content">
+                <h2>Nuestra Cultura</h2>
+                <p>Somos una consultora de tecnología que acompaña a empresas de distintas industrias en sus procesos de transformación digital, desde la implementación de SAP hasta el desarrollo de software a medida y la migración a la nube. Trabajamos en equipos multidisciplinarios donde conviven perfiles funcionales, técnicos y de negocio en torno a un mismo proyecto.</p>
+                <p>Creemos en el aprendizaje continuo: cada proyecto es una oportunidad de sumar una tecnología, una industria o una metodología nueva. Fomentamos la autonomía y la responsabilidad sobre los resultados, más que el control sobre el proceso, porque confiamos en que los mejores equipos se construyen con confianza, no con supervisión constante.</p>
+                <p>La innovación no es un área, es una forma de trabajar: buscamos que cada persona del equipo pueda proponer una mejor forma de resolver un problema, sin importar su antigüedad o su rol. Y el trabajo en equipo es nuestra base: los proyectos de consultoría se ganan y se sostienen en equipo, no de forma individual.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services section-alt-white" id="valores">
+        <div class="container">
+            <h2>Lo que nos define</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Aprendizaje continuo</h4>
+                    <p>Cada proyecto es una oportunidad de aprender una tecnología, una industria o una forma distinta de resolver un problema.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Innovación aplicada</h4>
+                    <p>Valoramos las ideas que mejoran un proyecto real por encima de la innovación como discurso.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Trabajo en equipo</h4>
+                    <p>Los proyectos de consultoría se sostienen en equipo: funcionales, técnicos y de negocio trabajando codo a codo.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Crecimiento profesional</h4>
+                    <p>Impulsamos el desarrollo de carrera de cada persona con planes concretos, no solo con buenas intenciones.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Diversidad de proyectos</h4>
+                    <p>Trabajamos con clientes de sectores muy distintos, lo que enriquece la experiencia de cada consultor.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Impacto real</h4>
+                    <p>Nuestro trabajo se mide en resultados concretos para el negocio de nuestros clientes, no solo en horas facturadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planes de Carrera -->
+    <section class="services" id="planes-carrera">
+        <div class="container">
+            <h2>Planes de Carrera</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Programas de capacitación</h4>
+                    <p>Formación continua en las tecnologías y metodologías que utilizamos en nuestros proyectos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Certificaciones</h4>
+                    <p>Acompañamos la obtención de certificaciones oficiales en SAP, AWS, Azure y otras tecnologías del stack.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Mentorías</h4>
+                    <p>Consultores senior acompañan el desarrollo de los perfiles junior y semi senior del equipo.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Planes de crecimiento</h4>
+                    <p>Definimos junto a cada persona una ruta de crecimiento concreta dentro de la organización.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Proyectos internacionales</h4>
+                    <p>Oportunidad de participar en proyectos con clientes de distintos países de la región.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Transformación digital</h4>
+                    <p>Participación directa en proyectos de transformación digital de punta a punta, no solo en tareas aisladas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Áreas de Oportunidad -->
+    <section class="services section-alt-white" id="areas-oportunidad">
+        <div class="container">
+            <h2>Áreas de Oportunidad</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/sap.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">SAP</h3>
+                    </div>
+                    <p>Implementación, configuración y soporte de entornos SAP ECC y S/4HANA para clientes de distintas industrias.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">SAP ECC</span><span class="area-tag">S/4HANA</span><span class="area-tag">ABAP</span><span class="area-tag">Fiori</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="SAP">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/java.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">Java</h3>
+                    </div>
+                    <p>Desarrollo de servicios backend y microservicios empresariales con Java y Spring Boot.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Java</span><span class="area-tag">Spring Boot</span><span class="area-tag">Microservicios</span><span class="area-tag">APIs</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Junior a Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Java">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/python.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">Python</h3>
+                    </div>
+                    <p>Automatización, ciencia de datos y modelos de machine learning aplicados a proyectos de clientes.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Python</span><span class="area-tag">Pandas</span><span class="area-tag">scikit-learn</span><span class="area-tag">FastAPI</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Junior a Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Python">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/react.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">React</h3>
+                    </div>
+                    <p>Construcción de interfaces web modernas, rápidas y accesibles para plataformas de clientes.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">React</span><span class="area-tag">Next.js</span><span class="area-tag">TypeScript</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Junior a Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="React">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/nodejs.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">Node.js</h3>
+                    </div>
+                    <p>Desarrollo de APIs y servicios backend en tiempo real para aplicaciones web y móviles.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Node.js</span><span class="area-tag">Express</span><span class="area-tag">WebSockets</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Junior a Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Node.js">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/aws.svg" alt="" width="38" height="24">
+                        <h3 style="margin:0;">AWS</h3>
+                    </div>
+                    <p>Diseño y migración de arquitecturas cloud escalables sobre Amazon Web Services.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">EC2</span><span class="area-tag">S3</span><span class="area-tag">Lambda</span><span class="area-tag">IAM</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="AWS">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/azure.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">Azure</h3>
+                    </div>
+                    <p>Implementación de infraestructura y servicios empresariales sobre Microsoft Azure.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Azure AD</span><span class="area-tag">App Services</span><span class="area-tag">DevOps</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Azure">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/postgresql.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">PostgreSQL</h3>
+                    </div>
+                    <p>Diseño, optimización y administración de bases de datos relacionales de alto rendimiento.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">SQL</span><span class="area-tag">Modelado de datos</span><span class="area-tag">Performance</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="PostgreSQL">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/mongodb.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">MongoDB</h3>
+                    </div>
+                    <p>Diseño de modelos de datos NoSQL para aplicaciones con alto volumen y flexibilidad de esquema.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">NoSQL</span><span class="area-tag">Agregaciones</span><span class="area-tag">Sharding</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="MongoDB">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/docker.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">Docker</h3>
+                    </div>
+                    <p>Containerización de aplicaciones y diseño de entornos reproducibles de desarrollo y producción.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Docker</span><span class="area-tag">Compose</span><span class="area-tag">Imágenes</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Docker">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <img src="../assets/tech/kubernetes.svg" alt="" width="32" height="32">
+                        <h3 style="margin:0;">Kubernetes</h3>
+                    </div>
+                    <p>Diseño y operación de clústeres para orquestar aplicaciones en contenedores a escala.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Kubernetes</span><span class="area-tag">Helm</span><span class="area-tag">Autoescalado</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Kubernetes">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                        <h3 style="margin:0;">DevOps / CI-CD</h3>
+                    </div>
+                    <p>Diseño de pipelines de integración y despliegue continuo para acelerar la entrega de software.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">GitHub Actions</span><span class="area-tag">GitLab CI</span><span class="area-tag">Jenkins</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="DevOps / CI-CD">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" /><circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".5" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".5" fill="currentColor" /></svg>
+                        <h3 style="margin:0;">UX/UI</h3>
+                    </div>
+                    <p>Diseño de experiencias e interfaces centradas en el usuario para productos digitales de clientes.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Figma</span><span class="area-tag">Design Systems</span><span class="area-tag">Prototipado</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Junior a Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="UX/UI">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20v-9" /><path d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z" /><path d="M14.12 3.88 16 2" /><path d="M21 21a4 4 0 0 0-3.81-4" /><path d="M21 5a4 4 0 0 1-3.55 3.97" /><path d="M22 13h-4" /><path d="M3 21a4 4 0 0 1 3.81-4" /><path d="M3 5a4 4 0 0 0 3.55 3.97" /><path d="M6 13H2" /><path d="m8 2 1.88 1.88" /><path d="M9 7.13V6a3 3 0 1 1 6 0v1.13" /></svg>
+                        <h3 style="margin:0;">QA</h3>
+                    </div>
+                    <p>Testing manual y automatizado para garantizar la calidad de cada entrega de software.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Testing manual</span><span class="area-tag">Automatización</span><span class="area-tag">Cypress</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Junior a Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="QA">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" /></svg>
+                        <h3 style="margin:0;">Business Analysis</h3>
+                    </div>
+                    <p>Relevamiento de procesos de negocio y traducción de necesidades del cliente en requerimientos técnicos.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Relevamiento</span><span class="area-tag">Documentación</span><span class="area-tag">BPMN</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Business Analysis">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3v14" /><path d="M12 3v8" /><path d="M19 3v18" /></svg>
+                        <h3 style="margin:0;">Project Management</h3>
+                    </div>
+                    <p>Planificación y coordinación de proyectos tecnológicos, asegurando plazos, alcance y calidad.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Metodologías ágiles</span><span class="area-tag">Scrum</span><span class="area-tag">PMO</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Project Management">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></svg>
+                        <h3 style="margin:0;">Consultoría Funcional</h3>
+                    </div>
+                    <p>Análisis y configuración funcional de sistemas SAP y ERP según los procesos de cada cliente.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">SAP FI/CO</span><span class="area-tag">MM</span><span class="area-tag">SD</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Consultoría Funcional">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                        <h3 style="margin:0;">Recursos Humanos</h3>
+                    </div>
+                    <p>Gestión del ciclo de vida del talento interno: selección, onboarding, capacitación y desarrollo.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Reclutamiento</span><span class="area-tag">Onboarding</span><span class="area-tag">Capacitación</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Recursos Humanos">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                        <h3 style="margin:0;">ERP</h3>
+                    </div>
+                    <p>Implementación y soporte de sistemas de gestión empresarial para PyMEs y grandes empresas.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">ERP</span><span class="area-tag">Integraciones</span><span class="area-tag">Migraciones</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Semi Senior / Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Híbrida</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="ERP">Postúlate aquí</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="area-card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /><path d="M9 13a4.5 4.5 0 0 0 3-4" /><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /><path d="M3.477 10.896a4 4 0 0 1 .585-.396" /><path d="M6 18a4 4 0 0 1-1.967-.516" /><path d="M12 13h4" /><path d="M12 18h6a2 2 0 0 1 2 2v1" /><path d="M12 8h8" /><path d="M16 8V5a2 2 0 0 1 2-2" /><circle cx="16" cy="13" r=".5" /><circle cx="18" cy="3" r=".5" /><circle cx="20" cy="21" r=".5" /><circle cx="20" cy="8" r=".5" /></svg>
+                        <h3 style="margin:0;">Inteligencia Artificial</h3>
+                    </div>
+                    <p>Investigación y desarrollo de soluciones de IA aplicadas a procesos de negocio de nuestros clientes.</p>
+                    <div class="area-tags">
+                        <span class="area-tag">Machine Learning</span><span class="area-tag">LLMs</span><span class="area-tag">Automatización</span>
+                    </div>
+                    <div class="case-meta">
+                        <div><strong>Nivel:</strong> <span>Senior</span></div>
+                        <div><strong>Modalidad:</strong> <span>Remota</span></div>
+                    </div>
+                    <button type="button" class="area-apply-btn" data-area="Inteligencia Artificial">Postúlate aquí</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿No encuentro el área exacta a la que quiero postularme, qué hago?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Podés elegir la opción "Otra" en el formulario de postulación y contarnos en la carta de presentación a qué área te gustaría sumarte.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Puedo postularme si no tengo experiencia previa?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, varias de nuestras áreas tienen posiciones de nivel Junior. Indicá tu situación real en el formulario, la evaluamos igual.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Las posiciones son remotas?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del área: algunas son totalmente remotas y otras híbridas, según se indica en cada tarjeta. Esto puede variar según el proyecto y el cliente.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué pasa después de enviar mi postulación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestro equipo revisa cada postulación y se contacta con los perfiles que mejor se ajustan a una posición vigente o futura.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Puedo postularme a más de un área?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, podés enviar una postulación por cada área de tu interés, indicando en cada una la tecnología o puesto correspondiente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Todavía no encontraste tu área?</h2>
+            <p>Contanos sobre vos igual, evaluamos cada postulación para futuras oportunidades.</p>
+            <button class="btn btn-primary" id="ctaCareersApply">Postularme</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+    <script>
+        // El CTA final reutiliza el mismo modal de postulación sin tecnología preseleccionada.
+        document.getElementById('ctaCareersApply')?.addEventListener('click', function () {
+            document.getElementById('careersHeroApply')?.click();
+        });
+    </script>
+</body>
+</html>

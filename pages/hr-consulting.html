@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consultoría en Recursos Humanos: digitalización, reclutamiento y selección, evaluaciones de desempeño, People Analytics, onboarding y gestión documental.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Consultoría en Recursos Humanos | PATERSAY">
+    <meta property="og:description" content="Digitalizamos la gestión del talento para que tu equipo de RRHH se enfoque en las personas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/hr-consulting.html">
+
+    <title>Consultoría en Recursos Humanos | Digitalización de RRHH — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de servicio -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html#services">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Servicios
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Consultoría en Recursos Humanos</h1>
+                <p>Digitalizamos la gestión del talento para que tu equipo de RRHH deje de perseguir planillas y se enfoque en las personas.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Contactar un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Descripción General -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>¿Qué es la Consultoría en Recursos Humanos?</h2>
+                <p>Es el acompañamiento para digitalizar y profesionalizar los procesos de gestión de talento de una empresa, desde el reclutamiento hasta el offboarding.</p>
+                <p>Sirve para que las decisiones sobre las personas se tomen con datos, no con planillas dispersas ni procesos informales que dependen de la memoria de alguien.</p>
+                <p>Resuelve problemas concretos: reclutamiento lento y desorganizado, evaluaciones de desempeño que nunca se completan, procesos de onboarding inconsistentes y falta de indicadores para tomar decisiones de talento.</p>
+                <p>Lo necesitan empresas en crecimiento que están dejando atrás la gestión manual de RRHH, y organizaciones que necesitan estandarizar procesos entre distintas áreas o países.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué hacemos? -->
+    <section class="services" id="que-hacemos">
+        <div class="container">
+            <h2>¿Qué hacemos?</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Digitalización de procesos de RRHH</h4>
+                    <p>Migramos procesos manuales o en planillas a plataformas digitales, con flujos claros y trazables.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Reclutamiento y selección</h4>
+                    <p>Optimización del proceso de búsqueda, desde la publicación hasta la selección final, con menos tiempo de vacante abierta.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Evaluaciones de desempeño</h4>
+                    <p>Ciclos de evaluación estructurados, con objetivos claros y seguimiento continuo, no solo una vez al año.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Capacitación y desarrollo</h4>
+                    <p>Plataformas y procesos para gestionar la formación continua de tus equipos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>People Analytics</h4>
+                    <p>Indicadores de rotación, clima, desempeño y productividad para decisiones de talento basadas en datos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Onboarding y offboarding</h4>
+                    <p>Procesos estructurados de bienvenida y salida que garantizan una buena experiencia y cumplimiento en ambos sentidos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Gestión documental</h4>
+                    <p>Digitalización de legajos y documentación laboral, con acceso seguro y trazable.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Automatización de procesos de RRHH</h4>
+                    <p>Flujos de aprobación, notificaciones y tareas repetitivas automatizadas para liberar tiempo del equipo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestros Servicios -->
+    <section class="services section-alt-white" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                    </div>
+                    <h3>Digitalización de RRHH</h3>
+                    <p>Migramos tus procesos manuales a flujos digitales trazables.</p>
+                    <p><strong>Beneficio:</strong> menos planillas, más consistencia entre áreas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Reclutamiento &amp; Selección</h3>
+                    <p>Seguimiento centralizado de candidatos, de punta a punta.</p>
+                    <p><strong>Beneficio:</strong> vacantes cubiertas en menos tiempo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>
+                    </div>
+                    <h3>Evaluación de desempeño</h3>
+                    <p>Ciclos de evaluación claros, con seguimiento continuo.</p>
+                    <p><strong>Beneficio:</strong> objetivos alineados entre líderes y equipos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>People Analytics</h3>
+                    <p>Indicadores de rotación, clima y desempeño en un solo lugar.</p>
+                    <p><strong>Beneficio:</strong> decisiones de talento basadas en datos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="m9 14 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Onboarding &amp; Offboarding</h3>
+                    <p>Checklists digitales para una bienvenida y salida consistentes.</p>
+                    <p><strong>Beneficio:</strong> mejor experiencia y cumplimiento en ambos procesos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                    </div>
+                    <h3>Gestión documental</h3>
+                    <p>Legajos digitales, seguros y accesibles cuando se necesitan.</p>
+                    <p><strong>Beneficio:</strong> menos papel, más trazabilidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología de Trabajo -->
+    <section class="methodology" id="metodologia">
+        <div class="container">
+            <h2>Nuestra Metodología</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Reunión inicial</h3>
+                    <p>Entendemos los procesos de RRHH actuales y los objetivos de la digitalización.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Relevamiento</h3>
+                    <p>Mapeamos el ciclo de vida del empleado y los puntos de fricción actuales.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Análisis</h3>
+                    <p>Identificamos qué procesos digitalizar primero según impacto y urgencia.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Diseño de solución</h3>
+                    <p>Definimos flujos, plataformas y métricas de éxito.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Implementación</h3>
+                    <p>Configuramos las herramientas y migramos la información existente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Capacitación</h3>
+                    <p>Formamos al equipo de RRHH y a los líderes que usarán las nuevas herramientas.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Soporte</h3>
+                    <p>Acompañamos la adopción durante los primeros ciclos de uso.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Mejora continua</h3>
+                    <p>Ajustamos procesos según el feedback de RRHH y los colaboradores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services section-alt-white" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
+                    </div>
+                    <h3>Procesos más rápidos</h3>
+                    <p>Menos tiempo administrativo, más foco en las personas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Mejor experiencia del empleado</h3>
+                    <p>Procesos claros desde el primer día hasta la salida.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Decisiones basadas en datos</h3>
+                    <p>Indicadores claros para anticipar rotación y planificar mejor.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                    </div>
+                    <h3>Cumplimiento y confidencialidad</h3>
+                    <p>Control de accesos y protección de datos personales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                    </div>
+                    <h3>Menos tareas manuales</h3>
+                    <p>Flujos automatizados que liberan tiempo del equipo de RRHH.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías utilizadas -->
+    <section class="technologies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías</h2>
+            <div class="tech-grid">
+                <a class="tech-item" href="tech/sap.html">
+                    <img class="tech-logo" src="../assets/tech/sap.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>SAP SuccessFactors</span>
+                </a>
+                <a class="tech-item" href="tech/aws.html">
+                    <img class="tech-logo tech-logo--wide" src="../assets/tech/aws.svg" alt="" width="36" height="28" loading="lazy">
+                    <span>AWS</span>
+                </a>
+                <a class="tech-item" href="tech/azure.html">
+                    <img class="tech-logo" src="../assets/tech/azure.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Azure</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectores -->
+    <section class="industries section-alt-white" id="sectores">
+        <div class="container">
+            <h2>Sectores</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="industries/manufactura.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16h.01" /><path d="M16 16h.01" /><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /><path d="M8 16h.01" /></svg>
+                    <span>Manufactura</span>
+                </a>
+                <a class="industry-item" href="industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="industries/salud.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg>
+                    <span>Salud</span>
+                </a>
+                <a class="industry-item" href="industries/educacion.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                    <span>Educación</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de uso -->
+    <section class="case-studies section-alt-gray" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Empresa de retail con alta rotación de personal</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>proceso de reclutamiento lento que dejaba puestos vacantes por semanas.</span></div>
+                        <div><strong>Solución:</strong> <span>digitalización del proceso de selección con seguimiento centralizado de candidatos.</span></div>
+                        <div><strong>Resultado:</strong> <span>40% menos tiempo promedio de contratación.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa industrial con 500 empleados en planta</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>legajos en papel y evaluaciones de desempeño incompletas.</span></div>
+                        <div><strong>Solución:</strong> <span>gestión documental digital y ciclo de evaluación estructurado.</span></div>
+                        <div><strong>Resultado:</strong> <span>100% de evaluaciones completadas en el primer ciclo digital.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa de servicios con equipos en 3 países</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>procesos de onboarding distintos en cada país, sin visibilidad centralizada.</span></div>
+                        <div><strong>Solución:</strong> <span>onboarding estandarizado con checklist digital y People Analytics.</span></div>
+                        <div><strong>Resultado:</strong> <span>onboarding 50% más rápido y mismo estándar en las 3 operaciones.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué es People Analytics y para qué sirve?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es el uso de datos e indicadores de RRHH (rotación, clima, desempeño) para tomar decisiones de talento basadas en evidencia, no en percepciones.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden digitalizar solo una parte de nuestros procesos de RRHH?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, podemos empezar por el proceso de mayor impacto (reclutamiento, evaluaciones, onboarding) y escalar gradualmente.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿La información de los empleados queda segura?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, trabajamos con control de accesos, cifrado y buenas prácticas de protección de datos personales.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Necesitamos reemplazar nuestro sistema de RRHH actual?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No necesariamente; en muchos casos optimizamos o integramos lo que ya tenés antes de proponer un reemplazo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Trabajan con SAP SuccessFactors?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, lo integramos como parte de un ecosistema SAP más amplio cuando el proyecto lo requiere.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma digitalizar un proceso de RRHH?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Entre 4 y 10 semanas según el proceso y el volumen de información a migrar.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen capacitación para el equipo de RRHH?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, formamos tanto al equipo de RRHH como a los líderes que participan en los procesos digitalizados.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Sirve para empresas con operaciones en varios países?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, ayudamos a estandarizar procesos manteniendo las particularidades legales de cada país.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión inicial donde relevamos tus procesos actuales de RRHH y definimos por dónde empezar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para digitalizar la gestión de tu talento?</h2>
+            <p>Contanos en qué proceso de RRHH querés empezar y te proponemos el mejor camino.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar diagnóstico</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Términos de Servicio de PATERSAY: condiciones de contratación, obligaciones de las partes, propiedad intelectual, confidencialidad y responsabilidad.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Términos de Servicio | PATERSAY">
+    <meta property="og:description" content="Condiciones que regulan la contratación de servicios de PATERSAY.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/terms-of-service.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Términos de Servicio",
+        "isPartOf": { "@type": "WebSite", "name": "PATERSAY", "url": "https://patersay.com" },
+        "publisher": { "@type": "Organization", "name": "PATERSAY" }
+    }
+    </script>
+
+    <title>Términos de Servicio — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página legal -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver al inicio
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="m9 15 2 2 4-4" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Términos de Servicio</h1>
+                <p>Las condiciones que regulan la contratación y prestación de los servicios de consultoría y desarrollo tecnológico de PATERSAY.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="printLegalDoc">Descargar Términos de Servicio (PDF)</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Contenido legal -->
+    <section class="about">
+        <div class="container" style="max-width: 860px;">
+            <div class="print-only" style="margin-bottom: 32px; border-bottom: 2px solid #0066cc; padding-bottom: 16px;">
+                <strong style="font-size: 20px; letter-spacing: 1px;">PATERSAY</strong>
+                <div style="font-size: 13px; color: #555; margin-top: 4px;">Términos de Servicio — Versión 1.0 — Emitido el 16 de julio de 2026</div>
+            </div>
+
+            <div class="legal-meta">
+                <span>Versión 1.0</span>
+                <span>Vigente desde el 16 de julio de 2026</span>
+                <span>Última actualización: 16 de julio de 2026</span>
+            </div>
+
+            <nav class="legal-toc" aria-label="Índice del documento">
+                <h2>Índice</h2>
+                <ol><!-- Generado automáticamente por main.js a partir de los <h2> de .legal-content --></ol>
+            </nav>
+
+            <article class="legal-content">
+                <h2>1. Objeto</h2>
+                <p>Los presentes Términos de Servicio ("Términos") regulan el acceso y uso del sitio web patersay.com y la relación entre PATERSAY ("la empresa", "nosotros") y las personas o empresas que contratan sus servicios de consultoría SAP, desarrollo de software, diseño y desarrollo web, aplicaciones móviles, consultoría de RRHH, ERP a medida, venta de sistemas de gestión, integraciones y demás servicios de tecnología de la información ("el Cliente").</p>
+
+                <h2>2. Definiciones</h2>
+                <p>A los efectos de estos Términos: "Servicios" significa cualquier servicio de consultoría, desarrollo o soporte tecnológico prestado por PATERSAY; "Sitio" significa el sitio web patersay.com; "Cliente" significa la persona física o jurídica que contrata los Servicios; "Entregables" significa cualquier software, documento, diseño o resultado de trabajo producido por PATERSAY en el marco de un Servicio contratado.</p>
+
+                <h2>3. Alcance de los servicios</h2>
+                <p>El alcance específico de cada Servicio (funcionalidades, plazos, entregables y precio) se define en una propuesta comercial o contrato particular acordado por escrito entre PATERSAY y el Cliente antes del inicio del trabajo. Estos Términos aplican de forma general a la relación comercial, sin perjuicio de las condiciones específicas que se acuerden en cada propuesta.</p>
+
+                <h2>4. Contratación</h2>
+                <p>La contratación de un Servicio se formaliza mediante la aceptación por escrito (incluyendo medios electrónicos) de una propuesta comercial enviada por PATERSAY, o mediante la firma de un contrato de servicios. El envío de un formulario de contacto o solicitud de asesoría a través del Sitio no constituye, por sí solo, una relación contractual entre las partes.</p>
+
+                <h2>5. Obligaciones del cliente</h2>
+                <p>El Cliente se compromete a: proporcionar información veraz, completa y oportuna necesaria para la prestación del Servicio; designar un referente con capacidad de decisión para validar avances y entregables; cumplir con los plazos de pago acordados; y utilizar los Entregables de conformidad con la licencia de uso otorgada y la normativa aplicable.</p>
+
+                <h2>6. Obligaciones de PATERSAY</h2>
+                <p>PATERSAY se compromete a: prestar los Servicios contratados con la diligencia y el nivel profesional propios de la industria; informar al Cliente sobre el avance del proyecto de forma razonable; mantener la confidencialidad de la información del Cliente conforme a lo previsto en estos Términos; y entregar los Entregables conforme a lo acordado en la propuesta comercial correspondiente.</p>
+
+                <h2>7. Propiedad intelectual</h2>
+                <p>Salvo acuerdo específico en contrario, una vez abonada la totalidad del Servicio, el Cliente adquiere la titularidad o la licencia de uso (según se defina en la propuesta comercial) sobre los Entregables desarrollados específicamente para él. PATERSAY conserva la titularidad de las metodologías, frameworks internos, librerías y conocimientos técnicos preexistentes o de aplicación general utilizados durante la prestación del Servicio, que no fueron desarrollados específicamente para el Cliente.</p>
+
+                <h2>8. Licencias de uso</h2>
+                <p>Cuando un Entregable incorpore componentes de software de terceros (librerías de código abierto, plataformas licenciadas como SAP, servicios de nube, etc.), su uso queda sujeto a los términos de licencia propios de cada proveedor, de los cuales PATERSAY informará al Cliente cuando resulte relevante para el proyecto.</p>
+
+                <h2>9. Confidencialidad</h2>
+                <p>Ambas partes se comprometen a mantener confidencial toda información no pública que reciban de la otra parte en el marco de la relación comercial, y a no divulgarla a terceros sin autorización previa, salvo que la ley exija su divulgación. Esta obligación de confidencialidad se mantiene vigente durante la relación comercial y por un período razonable posterior a su finalización.</p>
+
+                <h2>10. Protección de datos</h2>
+                <p>El tratamiento de datos personales en el marco de la prestación de los Servicios se rige por nuestra <a href="privacy-policy.html">Política de Privacidad</a> y, cuando corresponda, por un acuerdo de tratamiento de datos específico entre las partes, en cumplimiento de la normativa de protección de datos aplicable.</p>
+
+                <h2>11. Facturación y pagos</h2>
+                <p>Las condiciones de facturación (moneda, forma de pago, plazos y hitos de pago) se definen en cada propuesta comercial. El incumplimiento en los plazos de pago acordados puede dar lugar a la suspensión de los Servicios hasta la regularización correspondiente, sin perjuicio de otras acciones que PATERSAY pueda ejercer conforme a la legislación aplicable.</p>
+
+                <h2>12. Limitación de responsabilidad</h2>
+                <p>En la máxima medida permitida por la legislación aplicable, la responsabilidad total de PATERSAY frente al Cliente por cualquier reclamo derivado de la prestación de los Servicios se limita al monto efectivamente abonado por el Cliente por el Servicio específico que dio origen al reclamo. PATERSAY no será responsable por daños indirectos, lucro cesante o pérdida de datos derivados de causas ajenas a su control razonable.</p>
+
+                <h2>13. Garantías</h2>
+                <p>PATERSAY garantiza que los Servicios se prestarán con un nivel profesional razonable conforme a los estándares de la industria. Salvo acuerdo específico en contrario, los Entregables se proporcionan "tal cual", sin garantías adicionales explícitas o implícitas más allá de las expresamente asumidas en la propuesta comercial correspondiente.</p>
+
+                <h2>14. Suspensión o terminación del servicio</h2>
+                <p>PATERSAY podrá suspender o dar por terminado un Servicio ante el incumplimiento grave o reiterado de estos Términos o del contrato específico por parte del Cliente, previa notificación razonable, salvo en casos de incumplimiento que requieran acción inmediata. El Cliente podrá dar por terminado un Servicio conforme a las condiciones de cancelación previstas en la propuesta comercial correspondiente.</p>
+
+                <h2>15. Fuerza mayor</h2>
+                <p>Ninguna de las partes será responsable por el incumplimiento o retraso en sus obligaciones cuando este se deba a causas de fuerza mayor o caso fortuito, ajenas a su control razonable, incluyendo entre otros desastres naturales, fallas generalizadas de infraestructura de internet o de proveedores cloud, y disposiciones gubernamentales.</p>
+
+                <h2>16. Legislación aplicable</h2>
+                <p>Estos Términos se rigen, con carácter general, por la legislación del país en el que PATERSAY presta el Servicio correspondiente, salvo que la propuesta comercial o el contrato específico establezcan una legislación distinta de común acuerdo entre las partes.</p>
+
+                <h2>17. Resolución de conflictos</h2>
+                <p>Ante cualquier controversia derivada de la interpretación o ejecución de estos Términos, las partes procurarán resolverla de buena fe mediante negociación directa. De no alcanzarse un acuerdo, la controversia podrá someterse a los tribunales competentes de la jurisdicción acordada en la propuesta comercial correspondiente, o a un mecanismo de resolución alternativa de conflictos si así lo acuerdan las partes.</p>
+
+                <h2>18. Modificaciones de los términos</h2>
+                <p>PATERSAY podrá modificar estos Términos periódicamente para reflejar cambios en sus Servicios o en la normativa aplicable. Los cambios se publicarán en esta misma página con su fecha de actualización y número de versión. Las condiciones específicas de contratos ya firmados se mantendrán vigentes conforme a lo acordado en su momento, salvo modificación expresa de común acuerdo.</p>
+
+                <h2>19. Contacto</h2>
+                <p>Para consultas sobre estos Términos de Servicio, podés escribirnos a través del <a href="#" id="termsContactLink">formulario de contacto</a> de nuestro sitio o a sayagoluisp@gmail.com.</p>
+
+                <h2>20. Fecha de vigencia y versión</h2>
+                <p>Versión 1.0 — Vigente desde el 16 de julio de 2026.</p>
+            </article>
+
+            <div class="print-only" style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 12px; font-size: 12px; color: #777;">
+                PATERSAY — Términos de Servicio — Versión 1.0
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tenés dudas sobre estos Términos?</h2>
+            <p>Escribinos y te respondemos a la brevedad.</p>
+            <button class="btn btn-primary" id="ctaContact">Contactar</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.getElementById('termsContactLink')?.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('contactBtn')?.click();
+        });
+    </script>
+</body>
+</html>

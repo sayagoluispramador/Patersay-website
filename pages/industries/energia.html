@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cómo PATERSAY ayuda a empresas de energía con monitoreo de activos, IoT y sistemas de gestión.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Energía | Soluciones tecnológicas para el sector — PATERSAY">
+    <meta property="og:description" content="Tecnología para empresas de energía que operan activos críticos bajo estricta regulación">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/industries/energia.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Consultoría tecnológica para el sector energético",
+        "serviceType": "Consultoría e implementación tecnológica",
+        "provider": { "@type": "Organization", "name": "PATERSAY" },
+        "areaServed": "Energía",
+        "description": "Monitoreo de activos, IoT y sistemas de gestión para empresas de energía y petróleo y gas."
+    }
+    </script>
+
+    <title>Tecnología para el sector Energía: Soluciones y servicios — PATERSAY</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="../..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de industria -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../../index.html#industries">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Industrias
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Energía</h1>
+                <p>Las empresas de energía operan activos críticos, bajo fuerte regulación y con exigencias de seguridad extremas. PATERSAY desarrolla la tecnología que da visibilidad y control sobre esos activos, desde el pozo o la planta hasta la facturación al cliente final.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Hablar con un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- ¿Qué es esta industria? -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>El sector energético</h2>
+                <p>El sector energético agrupa empresas de generación y distribución eléctrica, petróleo y gas, y energías renovables, cuyo negocio depende de operar activos críticos con altos estándares de seguridad y bajo estricta regulación.</p>
+                <p>Durante décadas operó con sistemas de control industrial aislados de los sistemas de gestión; la digitalización de activos (smart grids, sensores IoT en pozos y plantas) impulsó la conexión de esos datos con la gestión del negocio.</p>
+                <p>Sus procesos centrales incluyen monitoreo de activos y producción, gestión de mantenimiento, facturación a clientes finales, cumplimiento normativo y gestión de la cadena de suministro energético.</p>
+                <p>Sus necesidades tecnológicas combinan sistemas de gestión que integren producción y finanzas, plataformas de monitoreo de activos en tiempo real, infraestructura segura para sistemas críticos y analítica para mantenimiento predictivo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principales Desafíos -->
+    <section class="services" id="desafios">
+        <div class="container">
+            <h2>Principales Desafíos</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Falta de integración entre sistemas de control y de gestión</h4>
+                    <p>Sistemas de control industrial (SCADA) y sistemas de gestión que operan de forma aislada, sin compartir datos de producción.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Procesos regulatorios exigentes</h4>
+                    <p>Normativas de seguridad, ambientales y de generación que exigen trazabilidad y reportes constantes a organismos de control.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Mantenimiento de activos críticos</h4>
+                    <p>Equipos e infraestructura cuya falla puede tener consecuencias operativas, ambientales y de seguridad graves.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Baja trazabilidad de la producción</h4>
+                    <p>Dificultad para reconstruir el historial completo de producción y mantenimiento de un activo específico.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Seguridad de la información en infraestructura crítica</h4>
+                    <p>Sistemas de control industrial expuestos a riesgos de ciberseguridad con consecuencias que van más allá de lo digital.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Costos operativos elevados</h4>
+                    <p>Ineficiencias en el mantenimiento y la operación de activos que impactan directamente en el margen del negocio.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Falta de indicadores en tiempo real</h4>
+                    <p>Decisiones operativas tomadas con reportes desactualizados en lugar del estado real de plantas y activos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Cómo ayuda PATERSAY? -->
+    <section class="services section-alt-white" id="como-ayudamos">
+        <div class="container">
+            <h2>¿Cómo ayuda PATERSAY?</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
+                    </div>
+                    <h3>Consultoría SAP</h3>
+                    <p>Implementamos SAP para la gestión financiera, de mantenimiento (PM) y de la cadena de suministro de empresas de energía.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Construimos portales de monitoreo de activos y de autogestión para clientes finales de servicios energéticos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>Desarrollo Mobile</h3>
+                    <p>Desarrollamos apps para técnicos de campo que registran mantenimiento e inspecciones desde el lugar del activo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>ERP a Medida</h3>
+                    <p>Diseñamos sistemas de gestión a medida para procesos operativos específicos que un ERP estándar no cubre por completo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                    </div>
+                    <h3>Programación</h3>
+                    <p>Desarrollamos las integraciones entre sistemas de control industrial (SCADA), sensores IoT y el ERP corporativo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Consultoría RRHH</h3>
+                    <p>Acompañamos la digitalización de la gestión de cuadrillas técnicas y personal de campo en operaciones distribuidas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 17H5" /><path d="M19 7h-9" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>
+                    </div>
+                    <h3>Sistemas de Gestión</h3>
+                    <p>Implementamos sistemas de gestión de mantenimiento y activos que dan trazabilidad completa a cada intervención.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integraciones</h3>
+                    <p>Conectamos sistemas de control industrial, sensores IoT y el ERP para que los datos operativos lleguen a la gestión sin intervención manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización</h3>
+                    <p>Automatizamos alertas de mantenimiento preventivo, reportes regulatorios y facturación a clientes finales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
+                    </div>
+                    <h3>Cloud</h3>
+                    <p>Migramos plataformas de monitoreo de activos a AWS para procesar datos de sensores a gran escala con la seguridad que exige infraestructura crítica.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Business Intelligence</h3>
+                    <p>Construimos tableros de producción, disponibilidad de activos y cumplimiento normativo para la gestión operativa.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Transformación Digital</h3>
+                    <p>Acompañamos a empresas de energía tradicionales en su camino hacia la operación digital de activos y redes inteligentes.</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:32px; font-size:14px; color:#666;">
+                ¿Tu operación necesita integrar el monitoreo de activos con la gestión del negocio? Conocé nuestro
+                <a href="../sap-consulting.html" style="color:#0066cc; text-decoration:underline; font-weight:500;">servicio de Consultoría SAP</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tecnologías que utilizamos en esta industria -->
+    <section class="case-studies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías que utilizamos en el sector energético</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3><a href="../tech/sap.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/sap.svg" alt="" width="24" height="24"> SAP</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para la gestión financiera, de mantenimiento de activos (PM) y de la cadena de suministro de la empresa energética.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la desconexión entre el mantenimiento de activos críticos y la planificación financiera y de compras.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta visibilidad unificada sobre el estado de los activos y su impacto financiero.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la planificación de mantenimiento, el control de costos y el cumplimiento de reportes regulatorios.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa y parametriza los módulos SAP PM y MM adaptados a la operación energética.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de generación redujo sus costos de mantenimiento no planificado en un 20% tras implementar SAP PM.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/java.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/java.svg" alt="" width="24" height="24"> Java</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en sistemas backend de gestión de activos y monitoreo que requieren alta estabilidad y precisión.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la necesidad de sistemas robustos para coordinar el monitoreo de activos distribuidos geográficamente.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta estabilidad en la coordinación de datos de activos críticos distribuidos en múltiples ubicaciones.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la sincronización entre los sistemas de monitoreo de campo y el sistema de gestión central.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla servicios backend en Java para sistemas de gestión y monitoreo de activos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía coordinó el monitoreo de 50 plantas distribuidas sobre un mismo sistema desarrollado en Java.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/python.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/python.svg" alt="" width="24" height="24"> Python</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en el procesamiento de datos de sensores IoT y modelos de mantenimiento predictivo de activos críticos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la detección tardía de fallas en activos cuya interrupción tiene alto impacto operativo y de seguridad.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta capacidad de anticipar fallas en activos críticos antes de que generen una interrupción grave.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el mantenimiento predictivo y reduce el riesgo de fallas no planificadas en infraestructura crítica.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla modelos de mantenimiento predictivo en Python a partir de datos de sensores de planta.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía evitó una falla mayor en un transformador clave tras detectar una anomalía con un modelo predictivo en Python.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/react.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/react.svg" alt="" width="24" height="24"> React</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para construir paneles de monitoreo de activos y portales de autogestión para clientes finales.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de visibilidad clara y en tiempo real del estado de activos distribuidos en distintas ubicaciones.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta a los equipos de operaciones una vista clara y actualizada del estado de los activos críticos.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la toma de decisiones operativas frente a alertas o desvíos en la producción.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla interfaces en React para paneles de monitoreo de activos y portales de clientes.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una distribuidora de energía redujo el tiempo de reacción ante alertas de red tras implementar un panel de monitoreo en React.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/nodejs.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/nodejs.svg" alt="" width="24" height="24"> Node.js</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para exponer APIs que conectan sensores de campo, sistemas SCADA y el ERP corporativo.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la necesidad de intercambiar datos operativos en tiempo real entre sistemas antes desconectados.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta datos operativos disponibles en el sistema de gestión sin demoras ni cargas manuales.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la sincronización entre lo que ocurre en campo y lo que ve el equipo de planificación.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY construye capas de API en Node.js para conectar sistemas de control industrial con los sistemas de gestión.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía redujo a segundos el tiempo entre un evento de planta y su registro en el sistema de gestión.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/aws.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/aws.svg" alt="" width="34" height="22"> AWS</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como infraestructura para procesar y almacenar grandes volúmenes de datos de sensores IoT de activos críticos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la incapacidad de la infraestructura local para procesar el volumen de datos que generan activos distribuidos.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta capacidad de procesamiento escalable para datos de sensores con los controles de seguridad que exige infraestructura crítica.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el análisis de datos operativos a gran escala y el desarrollo de modelos de mantenimiento predictivo.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas de ingesta de datos IoT sobre AWS con controles de seguridad reforzados.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía procesó datos de miles de sensores distribuidos en tiempo real tras migrar su plataforma de monitoreo a AWS.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/azure.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/azure.svg" alt="" width="24" height="24"> Azure</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en empresas de energía que integran su operación con herramientas Microsoft ya presentes en la empresa.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la fragmentación entre sistemas corporativos y plataformas de monitoreo operativo.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integración entre datos operativos y las herramientas de análisis que ya usa el equipo corporativo.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la colaboración entre el equipo de operaciones y las áreas corporativas de la empresa.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY integra sistemas de monitoreo con Power BI y Azure para empresas del ecosistema Microsoft.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa energética centralizó sus indicadores de producción y disponibilidad en Power BI conectado a su plataforma de monitoreo sobre Azure.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/postgresql.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/postgresql.svg" alt="" width="24" height="24"> PostgreSQL</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como base de datos transaccional para registros de producción, mantenimiento y facturación de clientes.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve inconsistencias entre lo registrado en campo y lo reflejado en el sistema de gestión.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integridad de datos en cada registro de producción y mantenimiento de activos.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la trazabilidad de la producción y el historial de mantenimiento de cada activo.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña esquemas PostgreSQL para sistemas de gestión de activos y facturación energética.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía logró trazabilidad completa del historial de mantenimiento de cada activo tras migrar su sistema a PostgreSQL.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/mongodb.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/mongodb.svg" alt="" width="24" height="24"> MongoDB</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para almacenar datos de sensores IoT con formatos variables entre distintos tipos de activos energéticos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de modelar datos de sensores heterogéneos entre plantas, redes y pozos en una estructura rígida.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta flexibilidad para incorporar nuevos tipos de activos y sensores sin rediseñar la base de datos.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la incorporación de nuevas fuentes de datos al sistema de monitoreo de activos.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa MongoDB como capa de almacenamiento de datos de sensores IoT de activos energéticos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía renovable incorporó un nuevo parque eólico a su sistema de monitoreo sin rediseñar su base de datos, gracias a MongoDB.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/docker.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/docker.svg" alt="" width="24" height="24"> Docker</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para empaquetar los servicios de monitoreo de activos de forma consistente entre entornos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve fallas de entorno al desplegar actualizaciones en sistemas críticos para la operación de activos energéticos.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta despliegues predecibles en sistemas que no pueden permitirse tiempo de inactividad no planificado.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la velocidad y seguridad con la que se actualizan los sistemas de monitoreo de activos.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY containeriza los servicios de monitoreo de activos energéticos antes de cada actualización.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía actualizó su sistema de monitoreo sin interrumpir la supervisión de sus plantas gracias a un despliegue containerizado.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/kubernetes.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/kubernetes.svg" alt="" width="24" height="24"> Kubernetes</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para orquestar los servicios de monitoreo de activos distribuidos geográficamente en distintas plantas o pozos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de resiliencia en sistemas que deben monitorear infraestructura crítica de forma ininterrumpida.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta continuidad del monitoreo de activos incluso ante la falla de un componente individual.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad de los sistemas de monitoreo en operaciones distribuidas geográficamente.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas sobre Kubernetes para empresas con monitoreo centralizado de activos distribuidos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía con activos en cinco provincias centralizó su monitoreo sobre una arquitectura Kubernetes de alta disponibilidad.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/cicd.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg> CI/CD</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para automatizar la actualización de sistemas de monitoreo con controles previos a cada despliegue.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve el riesgo de actualizar sistemas críticos de infraestructura energética sin un proceso de validación confiable.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta actualizaciones más frecuentes y seguras a los sistemas que sostienen la operación de activos críticos.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el ciclo de mejora continua de los sistemas de monitoreo y gestión de activos.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña pipelines de CI/CD con validaciones de seguridad reforzadas antes de cada despliegue a producción.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Una empresa de energía comenzó a actualizar su sistema de monitoreo mensualmente, sin incidentes, gracias a un pipeline de CI/CD con pruebas automatizadas.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg>
+                    </div>
+                    <h3>Reducción de costos</h3>
+                    <p>Menos mantenimiento no planificado y menos tiempo de inactividad de activos críticos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización de procesos</h3>
+                    <p>Alertas de mantenimiento, reportes regulatorios y facturación gestionados sin intervención manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integración de sistemas</h3>
+                    <p>Control industrial, monitoreo de activos y gestión corporativa conectados en una misma arquitectura.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Seguridad de la información</h3>
+                    <p>Sistemas de control industrial protegidos con controles de ciberseguridad adecuados a infraestructura crítica.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Cumplimiento normativo</h3>
+                    <p>Trazabilidad que facilita reportes a organismos reguladores del sector energético.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                    </div>
+                    <h3>Trazabilidad completa</h3>
+                    <p>Historial completo de producción y mantenimiento de cada activo, auditable en cualquier momento.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Escalabilidad</h3>
+                    <p>La infraestructura de monitoreo crece junto con la cantidad de activos y ubicaciones conectadas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 15 21.84" /><path d="M21 5V8" /><path d="M21 12L18 17H22L19 22" /><path d="M3 12A9 3 0 0 0 14.59 14.87" /></svg>
+                    </div>
+                    <h3>Decisiones basadas en datos</h3>
+                    <p>Producción, disponibilidad de activos y mantenimiento definidos con datos reales, no estimaciones.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Mayor productividad</h3>
+                    <p>Equipos técnicos y de campo con menos tareas administrativas y más foco en la operación.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de Uso -->
+    <section class="case-studies section-alt-white" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Empresa de generación con mantenimiento no planificado frecuente</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>las fallas de equipos se detectaban solo cuando ya habían ocurrido, generando paradas costosas.</span></div>
+                        <div><strong>Solución:</strong> <span>implementación de SAP PM con mantenimiento planificado basado en datos.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>SAP, Python</span></div>
+                        <div><strong>Resultado:</strong> <span>costos de mantenimiento no planificado reducidos en un 20%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa petrolera con riesgo de falla en activos críticos</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>no había forma de anticipar fallas en equipos clave de producción.</span></div>
+                        <div><strong>Solución:</strong> <span>modelo de mantenimiento predictivo sobre datos de sensores IoT.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Python, AWS, MongoDB</span></div>
+                        <div><strong>Resultado:</strong> <span>una falla mayor evitada en un activo crítico tras detectar una anomalía a tiempo.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Distribuidora de energía con baja visibilidad de red</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>las alertas de red se detectaban con demoras que afectaban la calidad de servicio.</span></div>
+                        <div><strong>Solución:</strong> <span>panel de monitoreo de red en tiempo real.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>React, Node.js</span></div>
+                        <div><strong>Resultado:</strong> <span>tiempo de reacción ante alertas de red reducido significativamente.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa de energía con activos distribuidos en cinco provincias</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>cada ubicación monitoreaba sus activos de forma aislada, sin visibilidad consolidada.</span></div>
+                        <div><strong>Solución:</strong> <span>plataforma de monitoreo centralizada sobre Kubernetes.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Kubernetes, AWS</span></div>
+                        <div><strong>Resultado:</strong> <span>monitoreo consolidado de todos los activos en un mismo tablero en tiempo real.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa de energía renovable con nuevos parques difíciles de integrar</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>cada nuevo parque eólico o solar requería adaptar el sistema de monitoreo.</span></div>
+                        <div><strong>Solución:</strong> <span>migración de datos de sensores a un modelo de datos flexible en MongoDB.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>MongoDB, Node.js</span></div>
+                        <div><strong>Resultado:</strong> <span>nuevos parques incorporados al sistema de monitoreo sin rediseñar la plataforma.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestro Proceso de Trabajo -->
+    <section class="methodology" id="proceso">
+        <div class="container">
+            <h2>Nuestro Proceso de Trabajo</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Descubrimiento y relevamiento</h3>
+                    <p>Analizamos la operación actual del sector, sus sistemas, procesos y objetivos de negocio, junto a los equipos técnicos y de negocio del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Diagnóstico</h3>
+                    <p>Identificamos brechas tecnológicas, cuellos de botella y riesgos, priorizando las oportunidades de mayor impacto.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Diseño de la solución</h3>
+                    <p>Definimos el alcance funcional y la hoja de ruta, alineando la solución con la estrategia y el presupuesto del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Arquitectura tecnológica</h3>
+                    <p>Diseñamos la arquitectura de sistemas, integraciones e infraestructura que sostendrá la solución en el tiempo.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Desarrollo e implementación</h3>
+                    <p>Construimos e implementamos la solución de forma incremental, con entregas frecuentes y validación continua.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Pruebas</h3>
+                    <p>Ejecutamos pruebas funcionales, de integración, de rendimiento y de seguridad antes de cada puesta en producción.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Capacitación</h3>
+                    <p>Formamos a los equipos del cliente para que adopten la solución con autonomía desde el primer día.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Soporte y mejora continua</h3>
+                    <p>Acompañamos la operación en producción con soporte, monitoreo y evolución continua de la solución.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar nuestros sistemas de control industrial (SCADA) con SAP?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos las integraciones necesarias para que los datos de sistemas de control industrial lleguen a SAP u otros sistemas de gestión sin intervención manual.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué es el mantenimiento predictivo y por qué es crítico en energía?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es la capacidad de anticipar una falla de activo antes de que ocurra; en energía es especialmente crítico porque una falla puede tener consecuencias operativas, ambientales y de seguridad graves.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo garantizan la seguridad de nuestros sistemas de control industrial?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aplicamos controles de ciberseguridad reforzados, adecuados a la sensibilidad de la infraestructura crítica que se está protegiendo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden ayudarnos a cumplir con normativas del sector energético?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, incorporamos la trazabilidad y los reportes necesarios para facilitar el cumplimiento de normativas regulatorias del sector.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Trabajan con empresas de energías renovables?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, trabajamos tanto con energía convencional (generación, petróleo y gas) como con parques eólicos y solares.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma implementar un sistema de gestión de activos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende de la cantidad y complejidad de los activos; proyectos de mediana envergadura suelen tomar entre 4 y 10 meses.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden monitorear activos distribuidos en múltiples ubicaciones geográficas?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, diseñamos plataformas de monitoreo centralizado capaces de consolidar datos de activos distribuidos en distintas ubicaciones.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen portales de autogestión para clientes finales de energía?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos portales donde los clientes finales consultan consumo y gestionan su servicio de forma digital.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Dan soporte continuo después de la implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros proyectos incluyen una etapa de soporte y mejora continua una vez en producción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos a trabajar con PATERSAY?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión de relevamiento donde analizamos tu operación actual y definimos la mejor hoja de ruta tecnológica para tu empresa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tu empresa de energía necesita más visibilidad sobre sus activos críticos?</h2>
+            <p>Conversemos sobre los desafíos de tu operación y cómo podemos ayudarte a resolverlos.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar asesoría</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../../index.html#services">Servicios</a></li>
+                        <li><a href="../../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="../privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="../terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

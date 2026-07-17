@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Desarrollo web a medida: frontend, backend, APIs REST y GraphQL, integraciones, portales, dashboards y e-commerce con arquitecturas escalables y seguras.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Desarrollo Web | PATERSAY">
+    <meta property="og:description" content="Aplicaciones web modernas, escalables y de alto rendimiento para tu operación.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/web-development.html">
+
+    <title>Desarrollo Web | Aplicaciones y Plataformas a Medida — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de servicio -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html#services">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Servicios
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /><path d="m14.5 4-5 16" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Desarrollo Web</h1>
+                <p>Construimos aplicaciones web modernas, escalables y de alto rendimiento, desde portales corporativos hasta plataformas de e-commerce complejas.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Contactar un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Descripción General -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>¿Qué es el Desarrollo Web?</h2>
+                <p>Es la construcción de la lógica, arquitectura e integraciones que convierten un diseño en una aplicación web funcional, segura y mantenible en el tiempo.</p>
+                <p>Sirve para que tus procesos de negocio —ventas, atención al cliente, gestión interna— tengan una plataforma propia, confiable y capaz de escalar con tu operación.</p>
+                <p>Resuelve problemas concretos: sistemas legados difíciles de mantener, plataformas que no soportan picos de tráfico, falta de integración entre sistemas y procesos manuales que podrían automatizarse en un portal.</p>
+                <p>Lo necesitan empresas que necesitan un portal o intranet a medida, una plataforma de e-commerce, o que quieren modernizar una aplicación web legada.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué hacemos? -->
+    <section class="services" id="que-hacemos">
+        <div class="container">
+            <h2>¿Qué hacemos?</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Frontend</h4>
+                    <p>Interfaces interactivas con React y las mejores prácticas de rendimiento y accesibilidad.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Backend</h4>
+                    <p>Lógica de negocio, autenticación y procesamiento de datos sobre Node.js, Python u otras stacks según el proyecto.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>APIs REST</h4>
+                    <p>Diseño de interfaces de integración claras, documentadas y versionadas para conectar sistemas.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>GraphQL</h4>
+                    <p>Capas de datos flexibles cuando el frontend necesita consultas complejas y eficientes.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Integraciones</h4>
+                    <p>Conexión con pasarelas de pago, CRMs, ERPs y otros sistemas de terceros.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Portales e intranets</h4>
+                    <p>Plataformas internas para gestión documental, aprobaciones y comunicación corporativa.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Dashboards</h4>
+                    <p>Paneles de control con datos en tiempo real para tomar decisiones más rápido.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Comercio electrónico</h4>
+                    <p>Tiendas online escalables, integradas a pasarelas de pago y logística.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestros Servicios -->
+    <section class="services section-alt-white" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /><path d="m14.5 4-5 16" /></svg>
+                    </div>
+                    <h3>Frontend a medida</h3>
+                    <p>Interfaces rápidas, accesibles y fáciles de mantener en el tiempo.</p>
+                    <p><strong>Beneficio:</strong> mejor experiencia de usuario y menor deuda técnica.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="8" x="2" y="2" rx="2" ry="2" /><rect width="20" height="8" x="2" y="14" rx="2" ry="2" /><line x1="6" x2="6.01" y1="6" y2="6" /><line x1="6" x2="6.01" y1="18" y2="18" /></svg>
+                    </div>
+                    <h3>APIs &amp; Backend</h3>
+                    <p>Servicios robustos, documentados y preparados para escalar.</p>
+                    <p><strong>Beneficio:</strong> una base técnica sólida para crecer sin reescribir todo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
+                    </div>
+                    <h3>E-commerce</h3>
+                    <p>Tiendas online integradas a pagos, stock y logística.</p>
+                    <p><strong>Beneficio:</strong> más canales de venta sin duplicar operación.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 19a1 1 0 0 1-1-1v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a1 1 0 0 1-1 1z" /><path d="M17 21v-2" /><path d="M19 14V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V10" /><path d="M21 21v-2" /><path d="M3 5V3" /><path d="M4 10a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a2 2 0 0 1-2 2z" /><path d="M7 5V3" /></svg>
+                    </div>
+                    <h3>Integraciones</h3>
+                    <p>Conectamos tu plataforma con SAP, CRMs, pagos y sistemas de terceros.</p>
+                    <p><strong>Beneficio:</strong> datos consistentes en toda tu operación.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Dashboards &amp; BI</h3>
+                    <p>Paneles con métricas de negocio en tiempo real.</p>
+                    <p><strong>Beneficio:</strong> decisiones más rápidas con datos confiables.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Seguridad &amp; Performance</h3>
+                    <p>Buenas prácticas de autenticación, cifrado y optimización de carga.</p>
+                    <p><strong>Beneficio:</strong> una plataforma confiable y rápida bajo cualquier carga.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología de Trabajo -->
+    <section class="methodology" id="metodologia">
+        <div class="container">
+            <h2>Nuestra Metodología</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Reunión inicial</h3>
+                    <p>Relevamos el problema de negocio y el resultado esperado de la plataforma.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Relevamiento</h3>
+                    <p>Analizamos sistemas existentes, integraciones necesarias y restricciones técnicas.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Análisis</h3>
+                    <p>Definimos arquitectura, stack tecnológico y alcance del primer entregable (MVP).</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Diseño de solución</h3>
+                    <p>Diagramamos la arquitectura técnica, el modelo de datos y las integraciones.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Implementación</h3>
+                    <p>Desarrollamos en sprints cortos, con entregas incrementales revisables.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Capacitación</h3>
+                    <p>Documentamos el sistema y capacitamos a tu equipo técnico si va a mantenerlo.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Soporte</h3>
+                    <p>Acompañamos el despliegue y damos soporte post-lanzamiento.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Mejora continua</h3>
+                    <p>Monitoreamos performance y evolucionamos la plataforma con nuevas funcionalidades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services section-alt-white" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Velocidad de lanzamiento</h3>
+                    <p>Entregas incrementales que muestran avances desde las primeras semanas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></svg>
+                    </div>
+                    <h3>Arquitectura escalable</h3>
+                    <p>Preparada para crecer en usuarios, funcionalidades y tráfico sin reescrituras.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                    </div>
+                    <h3>Seguridad</h3>
+                    <p>Autenticación, cifrado y control de accesos incorporados desde el diseño.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Performance</h3>
+                    <p>Sitios y APIs optimizados para cargar rápido y responder bajo carga.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integración con tu ecosistema</h3>
+                    <p>Conectada a tu SAP, CRM o sistemas de pago sin fricción.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías utilizadas -->
+    <section class="technologies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías</h2>
+            <div class="tech-grid">
+                <a class="tech-item" href="tech/react.html">
+                    <img class="tech-logo" src="../assets/tech/react.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>React</span>
+                </a>
+                <a class="tech-item" href="tech/nodejs.html">
+                    <img class="tech-logo" src="../assets/tech/nodejs.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Node.js</span>
+                </a>
+                <a class="tech-item" href="tech/python.html">
+                    <img class="tech-logo" src="../assets/tech/python.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Python</span>
+                </a>
+                <a class="tech-item" href="tech/postgresql.html">
+                    <img class="tech-logo" src="../assets/tech/postgresql.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>PostgreSQL</span>
+                </a>
+                <a class="tech-item" href="tech/mongodb.html">
+                    <img class="tech-logo" src="../assets/tech/mongodb.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>MongoDB</span>
+                </a>
+                <a class="tech-item" href="tech/docker.html">
+                    <img class="tech-logo" src="../assets/tech/docker.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Docker</span>
+                </a>
+                <a class="tech-item" href="tech/aws.html">
+                    <img class="tech-logo tech-logo--wide" src="../assets/tech/aws.svg" alt="" width="36" height="28" loading="lazy">
+                    <span>AWS</span>
+                </a>
+                <a class="tech-item" href="tech/cicd.html">
+                    <span class="tech-logo tech-logo--icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </span>
+                    <span>CI/CD</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectores -->
+    <section class="industries section-alt-white" id="sectores">
+        <div class="container">
+            <h2>Sectores</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="industries/logistica.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /><path d="M15 18H9" /><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /><circle cx="17" cy="18" r="2" /><circle cx="7" cy="18" r="2" /></svg>
+                    <span>Logística</span>
+                </a>
+                <a class="industry-item" href="industries/educacion.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                    <span>Educación</span>
+                </a>
+                <a class="industry-item" href="industries/telecomunicaciones.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9" /><path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5" /><circle cx="12" cy="9" r="2" /><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47" /><path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1" /><path d="M9.5 18h5" /><path d="m8 22 4-11 4 11" /></svg>
+                    <span>Telecomunicaciones</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de uso -->
+    <section class="case-studies section-alt-gray" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Plataforma de e-commerce multicanal</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>catálogo desincronizado entre tienda física y online.</span></div>
+                        <div><strong>Solución:</strong> <span>plataforma e-commerce con integración a inventario en tiempo real.</span></div>
+                        <div><strong>Resultado:</strong> <span>aumento de ventas online del 300% en el primer año.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Portal de autogestión para clientes</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>alto volumen de consultas telefónicas repetitivas.</span></div>
+                        <div><strong>Solución:</strong> <span>portal de autogestión con dashboard de cuenta y facturación.</span></div>
+                        <div><strong>Resultado:</strong> <span>45% menos llamadas al centro de atención.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Intranet corporativa para empresa de 800 empleados</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>comunicación interna dispersa en emails y planillas.</span></div>
+                        <div><strong>Solución:</strong> <span>intranet con gestión documental y flujos de aprobación.</span></div>
+                        <div><strong>Resultado:</strong> <span>tiempos de aprobación reducidos en un 50%.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué tecnologías usan para el desarrollo?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Elegimos el stack según el proyecto; trabajamos frecuentemente con React, Node.js, Python, PostgreSQL y arquitecturas en contenedores sobre AWS o Azure.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden trabajar sobre un sistema que ya existe?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, evaluamos el código y la arquitectura actual y te proponemos si conviene evolucionar el sistema existente o reconstruir partes específicas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo garantizan la seguridad de la plataforma?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aplicamos buenas prácticas de autenticación, cifrado, control de accesos y testing de seguridad antes de cada release.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué es un MVP y por qué empezar por ahí?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es una primera versión funcional con lo esencial, que permite validar el producto con usuarios reales antes de invertir en funcionalidades adicionales.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen mantenimiento después del lanzamiento?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, con planes de soporte y evolución continua según el nivel de criticidad de tu plataforma.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar la plataforma con nuestro ERP o CRM?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos integraciones a medida vía APIs con SAP, Salesforce y otros sistemas empresariales.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo manejan los picos de tráfico?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Diseñamos arquitecturas escalables en la nube, con balanceo de carga y autoescalado según demanda.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto dura un proyecto de desarrollo web?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Entre 6 y 20 semanas según el alcance, trabajando en sprints con entregas incrementales visibles desde las primeras semanas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Hacen testing antes de cada entrega?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, con pruebas automatizadas y validación manual antes de cada release a producción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión inicial donde relevamos el problema de negocio y te proponemos una arquitectura y un plan de trabajo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para llevar tu operación a una plataforma propia?</h2>
+            <p>Contanos qué necesitas automatizar o digitalizar y te proponemos la mejor arquitectura.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar propuesta técnica</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "patersay-website",
+  "version": "1.0.0",
+  "description": "Sitio web corporativo PATERSAY - Servicios de Tecnología de la Información",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=5500",
+    "build": "echo 'Build script coming soon'",
+    "test": "echo 'Test script coming soon'"
+  },
+  "keywords": [
+    "SAP",
+    "Consultoría",
+    "Desarrollo Web",
+    "Apps Móviles",
+    "RRHH",
+    "IT Services"
+  ],
+  "author": "PATERSAY",
+  "license": "Proprietary",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

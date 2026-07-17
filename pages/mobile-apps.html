@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicaciones móviles nativas e híbridas para iOS y Android: desarrollo, integración con APIs, notificaciones push, publicación en tiendas y mantenimiento continuo.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Aplicaciones Móviles | PATERSAY">
+    <meta property="og:description" content="Apps nativas e híbridas que tus usuarios realmente quieren usar, integradas con tus sistemas de negocio.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/mobile-apps.html">
+
+    <title>Aplicaciones Móviles | Desarrollo iOS y Android — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de servicio -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html#services">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Servicios
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Aplicaciones Móviles</h1>
+                <p>Diseñamos y desarrollamos apps nativas e híbridas para iOS y Android que tus usuarios realmente quieren usar, integradas con tus sistemas de negocio.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Contactar un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Descripción General -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>¿Qué son las Aplicaciones Móviles?</h2>
+                <p>Es el desarrollo de software nativo o híbrido para smartphones y tablets, diseñado para resolver una necesidad concreta de tus usuarios o de tus propios equipos.</p>
+                <p>Sirve para extender tu negocio al dispositivo que tus clientes usan todo el día, o para darle a tu equipo herramientas de trabajo desde cualquier lugar.</p>
+                <p>Resuelve problemas concretos: procesos que hoy dependen de papel o planillas en campo, falta de un canal directo con tus clientes, y equipos de venta o logística sin acceso a información en tiempo real.</p>
+                <p>Lo necesitan empresas con equipos en campo (ventas, logística, mantenimiento), marcas que buscan fidelizar clientes, y negocios que quieren digitalizar procesos hoy manuales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué hacemos? -->
+    <section class="services" id="que-hacemos">
+        <div class="container">
+            <h2>¿Qué hacemos?</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Desarrollo nativo Android</h4>
+                    <p>Apps construidas con Kotlin sobre el SDK de Android, con el máximo rendimiento y acceso a funciones del dispositivo.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Desarrollo nativo iOS</h4>
+                    <p>Apps construidas con Swift, siguiendo las guías de diseño de Apple para una experiencia consistente.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Aplicaciones híbridas</h4>
+                    <p>Un solo código base para lanzar en ambas plataformas más rápido y a menor costo de mantenimiento.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Integración con APIs</h4>
+                    <p>Conexión con tus sistemas de backend, ERP o CRM para que la app refleje información real de tu negocio.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Notificaciones push</h4>
+                    <p>Estrategia y configuración de notificaciones para reenganchar usuarios sin saturarlos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Publicación en tiendas</h4>
+                    <p>Preparación, cumplimiento de políticas y publicación en Google Play y App Store.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Mantenimiento y actualizaciones</h4>
+                    <p>Ciclos de actualización para nuevas versiones de sistema operativo, corrección de errores y nuevas funcionalidades.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Analítica y monitoreo</h4>
+                    <p>Medición de uso, errores y rendimiento para iterar la app con datos reales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestros Servicios -->
+    <section class="services section-alt-white" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>App nativa Android</h3>
+                    <p>Rendimiento máximo y acceso completo a las funciones del dispositivo.</p>
+                    <p><strong>Beneficio:</strong> la mejor experiencia posible en el ecosistema Android.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></svg>
+                    </div>
+                    <h3>App nativa iOS</h3>
+                    <p>Desarrollo en Swift siguiendo las guías de diseño de Apple.</p>
+                    <p><strong>Beneficio:</strong> una experiencia consistente con el resto del ecosistema Apple.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Apps híbridas</h3>
+                    <p>Un solo código base para iOS y Android, con menor costo y tiempo de desarrollo.</p>
+                    <p><strong>Beneficio:</strong> lanzás en ambas plataformas al mismo tiempo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 19a1 1 0 0 1-1-1v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a1 1 0 0 1-1 1z" /><path d="M17 21v-2" /><path d="M19 14V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V10" /><path d="M21 21v-2" /><path d="M3 5V3" /><path d="M4 10a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a2 2 0 0 1-2 2z" /><path d="M7 5V3" /></svg>
+                    </div>
+                    <h3>Integraciones con backend</h3>
+                    <p>Conexión con tu ERP, CRM o sistemas propios vía APIs.</p>
+                    <p><strong>Beneficio:</strong> la app siempre refleja información real de tu negocio.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></svg>
+                    </div>
+                    <h3>Notificaciones push &amp; engagement</h3>
+                    <p>Estrategia de notificaciones para reenganchar usuarios sin saturarlos.</p>
+                    <p><strong>Beneficio:</strong> más usuarios activos y recurrentes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                    </div>
+                    <h3>Publicación &amp; mantenimiento</h3>
+                    <p>Gestión de la publicación en tiendas y actualizaciones continuas.</p>
+                    <p><strong>Beneficio:</strong> tu app siempre disponible y compatible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología de Trabajo -->
+    <section class="methodology" id="metodologia">
+        <div class="container">
+            <h2>Nuestra Metodología</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Reunión inicial</h3>
+                    <p>Entendemos el objetivo de negocio detrás de la app y quién la va a usar.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Relevamiento</h3>
+                    <p>Analizamos flujos de usuario, sistemas a integrar y restricciones de plataforma.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Análisis</h3>
+                    <p>Definimos si conviene nativo o híbrido según performance, presupuesto y tiempos.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Diseño de solución</h3>
+                    <p>Prototipamos las pantallas clave y validamos el flujo con usuarios reales.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Implementación</h3>
+                    <p>Desarrollamos en sprints, con builds de prueba disponibles desde etapas tempranas.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Capacitación</h3>
+                    <p>Documentamos el proyecto y capacitamos a tu equipo si va a operar el backend.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Soporte</h3>
+                    <p>Acompañamos la publicación en las tiendas y el período post-lanzamiento.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Mejora continua</h3>
+                    <p>Analizamos el uso real y priorizamos mejoras según el comportamiento de los usuarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services section-alt-white" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Más engagement</h3>
+                    <p>Un canal directo y siempre disponible con tus clientes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
+                    </div>
+                    <h3>Procesos de campo más rápidos</h3>
+                    <p>Tu equipo trabaja desde el celular, sin planillas ni papel.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                    </div>
+                    <h3>Canal propio</h3>
+                    <p>No dependés de terceros para llegar a tus usuarios.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Rendimiento nativo</h3>
+                    <p>Apps fluidas, incluso con uso intensivo o poca conectividad.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></svg>
+                    </div>
+                    <h3>Comunicación directa</h3>
+                    <p>Notificaciones push para avisos, promociones y recordatorios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías utilizadas -->
+    <section class="technologies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <img class="tech-logo" src="../assets/tech/apple.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>iOS</span>
+                </div>
+                <div class="tech-item">
+                    <img class="tech-logo" src="../assets/tech/android.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Android</span>
+                </div>
+                <div class="tech-item">
+                    <img class="tech-logo" src="../assets/tech/swift.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Swift</span>
+                </div>
+                <div class="tech-item">
+                    <img class="tech-logo" src="../assets/tech/kotlin.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Kotlin</span>
+                </div>
+                <div class="tech-item">
+                    <img class="tech-logo" src="../assets/tech/flutter.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Flutter</span>
+                </div>
+                <a class="tech-item" href="tech/react.html">
+                    <img class="tech-logo" src="../assets/tech/react.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>React Native</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectores -->
+    <section class="industries section-alt-white" id="sectores">
+        <div class="container">
+            <h2>Sectores</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="industries/logistica.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /><path d="M15 18H9" /><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /><circle cx="17" cy="18" r="2" /><circle cx="7" cy="18" r="2" /></svg>
+                    <span>Logística</span>
+                </a>
+                <a class="industry-item" href="industries/salud.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg>
+                    <span>Salud</span>
+                </a>
+                <a class="industry-item" href="industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="industries/manufactura.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16h.01" /><path d="M16 16h.01" /><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /><path d="M8 16h.01" /></svg>
+                    <span>Manufactura</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de uso -->
+    <section class="case-studies section-alt-gray" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Cadena de retail con equipo de ventas en campo</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>vendedores sin acceso a stock e inventario en tiempo real durante visitas a clientes.</span></div>
+                        <div><strong>Solución:</strong> <span>app nativa Android con consulta de stock y toma de pedidos offline-first.</span></div>
+                        <div><strong>Resultado:</strong> <span>30% menos tiempo de gestión de pedidos por vendedor.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Empresa de logística con flota propia</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>choferes reportaban entregas por teléfono, generando errores y demoras.</span></div>
+                        <div><strong>Solución:</strong> <span>app móvil con confirmación de entregas, firma digital y geolocalización.</span></div>
+                        <div><strong>Resultado:</strong> <span>25% menos reclamos por entregas no confirmadas.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Marca de consumo masivo con programa de fidelización</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>baja recompra y sin canal directo con el cliente final.</span></div>
+                        <div><strong>Solución:</strong> <span>app de fidelización con notificaciones push y beneficios personalizados.</span></div>
+                        <div><strong>Resultado:</strong> <span>20% más frecuencia de compra en usuarios activos de la app.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Me conviene una app nativa o híbrida?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende de tu presupuesto, tiempos y necesidades de rendimiento: nativo ofrece el máximo desempeño, mientras que híbrido permite lanzar en ambas plataformas más rápido y con menor costo de mantenimiento.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma desarrollar una app?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Entre 8 y 20 semanas según el alcance y la plataforma, considerando diseño, desarrollo, testing y publicación en tiendas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Se encargan de publicar la app en las tiendas?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, gestionamos todo el proceso de publicación en Google Play y App Store, incluyendo el cumplimiento de sus políticas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar la app con nuestro sistema actual?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos las integraciones necesarias vía APIs con tu ERP, CRM o sistemas propios.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué pasa si Apple o Google cambian sus políticas?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Damos seguimiento a los cambios de plataforma y actualizamos la app para mantenerla siempre compatible.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen mantenimiento continuo?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, con planes de mantenimiento para nuevas versiones de sistema operativo, corrección de errores y mejoras.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿La app puede funcionar sin conexión a internet?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, podemos diseñar funcionalidades offline-first que sincronizan datos cuando vuelve la conexión.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo miden el éxito de la app una vez lanzada?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con analítica de uso, retención y errores, que usamos para priorizar las siguientes mejoras.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión inicial donde relevamos el objetivo de la app y te proponemos la mejor estrategia de plataforma.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para llevar tu negocio al bolsillo de tus clientes?</h2>
+            <p>Contanos tu idea y te ayudamos a definir la mejor estrategia móvil.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar propuesta</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Diseño de páginas web profesional: UX/UI, diseño responsivo, accesibilidad, branding digital, wireframes, sistema de diseño y optimización de conversión.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Diseño de Páginas Web | PATERSAY">
+    <meta property="og:description" content="Experiencias digitales que comunican tu marca con claridad y convierten visitantes en clientes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/web-design.html">
+
+    <title>Diseño de Páginas Web | UX/UI y Branding Digital — PATERSAY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de servicio -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../index.html#services">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Servicios
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Diseño de Páginas Web</h1>
+                <p>Diseñamos experiencias digitales que comunican tu marca con claridad y convierten visitantes en clientes, sobre una base sólida de UX, accesibilidad y rendimiento.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Contactar un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- Descripción General -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>¿Qué es el Diseño de Páginas Web?</h2>
+                <p>Es el proceso de investigación, arquitectura de información y diseño visual que convierte los objetivos de negocio de una empresa en una experiencia digital clara, usable y coherente con su marca.</p>
+                <p>Sirve para que un visitante entienda en segundos qué ofrece tu empresa, confíe en ella y avance hacia una acción concreta: cotizar, comprar o contactarte.</p>
+                <p>Resuelve problemas concretos: sitios desactualizados que no transmiten profesionalismo, tasas de rebote altas, formularios que nadie completa, experiencias que fallan en celular y marcas que se ven distintas en cada canal.</p>
+                <p>Lo necesitan empresas que están renovando su sitio corporativo, lanzando un nuevo producto o marca, o que necesitan unificar su identidad visual entre múltiples plataformas digitales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué hacemos? -->
+    <section class="services" id="que-hacemos">
+        <div class="container">
+            <h2>¿Qué hacemos?</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>UX/UI</h4>
+                    <p>Investigación de usuarios, arquitectura de información y diseño de interfaces centradas en cómo tus clientes realmente navegan y deciden.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Diseño responsivo</h4>
+                    <p>Interfaces que se adaptan de forma fluida a cualquier dispositivo, desde monitores grandes hasta smartphones, sin perder jerarquía visual.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Accesibilidad</h4>
+                    <p>Contraste, navegación por teclado, lectores de pantalla y buenas prácticas WCAG para que tu sitio sea usable por la mayor cantidad de personas posible.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Branding digital</h4>
+                    <p>Traducción de tu identidad de marca (colores, tipografías, tono) a un sistema visual coherente para web.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Diseño corporativo</h4>
+                    <p>Sitios institucionales que transmiten solidez, confianza y profesionalismo desde el primer scroll.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Prototipos y wireframes</h4>
+                    <p>Validación de la estructura y el flujo de navegación antes de escribir una sola línea de código, para reducir retrabajo.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Identidad visual</h4>
+                    <p>Sistemas de diseño (paleta, tipografía, componentes) reutilizables entre sitio, apps y materiales de marketing.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>SEO técnico y optimización de conversión</h4>
+                    <p>Estructura semántica, velocidad de carga y jerarquía visual pensadas para que te encuentren y para que actúen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestros Servicios -->
+    <section class="services section-alt-white" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <h3>UX Research &amp; Arquitectura de Información</h3>
+                    <p>Entendemos a tu usuario antes de diseñar cualquier pantalla.</p>
+                    <p><strong>Beneficio:</strong> decisiones de diseño basadas en evidencia, no en gustos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Diseño de Interfaz (UI)</h3>
+                    <p>Pantallas claras, jerarquizadas y coherentes con tu identidad de marca.</p>
+                    <p><strong>Beneficio:</strong> una experiencia que se siente profesional en cada detalle.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></svg>
+                    </div>
+                    <h3>Sistema de Diseño &amp; Branding</h3>
+                    <p>Componentes, paleta y tipografía reutilizables para todos tus canales.</p>
+                    <p><strong>Beneficio:</strong> consistencia de marca y desarrollos futuros más rápidos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8" /><path d="M10 19v-3.96 3.15" /><path d="M7 19h5" /><rect width="6" height="10" x="16" y="12" rx="2" /></svg>
+                    </div>
+                    <h3>Prototipado</h3>
+                    <p>Prototipos navegables para validar flujos antes de programar una sola línea.</p>
+                    <p><strong>Beneficio:</strong> menos retrabajo y decisiones tempranas más seguras.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Accesibilidad &amp; QA</h3>
+                    <p>Auditoría de contraste, teclado y lectores de pantalla contra WCAG 2.1 AA.</p>
+                    <p><strong>Beneficio:</strong> un sitio usable por más personas y con menor riesgo legal.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>CRO / Optimización de conversión</h3>
+                    <p>Pruebas y ajustes de formularios, CTAs y jerarquía visual sobre datos reales.</p>
+                    <p><strong>Beneficio:</strong> más resultados con el mismo tráfico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología de Trabajo -->
+    <section class="methodology" id="metodologia">
+        <div class="container">
+            <h2>Nuestra Metodología</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Reunión inicial</h3>
+                    <p>Relevamos tu marca, tu público objetivo y los objetivos de negocio detrás del sitio.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Relevamiento</h3>
+                    <p>Analizamos tu sitio actual, referentes de la industria y el comportamiento de tus usuarios.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Análisis</h3>
+                    <p>Definimos arquitectura de información, flujos clave y prioridades de contenido.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Diseño de solución</h3>
+                    <p>Wireframes, prototipos navegables y diseño visual sobre el sistema de diseño acordado.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Implementación</h3>
+                    <p>Maquetación y ajustes finales de UI, validados en los principales tamaños de pantalla.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Capacitación</h3>
+                    <p>Entrenamos a tu equipo en el uso del sistema de diseño y, si aplica, del CMS.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Soporte</h3>
+                    <p>Acompañamos el lanzamiento y ajustamos detalles con datos reales de uso.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Mejora continua</h3>
+                    <p>Medimos conversión y experiencia, y proponemos mejoras iterativas basadas en datos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services section-alt-white" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Más conversión</h3>
+                    <p>Formularios y CTAs diseñados para reducir la fricción y aumentar las conversiones.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Mejor experiencia</h3>
+                    <p>Navegación simple e intuitiva que reduce la frustración del usuario.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Marca consistente</h3>
+                    <p>La misma identidad visual y de tono en todos tus canales digitales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Mejor rendimiento</h3>
+                    <p>Sitios livianos y rápidos, pensados para no perder visitantes en la carga.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>
+                    </div>
+                    <h3>Mensajes claros</h3>
+                    <p>Contenido priorizado para que tu propuesta de valor se entienda en segundos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías utilizadas -->
+    <section class="technologies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <img class="tech-logo" src="../assets/tech/figma.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Figma</span>
+                </div>
+                <a class="tech-item" href="tech/react.html">
+                    <img class="tech-logo" src="../assets/tech/react.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>React</span>
+                </a>
+                <a class="tech-item" href="tech/nodejs.html">
+                    <img class="tech-logo" src="../assets/tech/nodejs.svg" alt="" width="28" height="28" loading="lazy">
+                    <span>Node.js</span>
+                </a>
+                <a class="tech-item" href="tech/aws.html">
+                    <img class="tech-logo tech-logo--wide" src="../assets/tech/aws.svg" alt="" width="36" height="28" loading="lazy">
+                    <span>AWS</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectores -->
+    <section class="industries section-alt-white" id="sectores">
+        <div class="container">
+            <h2>Sectores</h2>
+            <div class="industries-grid">
+                <a class="industry-item" href="industries/retail.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></svg>
+                    <span>Retail</span>
+                </a>
+                <a class="industry-item" href="industries/financiero.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" /></svg>
+                    <span>Financiero</span>
+                </a>
+                <a class="industry-item" href="industries/salud.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg>
+                    <span>Salud</span>
+                </a>
+                <a class="industry-item" href="industries/educacion.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>
+                    <span>Educación</span>
+                </a>
+                <a class="industry-item" href="industries/manufactura.html">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16h.01" /><path d="M16 16h.01" /><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /><path d="M8 16h.01" /></svg>
+                    <span>Manufactura</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de uso -->
+    <section class="case-studies section-alt-gray" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Empresa de servicios profesionales B2B</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>sitio institucional desactualizado que no generaba leads.</span></div>
+                        <div><strong>Solución:</strong> <span>rediseño UX/UI con formularios optimizados y jerarquía de contenido clara.</span></div>
+                        <div><strong>Resultado:</strong> <span>60% más solicitudes de contacto en los primeros 3 meses.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Marca de indumentaria retail</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>identidad visual inconsistente entre e-commerce, redes y local físico.</span></div>
+                        <div><strong>Solución:</strong> <span>sistema de diseño unificado aplicado a todos los canales digitales.</span></div>
+                        <div><strong>Resultado:</strong> <span>mayor reconocimiento de marca y 40% menos tiempo de diseño por pieza.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Startup fintech en expansión regional</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>sitio no accesible y con baja conversión en mobile.</span></div>
+                        <div><strong>Solución:</strong> <span>rediseño responsivo con foco en accesibilidad WCAG AA y checkout simplificado.</span></div>
+                        <div><strong>Resultado:</strong> <span>conversión mobile +25% y cumplimiento de estándares de accesibilidad.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma un proyecto de diseño web?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Entre 3 y 8 semanas según el alcance: un sitio institucional simple puede estar listo en 3-4 semanas, mientras que un rediseño completo con sistema de diseño puede tomar 6-8.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Incluyen el desarrollo o solo el diseño?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Podemos entregar el diseño para que tu equipo lo desarrolle, o encargarnos también del desarrollo con nuestro equipo de Desarrollo Web.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Trabajan con nuestra identidad de marca existente?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, partimos de tu manual de marca si existe; si no lo tenés, lo construimos como parte del proyecto.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué es un sistema de diseño y por qué lo necesito?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es un conjunto de componentes, reglas y estilos reutilizables que garantiza consistencia visual en todos tus canales digitales y acelera futuros desarrollos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo garantizan que el sitio sea accesible?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Seguimos las pautas WCAG 2.1 AA: contraste de color, navegación por teclado, textos alternativos y estructura semántica validada con herramientas de auditoría.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿El diseño será responsivo?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros proyectos se diseñan mobile-first y se validan en los principales tamaños de pantalla.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué herramientas utilizan para el diseño?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Trabajamos principalmente en Figma, lo que te permite revisar, comentar y aprobar cada pantalla en tiempo real.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Miden el impacto del rediseño?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, definimos métricas de éxito (conversión, tiempo en sitio, tasa de rebote) antes de empezar y las monitoreamos después del lanzamiento.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden rediseñar solo una parte de nuestro sitio?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, trabajamos tanto proyectos integrales como mejoras puntuales: checkout, landing pages o formularios específicos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión inicial donde relevamos tu marca, objetivos y público, y te presentamos una propuesta de alcance y tiempos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para renovar tu presencia digital?</h2>
+            <p>Contanos tu proyecto y te mostramos cómo podemos ayudarte a comunicarlo mejor.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar propuesta</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Servicios</a></li>
+                        <li><a href="../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

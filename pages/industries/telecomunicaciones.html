@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cómo PATERSAY ayuda a operadores de telecomunicaciones con facturación, autogestión y plataformas escalables.">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Telecomunicaciones | Soluciones tecnológicas para el sector — PATERSAY">
+    <meta property="og:description" content="Tecnología para operadores que gestionan millones de clientes, redes y facturación en simultáneo">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://patersay.com/pages/industries/telecomunicaciones.html">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Consultoría tecnológica para telecomunicaciones",
+        "serviceType": "Consultoría e implementación tecnológica",
+        "provider": { "@type": "Organization", "name": "PATERSAY" },
+        "areaServed": "Telecomunicaciones",
+        "description": "Sistemas de facturación, autogestión y plataformas escalables para operadores de telecomunicaciones."
+    }
+    </script>
+
+    <title>Tecnología para el sector Telecomunicaciones: Soluciones y servicios — PATERSAY</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-root="../..">
+    <!-- ============================================
+         SPLASH SCREEN
+         Se muestra una sola vez por sesión de navegador (sessionStorage) y se omite
+         por completo si el usuario tiene activado prefers-reduced-motion.
+         ============================================ -->
+    <div class="splash-screen" id="splashScreen" role="presentation" aria-hidden="true">
+        <button type="button" class="splash-skip" id="splashSkip">Saltar introducción</button>
+
+        <div class="splash-stage splash-stage-intro">
+            <p class="splash-intro-text" id="splashIntroText">Bienvenido al futuro</p>
+        </div>
+
+        <div class="splash-stage splash-stage-logo">
+            <h1 class="splash-logo" id="splashLogo" aria-label="PATERSAY">
+                <span class="splash-letter splash-letter-blue" aria-hidden="true">P</span><span class="splash-letter splash-letter-blue" aria-hidden="true">A</span><span class="splash-letter splash-letter-blue" aria-hidden="true">T</span><span class="splash-letter splash-letter-blue" aria-hidden="true">E</span><span class="splash-letter splash-letter-blue" aria-hidden="true">R</span><span class="splash-letter splash-letter-black" aria-hidden="true">S</span><span class="splash-letter splash-letter-black" aria-hidden="true">A</span><span class="splash-letter splash-letter-black" aria-hidden="true">Y</span>
+            </h1>
+            <p class="splash-subtitle" id="splashSubtitle">Soluciones Tecnológicas</p>
+        </div>
+    </div>
+    <noscript><style>.splash-screen { display: none !important; }</style></noscript>
+    <script>
+    (function () {
+        try {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var alreadyShown = sessionStorage.getItem('patersaySplashShown') === '1';
+            if (reduced || alreadyShown) {
+                var splash = document.getElementById('splashScreen');
+                if (splash) { splash.style.display = 'none'; }
+            } else {
+                document.documentElement.classList.add('splash-lock');
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <div id="siteContent">
+    <!-- Header Sticky -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.html" class="logo">PATERSAY</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-right" id="navRight">
+                    <div class="search-icon" id="searchIcon" role="button" tabindex="0" aria-label="Abrir búsqueda">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                    </div>
+                    <div class="region-selector" id="regionSelector" role="button" tabindex="0" aria-label="Seleccionar región">
+                        <span class="region-flag" id="regionFlag">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        </span>
+                        <span class="region-name" id="regionName">Región</span>
+                    </div>
+                    <button class="contact-btn" id="contactBtn" aria-label="Abrir formulario de contacto">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <button class="close-btn" id="closeSearch">×</button>
+            <h2>Buscar</h2>
+            <input type="text" id="searchInput" placeholder="Escribe una palabra clave..." class="search-input">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Region Selector Modal -->
+    <div class="modal" id="regionModal">
+        <div class="modal-content region-modal-content">
+            <button class="close-btn" id="closeRegion">×</button>
+            <h2>Seleccionar Región</h2>
+            <div class="region-options" id="regionOptions"></div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <button class="close-btn" id="closeContact">×</button>
+            <h2>Contactar</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" maxlength="500"></textarea>
+                    <small id="charCount" class="char-count"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero: página de industria -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <a class="service-breadcrumb" href="../../index.html#industries">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+                    Volver a Industrias
+                </a>
+                <div class="hero-service-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9" /><path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5" /><circle cx="12" cy="9" r="2" /><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47" /><path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1" /><path d="M9.5 18h5" /><path d="m8 22 4-11 4 11" /></svg>
+                </div>
+                <div class="hero-accent"></div>
+                <h1>Telecomunicaciones</h1>
+                <p>Los operadores de telecomunicaciones gestionan millones de clientes, redes y ciclos de facturación de forma simultánea. PATERSAY desarrolla la tecnología que sostiene esa escala sin perder velocidad ni confiabilidad.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="heroContact">Solicitar asesoría</button>
+                    <button class="btn btn-secondary" id="heroWhatsapp">Hablar con un especialista</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-mono-prism">
+            <div class="hero-mono-vstreak"></div>
+        </div>
+    </section>
+
+    <!-- ¿Qué es esta industria? -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>El sector de telecomunicaciones</h2>
+                <p>El sector de telecomunicaciones agrupa operadores de telefonía, internet y televisión paga, cuyo negocio depende de gestionar redes, clientes y facturación a una escala que pocas industrias enfrentan.</p>
+                <p>Durante años operó con sistemas de facturación (billing) monolíticos y canales de atención centralizados; la presión de la competencia y el crecimiento del consumo de datos aceleraron la digitalización de la autogestión y el soporte.</p>
+                <p>Sus procesos centrales incluyen gestión de clientes y contratos, facturación recurrente, soporte y atención al cliente, gestión de red y aprovisionamiento de servicios.</p>
+                <p>Sus necesidades tecnológicas combinan sistemas de facturación de altísimo volumen, portales de autogestión, infraestructura elástica para picos de demanda y analítica para reducir la fuga de clientes (churn).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principales Desafíos -->
+    <section class="services" id="desafios">
+        <div class="container">
+            <h2>Principales Desafíos</h2>
+            <div class="whatwedo-list">
+                <div class="whatwedo-item">
+                    <h4>Falta de integración entre sistemas de facturación y atención</h4>
+                    <p>Sistemas de billing, CRM y soporte que no comparten información, generando respuestas inconsistentes al cliente.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Alto volumen transaccional</h4>
+                    <p>Millones de ciclos de facturación y eventos de red que exigen sistemas de altísimo rendimiento.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Fuga de clientes (churn)</h4>
+                    <p>Dificultad para anticipar qué clientes están en riesgo de darse de baja antes de que lo hagan.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Experiencia de autogestión limitada</h4>
+                    <p>Clientes que aún dependen de call centers para gestiones simples que podrían resolver solos.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Escalabilidad ante picos de demanda</h4>
+                    <p>Lanzamientos de planes o promociones que generan picos de tráfico difíciles de sostener.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Seguridad de la información</h4>
+                    <p>Grandes volúmenes de datos personales y de consumo que exigen protección rigurosa.</p>
+                </div>
+                <div class="whatwedo-item">
+                    <h4>Falta de indicadores de red y negocio en tiempo real</h4>
+                    <p>Decisiones comerciales y de red tomadas con reportes desactualizados en lugar de datos en vivo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Cómo ayuda PATERSAY? -->
+    <section class="services section-alt-white" id="como-ayudamos">
+        <div class="container">
+            <h2>¿Cómo ayuda PATERSAY?</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
+                    </div>
+                    <h3>Consultoría SAP</h3>
+                    <p>Implementamos SAP para la gestión financiera y de facturación de operadores, dando soporte a procesos de facturación recurrente a gran escala.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="7" x="3" y="3" rx="1" /><rect width="9" height="7" x="3" y="14" rx="1" /><rect width="5" height="7" x="16" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Construimos portales de autogestión donde el cliente consulta consumo, factura y gestiona su plan sin llamar al call center.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <h3>Desarrollo Mobile</h3>
+                    <p>Desarrollamos apps de autogestión que reducen la dependencia del cliente de canales de atención tradicionales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                    </div>
+                    <h3>ERP a Medida</h3>
+                    <p>Diseñamos sistemas de gestión a medida para procesos de aprovisionamiento y gestión de servicios que un ERP estándar no cubre.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                    </div>
+                    <h3>Programación</h3>
+                    <p>Desarrollamos las integraciones entre sistemas de facturación, CRM, red y canales de atención al cliente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Consultoría RRHH</h3>
+                    <p>Acompañamos la digitalización de la gestión de grandes dotaciones de personal en operadores con call centers propios.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 17H5" /><path d="M19 7h-9" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>
+                    </div>
+                    <h3>Sistemas de Gestión</h3>
+                    <p>Implementamos sistemas de gestión de clientes y contratos que dan visibilidad completa del ciclo de vida del cliente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integraciones</h3>
+                    <p>Conectamos sistemas de facturación, CRM, plataformas de red y canales digitales en una misma arquitectura.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización</h3>
+                    <p>Automatizamos la facturación recurrente, el aprovisionamiento de servicios y la atención de reclamos frecuentes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
+                    </div>
+                    <h3>Cloud</h3>
+                    <p>Migramos plataformas de atención y autogestión a AWS con arquitecturas elásticas para picos de demanda.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Business Intelligence</h3>
+                    <p>Construimos tableros de churn, consumo y calidad de red para decisiones comerciales basadas en datos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg>
+                    </div>
+                    <h3>Transformación Digital</h3>
+                    <p>Acompañamos a operadores tradicionales en su tránsito hacia una atención digital-first, reduciendo la dependencia del canal telefónico.</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:32px; font-size:14px; color:#666;">
+                ¿Tu operación necesita sistemas capaces de escalar a millones de clientes? Conocé nuestro
+                <a href="../software-development.html" style="color:#0066cc; text-decoration:underline; font-weight:500;">servicio de Programación de Software</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tecnologías que utilizamos en esta industria -->
+    <section class="case-studies section-alt-gray" id="tecnologias">
+        <div class="container">
+            <h2>Tecnologías que utilizamos en el sector de telecomunicaciones</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3><a href="../tech/sap.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/sap.svg" alt="" width="24" height="24"> SAP</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para la gestión financiera y de facturación recurrente de grandes volúmenes de clientes.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la complejidad de facturar de forma precisa a millones de clientes con planes y consumos distintos.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta precisión y escalabilidad en el proceso de facturación recurrente.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el ciclo de facturación, la gestión de cobros y el cierre financiero del operador.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa y parametriza los módulos financieros de SAP adaptados a la facturación de alto volumen.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador de telefonía redujo los errores de facturación en un 20% tras optimizar su proceso de billing sobre SAP.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/java.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/java.svg" alt="" width="24" height="24"> Java</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en los sistemas backend de facturación y gestión de red que requieren máxima estabilidad.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la necesidad de sistemas robustos capaces de procesar millones de eventos de facturación sin fallar.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta estabilidad en el procesamiento masivo de eventos de facturación y consumo.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el procesamiento de ciclos de facturación y la integración con sistemas de red.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla microservicios en Java para los componentes de facturación y gestión de red de mayor volumen.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador procesó el doble de eventos de facturación sin degradar su rendimiento tras migrar su motor de billing a microservicios Java.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/python.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/python.svg" alt="" width="24" height="24"> Python</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en modelos de predicción de fuga de clientes (churn) y análisis de patrones de consumo.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de anticipar qué clientes están en riesgo de darse de baja.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta capacidad de intervenir con ofertas de retención antes de que el cliente se dé de baja.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora las campañas de retención y la segmentación comercial basada en consumo real.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla modelos de predicción de churn en Python integrados al CRM del operador.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador de internet redujo su tasa de bajas en un 12% tras implementar un modelo de predicción de churn en Python.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/react.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/react.svg" alt="" width="24" height="24"> React</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para construir portales y paneles de autogestión donde el cliente consulta consumo y gestiona su plan.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dependencia excesiva del call center para gestiones simples del cliente.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta una experiencia de autogestión rápida que reduce la carga sobre los canales de atención.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la resolución de consultas simples sin intervención de un agente de atención.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY desarrolla interfaces en React para portales de autogestión de clientes.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador redujo en un 30% las llamadas al call center por consultas de factura tras lanzar su portal de autogestión en React.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/nodejs.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/nodejs.svg" alt="" width="24" height="24"> Node.js</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para exponer APIs que conectan facturación, CRM, red y canales de atención en tiempo real.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de sincronización entre lo que ve el cliente y el estado real de su cuenta y consumo.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta información de cuenta y consumo actualizada en tiempo real en todos los canales.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la coherencia de la información que recibe el cliente sin importar el canal que utilice.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY construye APIs en Node.js como capa de integración entre los sistemas del operador.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador sincronizó el estado de cuenta de sus clientes entre app, web y call center en tiempo real gracias a una capa de APIs en Node.js.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/aws.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/aws.svg" alt="" width="34" height="22"> AWS</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como infraestructura para portales de autogestión y plataformas de atención, especialmente en lanzamientos de campañas.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de capacidad de la infraestructura propia para absorber picos de tráfico en lanzamientos comerciales.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta escalabilidad automática que sostiene los picos de tráfico de lanzamientos y promociones.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la disponibilidad de los canales digitales durante campañas de alto impacto.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas elásticas en AWS dimensionadas para los picos comerciales del operador.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador sostuvo sin caídas el lanzamiento de un nuevo plan con un pico de tráfico diez veces mayor al habitual tras migrar a AWS.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/azure.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/azure.svg" alt="" width="24" height="24"> Azure</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza en operadores que integran su operación con herramientas Microsoft para gestión corporativa y de datos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la fragmentación entre sistemas corporativos y plataformas de atención al cliente.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integración entre datos comerciales y las herramientas de análisis que ya usa el equipo corporativo.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la colaboración entre las áreas comerciales y de tecnología del operador.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY integra sistemas de gestión de clientes con Power BI y Azure para operadores del ecosistema Microsoft.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador centralizó sus indicadores comerciales y de churn en Power BI conectado a su CRM sobre Azure.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/postgresql.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/postgresql.svg" alt="" width="24" height="24"> PostgreSQL</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza como base de datos transaccional para contratos, consumo y facturación de clientes.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve inconsistencias en el registro de consumo que pueden derivar en errores de facturación.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta integridad de datos en cada evento de consumo y facturación registrado.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la precisión del ciclo de facturación y reduce reclamos por errores de cobro.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña esquemas PostgreSQL para sistemas de facturación y gestión de contratos.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador redujo sus reclamos por errores de facturación en un 25% tras migrar su sistema de billing a PostgreSQL.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/mongodb.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/mongodb.svg" alt="" width="24" height="24"> MongoDB</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para almacenar eventos de red y consumo con volumen y formato muy variable entre servicios.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la dificultad de modelar eventos de red heterogéneos en una estructura relacional rígida.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta flexibilidad para incorporar nuevos tipos de servicios y eventos de red sin rediseñar el sistema.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el análisis de patrones de consumo utilizado en los modelos de predicción de churn.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY implementa MongoDB como capa de almacenamiento de eventos de red y consumo.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador incorporó un nuevo servicio de streaming a su plataforma de consumo sin rediseñar su base de datos, gracias a MongoDB.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/docker.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/docker.svg" alt="" width="24" height="24"> Docker</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para empaquetar los servicios de facturación y atención de forma consistente entre entornos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve fallas de entorno que en sistemas de facturación pueden derivar en cobros incorrectos a gran escala.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta despliegues predecibles en sistemas donde un error se multiplica por millones de clientes.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la velocidad y seguridad con la que se actualizan los sistemas de facturación y atención.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY containeriza los servicios críticos de facturación y atención antes de cada actualización.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador redujo sus incidentes post-despliegue en un 35% tras containerizar sus servicios de facturación.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/kubernetes.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><img src="../../assets/tech/kubernetes.svg" alt="" width="24" height="24"> Kubernetes</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para orquestar los microservicios de facturación y atención y sostener picos de demanda comercial.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve la falta de resiliencia en arquitecturas donde la caída de un componente afecta a millones de clientes.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta alta disponibilidad automática, crítica en sistemas que atienden a una base masiva de clientes.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora la continuidad de los portales de autogestión y los sistemas de facturación.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña arquitecturas sobre Kubernetes con autoescalado para los sistemas de mayor criticidad del operador.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador sostuvo sin caídas el lanzamiento de una promoción masiva gracias al autoescalado de su plataforma sobre Kubernetes.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3><a href="../tech/cicd.html" style="display:inline-flex; align-items:center; gap:10px; color:inherit;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg> CI/CD</a></h3>
+                    <div class="case-meta">
+                        <div><strong>¿Para qué se utiliza?</strong> <span>Se utiliza para automatizar el despliegue de mejoras a los sistemas de facturación y atención con controles previos.</span></div>
+                        <div><strong>Problemas que resuelve:</strong> <span>Resuelve el riesgo de desplegar cambios manuales en sistemas que impactan a millones de clientes simultáneamente.</span></div>
+                        <div><strong>Beneficios:</strong> <span>Aporta despliegues más frecuentes y seguros, con menor riesgo de impacto masivo ante un error.</span></div>
+                        <div><strong>Procesos que mejora:</strong> <span>Mejora el ciclo de entrega de nuevas funcionalidades comerciales y de atención al cliente.</span></div>
+                        <div><strong>Cómo lo implementa PATERSAY:</strong> <span>PATERSAY diseña pipelines de CI/CD con validaciones exhaustivas antes de cada despliegue a producción.</span></div>
+                        <div><strong>Ejemplo práctico:</strong> <span>Un operador pasó de un release mensual a despliegues semanales sin aumentar sus incidentes en producción.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="services" id="beneficios">
+        <div class="container">
+            <h2>Beneficios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg>
+                    </div>
+                    <h3>Reducción de costos</h3>
+                    <p>Menos llamadas al call center gracias a canales de autogestión más completos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect width="8" height="8" x="13" y="13" rx="2" /></svg>
+                    </div>
+                    <h3>Automatización de procesos</h3>
+                    <p>Facturación, aprovisionamiento y atención de reclamos frecuentes sin intervención manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></svg>
+                    </div>
+                    <h3>Integración de sistemas</h3>
+                    <p>Facturación, CRM, red y canales de atención conectados en tiempo real.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" /></svg>
+                    </div>
+                    <h3>Escalabilidad</h3>
+                    <p>La infraestructura sostiene picos de tráfico de lanzamientos y campañas sin caídas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>
+                    </div>
+                    <h3>Mejor experiencia del cliente</h3>
+                    <p>Autogestión rápida y coherente sin importar el canal que el cliente elija usar.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Seguridad de la información</h3>
+                    <p>Datos personales y de consumo protegidos con controles adecuados a su volumen y sensibilidad.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                    </div>
+                    <h3>Trazabilidad completa</h3>
+                    <p>Cada evento de consumo y facturación queda registrado de forma auditable.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 15 21.84" /><path d="M21 5V8" /><path d="M21 12L18 17H22L19 22" /><path d="M3 12A9 3 0 0 0 14.59 14.87" /></svg>
+                    </div>
+                    <h3>Decisiones basadas en datos</h3>
+                    <p>Churn, consumo y calidad de red visibles en tiempo real para el equipo comercial y de red.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>
+                    </div>
+                    <h3>Mayor productividad</h3>
+                    <p>Los equipos de atención se enfocan en casos complejos en lugar de consultas rutinarias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casos de Uso -->
+    <section class="case-studies section-alt-white" id="casos-de-uso">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3>Operador de telefonía con errores de facturación frecuentes</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>inconsistencias en el registro de consumo generaban reclamos constantes de clientes.</span></div>
+                        <div><strong>Solución:</strong> <span>migración del sistema de billing a una base de datos transaccional más robusta.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>PostgreSQL, Java, SAP</span></div>
+                        <div><strong>Resultado:</strong> <span>reclamos por errores de facturación reducidos en un 25%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Operador de internet con alta tasa de bajas</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>no había forma de anticipar qué clientes estaban en riesgo de darse de baja.</span></div>
+                        <div><strong>Solución:</strong> <span>modelo de predicción de churn en Python integrado al CRM.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Python, AWS</span></div>
+                        <div><strong>Resultado:</strong> <span>tasa de bajas reducida en un 12%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Operador con call center saturado</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>la mayoría de las llamadas eran consultas simples que el cliente podría resolver solo.</span></div>
+                        <div><strong>Solución:</strong> <span>portal y app de autogestión con consulta de consumo y gestión de plan.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>React, Node.js</span></div>
+                        <div><strong>Resultado:</strong> <span>llamadas al call center reducidas en un 30%.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Operador con caídas en lanzamientos de promociones</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>los picos de tráfico de nuevas promociones colapsaban la plataforma comercial.</span></div>
+                        <div><strong>Solución:</strong> <span>migración a arquitectura escalable con Kubernetes sobre AWS.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>Kubernetes, AWS, Docker</span></div>
+                        <div><strong>Resultado:</strong> <span>cero caídas durante el lanzamiento de la promoción más exitosa del año.</span></div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>Operador con nuevos servicios difíciles de integrar</h3>
+                    <div class="case-meta">
+                        <div><strong>Problema:</strong> <span>cada nuevo servicio (streaming, IoT) requería rediseñar el sistema de consumo.</span></div>
+                        <div><strong>Solución:</strong> <span>migración de eventos de consumo a un modelo de datos flexible en MongoDB.</span></div>
+                        <div><strong>Tecnologías utilizadas:</strong> <span>MongoDB, Node.js</span></div>
+                        <div><strong>Resultado:</strong> <span>nuevos servicios incorporados a la plataforma sin rediseñar el sistema.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestro Proceso de Trabajo -->
+    <section class="methodology" id="proceso">
+        <div class="container">
+            <h2>Nuestro Proceso de Trabajo</h2>
+            <div class="methodology-grid">
+                <div class="methodology-step">
+                    <div class="step-number">01</div>
+                    <h3>Descubrimiento y relevamiento</h3>
+                    <p>Analizamos la operación actual del sector, sus sistemas, procesos y objetivos de negocio, junto a los equipos técnicos y de negocio del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">02</div>
+                    <h3>Diagnóstico</h3>
+                    <p>Identificamos brechas tecnológicas, cuellos de botella y riesgos, priorizando las oportunidades de mayor impacto.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">03</div>
+                    <h3>Diseño de la solución</h3>
+                    <p>Definimos el alcance funcional y la hoja de ruta, alineando la solución con la estrategia y el presupuesto del cliente.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">04</div>
+                    <h3>Arquitectura tecnológica</h3>
+                    <p>Diseñamos la arquitectura de sistemas, integraciones e infraestructura que sostendrá la solución en el tiempo.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">05</div>
+                    <h3>Desarrollo e implementación</h3>
+                    <p>Construimos e implementamos la solución de forma incremental, con entregas frecuentes y validación continua.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">06</div>
+                    <h3>Pruebas</h3>
+                    <p>Ejecutamos pruebas funcionales, de integración, de rendimiento y de seguridad antes de cada puesta en producción.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">07</div>
+                    <h3>Capacitación</h3>
+                    <p>Formamos a los equipos del cliente para que adopten la solución con autonomía desde el primer día.</p>
+                </div>
+                <div class="methodology-step">
+                    <div class="step-number">08</div>
+                    <h3>Soporte y mejora continua</h3>
+                    <p>Acompañamos la operación en producción con soporte, monitoreo y evolución continua de la solución.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden integrar nuestro sistema de facturación con el CRM y la atención al cliente?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, es una de las integraciones más frecuentes que realizamos para operadores con sistemas hoy dispersos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Nuestra plataforma soportará el lanzamiento de una promoción masiva?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Diseñamos las arquitecturas pensando específicamente en esos picos, con autoescalado que se activa según la demanda real.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden ayudarnos a reducir la tasa de bajas de clientes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos modelos de predicción de churn en Python que se integran a tu CRM para anticipar el riesgo de baja.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuánto tiempo toma modernizar un sistema de facturación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende del alcance y volumen de clientes; recomendamos migraciones incrementales que pueden tomar entre 4 y 12 meses.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden desarrollar un portal de autogestión para nuestros clientes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, desarrollamos portales y apps de autogestión integrados a tu sistema de facturación y CRM.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Qué pasa con nuestros sistemas legados durante la migración?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Diseñamos migraciones incrementales que conviven con los sistemas legados hasta completar la transición, sin interrumpir el servicio.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo manejan la seguridad de los datos de nuestros clientes?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aplicamos cifrado y control de accesos adecuados al volumen y sensibilidad de los datos personales y de consumo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Pueden ayudarnos con la gestión de eventos de red?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, implementamos sistemas capaces de procesar grandes volúmenes de eventos de red y consumo en tiempo real.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Ofrecen soporte continuo después de la implementación?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros proyectos incluyen una etapa de soporte y mejora continua una vez en producción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo empezamos a trabajar con PATERSAY?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Con una reunión de relevamiento donde analizamos tu operación actual y definimos la mejor hoja de ruta tecnológica para tu empresa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Tu operación necesita sistemas capaces de escalar a millones de clientes?</h2>
+            <p>Conversemos sobre los desafíos de tu operación y cómo podemos ayudarte a resolverlos.</p>
+            <button class="btn btn-primary" id="ctaContact">Solicitar asesoría</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>PATERSAY</h4>
+                    <p>Servicios de Tecnología de la Información de clase mundial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="../../index.html#services">Servicios</a></li>
+                        <li><a href="../../index.html#about">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="../privacy-policy.html">Política de Privacidad</a></li>
+                        <li><a href="../terms-of-service.html">Términos de Servicio</a></li>
+                        <li><a href="#" id="footerContact">Contacto</a></li>
+                        <li><a href="../careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PATERSAY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-button" id="whatsappButton" role="button" tabindex="0" aria-label="Contactar por WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content whatsapp-modal-content">
+            <button class="close-btn" id="closeWhatsapp">×</button>
+            <h2>Contactar por WhatsApp</h2>
+            <form id="whatsappForm" class="whatsapp-form">
+                <div class="form-group">
+                    <label for="wa-name">Nombre *</label>
+                    <input type="text" id="wa-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-company">Empresa *</label>
+                    <input type="text" id="wa-company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wa-message">Mensaje *</label>
+                    <textarea id="wa-message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+    </div><!-- /#siteContent -->
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

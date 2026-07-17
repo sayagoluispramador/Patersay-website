@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATERSAY - Guía de Instalación</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        h1 { font-size: 36px; margin-bottom: 24px; color: #1a1a1a; }
+        h2 { font-size: 24px; margin-top: 32px; margin-bottom: 16px; color: #0066cc; }
+        h3 { font-size: 18px; margin-top: 20px; margin-bottom: 12px; color: #1a1a1a; }
+        p { margin-bottom: 12px; color: #666; }
+        code { background: #eeeeee; padding: 4px 8px; border-radius: 4px; font-family: 'Courier New', monospace; }
+        pre { background: #1a1a1a; color: #00ff88; padding: 16px; border-radius: 4px; overflow-x: auto; margin-bottom: 16px; font-size: 13px; }
+        ul, ol { margin-left: 24px; margin-bottom: 16px; }
+        li { margin-bottom: 8px; }
+        .step { background: #ffffff; padding: 20px; border-left: 4px solid #0066cc; margin-bottom: 16px; border-radius: 4px; }
+        .success { background: #e8f5e9; border-left-color: #4caf50; color: #2e7d32; padding: 12px; margin-bottom: 16px; border-radius: 4px; }
+        .warning { background: #fff3e0; border-left-color: #ff9800; color: #e65100; padding: 12px; margin-bottom: 16px; border-radius: 4px; border-left: 4px solid #ff9800; }
+        .info { background: #e3f2fd; border-left-color: #2196f3; color: #0d47a1; padding: 12px; margin-bottom: 16px; border-radius: 4px; border-left: 4px solid #2196f3; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+        th { background: #f5f5f5; font-weight: 600; }
+        .file-tree { background: #f5f5f5; padding: 16px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PATERSAY Website - Guía Completa de Instalación</h1>
+        
+        <div class="success">
+            <strong>✅ Felicidades!</strong> Has recibido la estructura completa del sitio web PATERSAY basado en el diseño Minimal Executive 4.1
+        </div>
+
+        <h2>📦 Contenido Descargado</h2>
+        <p>La carpeta <code>patersay-website/</code> contiene:</p>
+        <ul>
+            <li><code>index.html</code> - Página principal con todas las secciones</li>
+            <li><code>css/styles.css</code> - Estilos responsivos (desktop, tablet, mobile)</li>
+            <li><code>js/main.js</code> - JavaScript funcional (búsqueda, modales, WhatsApp)</li>
+            <li><code>README.md</code> - Documentación completa</li>
+            <li><code>ESTRUCTURA.md</code> - Guía de carpetas y próximos pasos</li>
+            <li><code>package.json</code> - Configuración npm</li>
+            <li><code>.env.example</code> - Variables de entorno</li>
+            <li><code>.gitignore</code> - Configuración Git</li>
+        </ul>
+
+        <h2>🎯 Paso 1: Descargar la Carpeta</h2>
+        <p>Si aún no lo has hecho, descarga la carpeta <code>patersay-website</code> completa en tu computadora.</p>
+
+        <h2>🖥️ Paso 2: Abrir en VS Code</h2>
+        <div class="step">
+            <h3>Opción A: Desde Terminal</h3>
+            <pre>cd ruta/a/patersay-website
+code .</pre>
+        </div>
+
+        <div class="step">
+            <h3>Opción B: Desde VS Code</h3>
+            <ol>
+                <li>Abre VS Code</li>
+                <li>File → Open Folder</li>
+                <li>Selecciona la carpeta <code>patersay-website</code></li>
+                <li>Click en "Select Folder"</li>
+            </ol>
+        </div>
+
+        <h2>⚙️ Paso 3: Instalar Extensiones (Recomendado)</h2>
+        <p>En VS Code, instala estas extensiones para mejor desarrollo:</p>
+        <ul>
+            <li><strong>Live Server</strong> - Para ver cambios en tiempo real</li>
+            <li><strong>Prettier</strong> - Formateador de código</li>
+            <li><strong>HTML to CSS autocompletion</strong> - Autocompletado CSS</li>
+            <li><strong>Thunder Client o Postman</strong> - Para testing de APIs (futuro)</li>
+        </ul>
+
+        <div class="info">
+            <strong>💡 Tip:</strong> En VS Code, presiona <code>Ctrl+Shift+X</code> (Windows/Linux) o <code>Cmd+Shift+X</code> (Mac) para abrir la tienda de extensiones.
+        </div>
+
+        <h2>🌐 Paso 4: Ver la Página en el Navegador</h2>
+        <div class="step">
+            <h3>Con Live Server (Recomendado)</h3>
+            <ol>
+                <li>Click derecho en <code>index.html</code></li>
+                <li>Selecciona "Open with Live Server"</li>
+                <li>Se abrirá automáticamente en <code>http://localhost:5500</code></li>
+                <li>Los cambios se reflejan en tiempo real</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>Sin Live Server (Manual)</h3>
+            <ol>
+                <li>Haz doble clic en <code>index.html</code></li>
+                <li>Se abrirá en tu navegador predeterminado</li>
+                <li>Para ver cambios, recarga la página (F5)</li>
+            </ol>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Nota:</strong> Algunos navegadores no permiten características de JavaScript con <code>file://</code> local. Usa Live Server para evitar problemas.
+        </div>
+
+        <h2>✅ Funcionalidades Implementadas</h2>
+        <table>
+            <tr>
+                <th>Funcionalidad</th>
+                <th>Estado</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td>Header Sticky</td>
+                <td>✅</td>
+                <td>Navegación fija en top</td>
+            </tr>
+            <tr>
+                <td>Búsqueda Inteligente</td>
+                <td>✅</td>
+                <td>Navega a secciones automáticamente</td>
+            </tr>
+            <tr>
+                <td>Selector de Región</td>
+                <td>✅</td>
+                <td>Guarda en localStorage</td>
+            </tr>
+            <tr>
+                <td>Modal de Contacto</td>
+                <td>✅</td>
+                <td>Formulario con validación</td>
+            </tr>
+            <tr>
+                <td>WhatsApp Flotante</td>
+                <td>✅</td>
+                <td>Abre conversación automáticamente</td>
+            </tr>
+            <tr>
+                <td>FAQ Accordion</td>
+                <td>✅</td>
+                <td>Expandible y colapsable</td>
+            </tr>
+            <tr>
+                <td>Responsive Mobile</td>
+                <td>✅</td>
+                <td>Optimizado para celulares</td>
+            </tr>
+            <tr>
+                <td>8 Servicios</td>
+                <td>✅</td>
+                <td>Todos con descripción y botón</td>
+            </tr>
+        </table>
+
+        <h2>📝 Próximos Pasos</h2>
+
+        <div class="step">
+            <h3>Fase 1: Personalización (Inmediato)</h3>
+            <ul>
+                <li>Cambiar colores si es necesario</li>
+                <li>Actualizar textos y contenido</li>
+                <li>Agregar imágenes reales</li>
+                <li>Actualizar números de teléfono</li>
+                <li>Agregar emails correctos</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>Fase 2: Backend (Próximo Sprint)</h3>
+            <ul>
+                <li>Implementar servidor Node.js/Express</li>
+                <li>Configurar base de datos</li>
+                <li>Implementar envío de emails</li>
+                <li>Securizar formularios</li>
+                <li>Agregar autenticación</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>Fase 3: Deployment (Después del Backend)</h3>
+            <ul>
+                <li>Deployar en Vercel o Netlify</li>
+                <li>Configurar dominio</li>
+                <li>Implementar SSL/HTTPS</li>
+                <li>Configurar Google Analytics</li>
+                <li>Optimize para SEO</li>
+            </ul>
+        </div>
+
+        <h2>🔧 Editar Contenido</h2>
+
+        <h3>Cambiar Texto Principal</h3>
+        <p>Abre <code>index.html</code> y busca los textos. Por ejemplo:</p>
+        <pre>&lt;h1&gt;Soluciones tecnológicas de impacto&lt;/h1&gt;</pre>
+        <p>Cámbialo por tu texto y guarda (Ctrl+S o Cmd+S).</p>
+
+        <h3>Cambiar Colores</h3>
+        <p>Abre <code>css/styles.css</code> y busca <code>#0066cc</code> (azul corporativo):</p>
+        <pre>.btn-primary {
+    background: #0066cc;  /* Cambia aquí */
+}</pre>
+
+        <h3>Agregar Imágenes</h3>
+        <ol>
+            <li>Crea carpeta <code>patersay-website/assets/images/</code></li>
+            <li>Coloca tus imágenes (hero.jpg, etc.)</li>
+            <li>En HTML, actualiza la ruta: <code>&lt;img src="assets/images/hero.jpg" alt="Description"&gt;</code></li>
+        </ol>
+
+        <h2>📱 Testing en Mobile</h2>
+        <p>Para ver cómo se ve en móvil:</p>
+        <ul>
+            <li><strong>Desde el navegador:</strong> Presiona F12 → Click en ícono de móvil (arriba a la izquierda)</li>
+            <li><strong>Tamaños a probar:</strong> 480px, 768px, 1024px, 1280px</li>
+            <li><strong>Dispositivos específicos:</strong> iPhone 12, iPad, Android</li>
+        </ul>
+
+        <h2>🐛 Troubleshooting</h2>
+
+        <div class="step">
+            <h3>❌ "Live Server no funciona"</h3>
+            <p>Soluciones:</p>
+            <ul>
+                <li>Asegúrate de tener Live Server instalado</li>
+                <li>Reinicia VS Code</li>
+                <li>Verifica puerto 5500 no esté ocupado</li>
+                <li>Abre manualmente en navegador</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>❌ "Los estilos no se ven"</h3>
+            <p>Soluciones:</p>
+            <ul>
+                <li>Verifica que <code>css/styles.css</code> exista</li>
+                <li>Recarga la página (Ctrl+Shift+R)</li>
+                <li>Limpia caché del navegador</li>
+                <li>Abre DevTools (F12) → Pestaña Network para verificar recursos</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>❌ "JavaScript no funciona"</h3>
+            <p>Soluciones:</p>
+            <ul>
+                <li>Verifica que <code>js/main.js</code> exista</li>
+                <li>Abre DevTools (F12) → Pestaña Console para ver errores</li>
+                <li>Revisa que no haya errores de sintaxis</li>
+                <li>Recarga la página</li>
+            </ul>
+        </div>
+
+        <h2>📚 Estructura Actual</h2>
+        <div class="file-tree">
+patersay-website/
+├── index.html
+├── README.md
+├── ESTRUCTURA.md
+├── package.json
+├── .gitignore
+├── .env.example
+├── css/
+│   └── styles.css
+└── js/
+    └── main.js
+        </div>
+
+        <div class="info">
+            <strong>💾 Próximas carpetas a crear:</strong> <code>assets/images/</code>, <code>assets/icons/</code>, <code>assets/logos/</code>
+        </div>
+
+        <h2>📞 Contacto & Soporte</h2>
+        <p>Para dudas o problemas:</p>
+        <ul>
+            <li>Email: sayagoluisp@gmail.com</li>
+            <li>WhatsApp: +54 9 11 5907-2017</li>
+        </ul>
+
+        <h2>✨ Checklist Final</h2>
+        <ul>
+            <li>☐ Carpeta descargada en tu computadora</li>
+            <li>☐ VS Code instalado</li>
+            <li>☐ Live Server instalado (recomendado)</li>
+            <li>☐ Carpeta abierta en VS Code</li>
+            <li>☐ index.html abierto en navegador</li>
+            <li>☐ Todos los elementos visibles y funcionales</li>
+            <li>☐ Probado en mobile (F12)</li>
+            <li>☐ Probado en diferentes navegadores</li>
+            <li>☐ Git inicializado (opcional: <code>git init</code>)</li>
+        </ul>
+
+        <div class="success">
+            <strong>🎉 ¡Listo!</strong> Ya tienes la base del sitio web PATERSAY. Los próximos pasos son personalización y luego implementar el backend.
+        </div>
+
+    </div>
+</body>
+</html>
